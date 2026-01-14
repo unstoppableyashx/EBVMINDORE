@@ -3,287 +3,489 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0a192f">
+    <meta name="description" content="Bal Vinay Mandir - School of Excellence. Providing quality education since 1980.">
+    
     <title>School of Excellence | Bal Vinay Mandir</title>
     <link rel="icon" type="image/jpeg" href="./assets/images/logo.jpeg">
     
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <style>
+        /* ==============================================
+           1. CORE VARIABLES & THEME CONFIGURATION
+        =============================================== */
         :root {
-            /* --- ULTRA ROYAL PALETTE --- */
+            /* --- ROYAL COLOR PALETTE --- */
             --navy-dark: #020c1b;
             --navy: #0a192f;
-            --navy-light: #172a45;
+            --navy-light: #112240;
+            --navy-lighter: #233554;
             
-            /* Realistic Gold Gradient */
+            /* REALISTIC GOLD GRADIENT */
             --gold: #d4af37;
+            --gold-dim: #c5a028;
             --gold-gradient: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
             --gold-text: #eebb4d;
             
+            /* NEUTRALS */
             --text-dark: #1e293b;
-            --text-muted: #64748b;
+            --text-light: #8892b0;
+            --text-white: #e6f1ff;
+            --bg-body: #f8fafc; /* Clean Paper White */
             --white: #ffffff;
-            --bg-royal: #fdfbf7;
             
+            /* EFFECTS */
             --glass: rgba(255, 255, 255, 0.95);
+            --glass-dark: rgba(10, 25, 47, 0.85);
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
             --shadow-card: 0 10px 30px -15px rgba(2, 12, 27, 0.2);
+            --shadow-hover: 0 20px 30px -15px rgba(2, 12, 27, 0.3);
+            
+            /* BORDERS */
             --border-gold: 1px solid rgba(212, 175, 55, 0.3);
+            --border-light: 1px solid #e2e8f0;
         }
 
-        /* --- RESET & BASICS --- */
-        * { margin:0; padding:0; box-sizing:border-box; font-family:'Lato', sans-serif; -webkit-tap-highlight-color: transparent; }
-        html { scroll-behavior: smooth; }
-        body { background: var(--bg-royal); color: var(--text-dark); overflow-x: hidden; }
-        h1, h2, h3 { font-family: 'Playfair Display', serif; color: var(--navy); }
-        img { display: block; width: 100%; }
+        /* ==============================================
+           2. RESET & GLOBAL STYLES
+        =============================================== */
+        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
+        
+        html { scroll-behavior: smooth; font-size: 16px; }
+        
+        body { 
+            background: var(--bg-body); 
+            color: var(--text-dark); 
+            font-family: 'Lato', sans-serif; 
+            overflow-x: hidden; 
+            line-height: 1.6;
+            -webkit-user-select: none; /* Security: Disable Select */
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
 
-        /* --- PRELOADER --- */
+        h1, h2, h3, h4, h5, h6 { font-family: 'Playfair Display', serif; color: var(--navy); font-weight: 700; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-body); }
+        ::-webkit-scrollbar-thumb { background: var(--navy-light); border-radius: 4px; border: 1px solid var(--gold); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+        img { display: block; width: 100%; height: auto; pointer-events: none; /* Security: Disable drag */ }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+
+        /* ==============================================
+           3. PRELOADER & ANIMATIONS
+        =============================================== */
         #preloader {
             position: fixed; inset: 0; z-index: 9999;
             background: var(--navy-dark);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: opacity 0.5s ease, visibility 0.5s;
+            transition: opacity 0.6s ease, visibility 0.6s;
         }
-        .loader-logo {
-            width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--gold);
-            animation: pulse 1.5s infinite; object-fit: cover;
-        }
-        .loader-text {
-            margin-top: 20px; color: var(--gold-text); font-family: 'Cinzel', serif; 
-            letter-spacing: 2px; font-size: 1.2rem;
-        }
-        @keyframes pulse { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); } 70% { transform: scale(1.1); box-shadow: 0 0 0 20px rgba(212, 175, 55, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); } }
-
-        /* --- HEADER & NAV --- */
-        header {
-            background: var(--glass); backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-            position: sticky; top: 0; z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-        }
-        .nav-container {
-            max-width: 1300px; margin: 0 auto; padding: 0 20px; height: 80px;
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .brand { display: flex; align-items: center; gap: 15px; text-decoration: none; }
-        .logo-box { 
-            padding: 2px; border-radius: 50%; background: var(--gold-gradient); 
-            box-shadow: 0 4px 10px rgba(212, 175, 55, 0.4);
-        }
-        .logo { height: 50px; width: 50px; border-radius: 50%; border: 2px solid white; object-fit: cover; }
-        .brand-txt h1 { font-size: 1.4rem; font-weight: 700; line-height: 1; }
-        .brand-txt p { font-size: 0.65rem; color: #b38728; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-top: 3px; font-family: 'Cinzel'; }
-
-        .desk-menu { display: flex; gap: 25px; list-style: none; align-items: center; }
-        .desk-menu a { 
-            text-decoration: none; color: var(--navy); font-weight: 600; font-size: 0.85rem; 
-            text-transform: uppercase; letter-spacing: 1px; position: relative; padding: 5px 0;
-        }
-        .desk-menu a::after {
-            content:''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
-            background: var(--gold-gradient); transition: 0.3s;
-        }
-        .desk-menu a:hover::after { width: 100%; }
-
-        .btn-lang {
-            padding: 6px 12px; border: 1px solid #b38728; border-radius: 4px;
-            background: transparent; color: #b38728; font-weight: 700; font-size: 0.75rem; 
-            cursor: pointer; font-family: 'Cinzel'; transition:0.3s;
-        }
-        .btn-lang:hover { background: var(--gold-gradient); color: var(--navy); border-color:transparent; }
-        .menu-toggle { display: none; font-size: 28px; color: var(--navy); cursor: pointer; }
-
-        /* --- HERO --- */
-        .hero { 
-            height: 70vh; min-height: 500px; position: relative; display: flex; 
-            align-items: center; justify-content: center; text-align: center; overflow: hidden;
-        }
-        .hero-bg {
-            position: absolute; inset: 0; z-index: 1;
-            background: linear-gradient(to bottom, rgba(10, 25, 47, 0.7), rgba(10, 25, 47, 0.5)), url('./assets/images/school.jpg') center/cover;
-            /* Animation removed for performance on mobile, kept simple parallax or static */
-        }
-        .hero-content { position: relative; z-index: 2; max-width: 900px; padding: 20px; animation: fadeInUp 1s ease; }
-        .hero-title { 
-            font-size: clamp(2.2rem, 6vw, 4.5rem); color: white; line-height: 1.1; margin-bottom: 20px; 
-            text-shadow: 0 10px 30px rgba(0,0,0,0.5); font-family: 'Cinzel';
-        }
-        .hero-badge {
-            display: inline-block; padding: 10px 30px; background: rgba(255,255,255,0.1); 
-            backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.3);
-            color: var(--gold-text); text-transform: uppercase; letter-spacing: 2px; font-weight: 700; 
-            border-radius: 50px;
-        }
-
-        /* --- LAYOUT --- */
-        .main-container { max-width: 1300px; margin: 0 auto; padding: 60px 20px; display: grid; grid-template-columns: 3fr 1fr; gap: 40px; }
-        .section-wrap { margin-bottom: 80px; scroll-margin-top: 100px; }
         
-        /* Headings */
-        .sec-head { text-align: center; margin-bottom: 40px; position: relative; }
-        .sec-title { 
-            font-size: 2.2rem; color: var(--navy); font-family: 'Cinzel'; 
-            display: inline-block; background: var(--bg-royal); padding: 0 20px; position: relative; z-index: 2; 
-        }
-        .sec-line { position: absolute; top: 50%; left: 0; width: 100%; height: 1px; background: #d4af37; z-index: 1; opacity: 0.5; }
-
-        /* Royal Card */
-        .royal-card { 
-            background: white; padding: 30px; border-radius: 8px; 
-            box-shadow: var(--shadow-card); border: var(--border-gold);
-            display: flex; gap: 30px; align-items: flex-start;
-        }
-        .royal-img { width: 40%; border-radius: 4px; box-shadow: 5px 5px 15px rgba(0,0,0,0.1); object-fit: cover; }
-        .royal-txt { flex: 1; font-size: 1.05rem; line-height: 1.7; color: #475569; text-align: justify; }
-
-        /* Facilities Grid */
-        .stats-grid {
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px;
-            background: var(--navy); color: white; padding: 30px; border-radius: 8px; text-align: center;
-        }
-        .sr-num { font-family: 'Cinzel'; font-size: 2rem; color: var(--gold-text); }
-        .sr-lbl { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; }
-
-        /* Image Grids (Optimized for Aspect Ratio) */
-        .grid-premium { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
-        .premium-item { 
-            background: white; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow-card); 
-            border: 1px solid rgba(0,0,0,0.05); transition: transform 0.3s; cursor: pointer;
-        }
-        .premium-item:hover { transform: translateY(-5px); border-color: var(--gold); }
-        
-        .premium-img-box { 
-            height: 220px; /* Fixed height for grid alignment */
-            background: #0f172a; /* Dark background to make photos pop */
+        .loader-logo-wrap {
+            position: relative; width: 100px; height: 100px;
             display: flex; align-items: center; justify-content: center;
-            overflow: hidden;
         }
-        .premium-img-box img { 
-            width: 100%; height: 100%; 
-            object-fit: contain; /* CRITICAL: Prevents cutting/stretching */
+        
+        .loader-logo {
+            width: 90px; height: 90px; border-radius: 50%; 
+            border: 3px solid var(--gold); object-fit: cover;
+            animation: pulse 2s infinite; z-index: 2;
+        }
+        
+        .loader-ring {
+            position: absolute; width: 100%; height: 100%; border-radius: 50%;
+            border: 2px solid transparent; border-top-color: var(--gold);
+            animation: spin 1s linear infinite; z-index: 1;
+        }
+
+        .loader-text {
+            margin-top: 25px; color: var(--gold-text); 
+            font-family: 'Cinzel', serif; letter-spacing: 4px; font-weight: 700; font-size: 1.2rem;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        @keyframes pulse { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); } 70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(212, 175, 55, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); } }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
+
+        /* ==============================================
+           4. NAVIGATION & HEADER
+        =============================================== */
+        header {
+            background: var(--glass); 
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+            position: sticky; top: 0; z-index: 1000;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.03);
             transition: 0.3s;
         }
 
-        .premium-caption { padding: 12px; text-align: center; border-top: 1px solid #f1f5f9; background: white; }
-        .pc-title { font-weight: 700; color: var(--navy); font-size: 0.9rem; font-family: 'Playfair Display'; }
+        .nav-container {
+            max-width: 1300px; margin: 0 auto; padding: 0 25px; height: 85px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
 
-        /* Sidebar */
-        .sidebar { position: sticky; top: 100px; height: fit-content; }
+        .brand { display: flex; align-items: center; gap: 15px; }
+        
+        .brand-logo-box { 
+            width: 54px; height: 54px; padding: 2px; border-radius: 50%; 
+            background: var(--gold-gradient); 
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+        
+        .brand-logo { width: 100%; height: 100%; border-radius: 50%; border: 2px solid var(--white); object-fit: cover; }
+        
+        .brand-text h1 { font-size: 1.5rem; font-weight: 800; line-height: 1; color: var(--navy); letter-spacing: -0.5px; }
+        .brand-text p { font-size: 0.7rem; color: #b38728; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-top: 4px; font-family: 'Cinzel', serif; }
+
+        .desk-menu { display: flex; gap: 30px; align-items: center; }
+        
+        .nav-link { 
+            font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--navy);
+            position: relative; padding: 5px 0; font-family: 'Lato', sans-serif;
+        }
+        
+        .nav-link::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
+            background: var(--gold-gradient); transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after { width: 100%; }
+        .nav-link:hover { color: #b38728; }
+
+        .btn-lang {
+            padding: 8px 16px; border: 1px solid #b38728; border-radius: 4px;
+            background: transparent; color: #b38728; font-weight: 700; font-size: 0.75rem; 
+            cursor: pointer; font-family: 'Cinzel', serif; transition: 0.3s; letter-spacing: 1px;
+        }
+        .btn-lang:hover { background: var(--gold-gradient); color: var(--navy); border-color: transparent; box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3); }
+
+        .menu-toggle { display: none; font-size: 30px; color: var(--navy); cursor: pointer; }
+
+        /* ==============================================
+           5. HERO SECTION
+        =============================================== */
+        .hero { 
+            height: 75vh; min-height: 550px; position: relative; display: flex; 
+            align-items: center; justify-content: center; text-align: center; overflow: hidden;
+        }
+        
+        .hero-bg {
+            position: absolute; inset: 0; z-index: 1;
+            background: linear-gradient(to bottom, rgba(10, 25, 47, 0.8), rgba(10, 25, 47, 0.6)), url('./assets/images/school.jpg') center/cover fixed;
+            /* Static background for performance, overlay handles the mood */
+        }
+        
+        .hero-content { position: relative; z-index: 2; max-width: 900px; padding: 20px; animation: fadeInUp 1s ease 0.5s backwards; }
+        
+        .hero-title { 
+            font-size: clamp(2.5rem, 6vw, 5rem); color: var(--white); line-height: 1.1; margin-bottom: 25px; 
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5); font-family: 'Cinzel', serif;
+        }
+        
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 12px 30px; background: rgba(255,255,255,0.05); 
+            backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);
+            color: var(--gold-text); text-transform: uppercase; letter-spacing: 3px; font-weight: 700; 
+            font-size: 0.8rem; border-radius: 50px; box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* ==============================================
+           6. MAIN LAYOUT (GRID SYSTEM)
+        =============================================== */
+        .main-container { 
+            max-width: 1300px; margin: 0 auto; padding: 60px 20px; 
+            display: grid; grid-template-columns: 1fr 340px; gap: 50px; 
+        }
+
+        .section-wrap { margin-bottom: 90px; scroll-margin-top: 120px; }
+
+        /* Section Headers */
+        .sec-head { text-align: center; margin-bottom: 45px; position: relative; display: flex; align-items: center; justify-content: center; width: 100%; }
+        .sec-title { 
+            font-size: 2.2rem; color: var(--navy); font-family: 'Cinzel', serif; 
+            background: var(--bg-body); padding: 0 25px; position: relative; z-index: 2; 
+        }
+        .sec-line { position: absolute; width: 100%; height: 1px; background: var(--gold); opacity: 0.4; z-index: 1; }
+
+        /* Royal Card (Content Box) */
+        .royal-card { 
+            background: var(--white); padding: 35px; border-radius: 8px; 
+            box-shadow: var(--shadow-card); border: 1px solid rgba(212, 175, 55, 0.15);
+            display: flex; gap: 35px; align-items: flex-start; transition: 0.3s;
+        }
+        .royal-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); border-color: rgba(212, 175, 55, 0.4); }
+
+        .royal-img { 
+            width: 45%; border-radius: 4px; 
+            box-shadow: 10px 10px 0 var(--bg-body), 10px 10px 0 1px var(--gold);
+            object-fit: cover;
+        }
+        
+        .royal-txt { flex: 1; font-size: 1.05rem; line-height: 1.8; color: #475569; text-align: justify; }
+
+        /* Facilities Stats */
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+            background: var(--navy); color: var(--white); padding: 40px; border-radius: 8px;
+            position: relative; overflow: hidden; text-align: center;
+            box-shadow: var(--shadow-card);
+        }
+        .stats-grid::before { content:''; position:absolute; top:0; left:0; width:100%; height:4px; background: var(--gold-gradient); }
+        .sr-num { font-family: 'Cinzel', serif; font-size: 2.5rem; color: var(--gold-text); margin-bottom: 5px; font-weight: 700; }
+        .sr-lbl { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; }
+
+        /* Image Grids (Gallery/Achievements) */
+        .grid-premium { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; }
+        
+        .premium-item { 
+            background: var(--white); border-radius: 6px; overflow: hidden; 
+            box-shadow: var(--shadow-card); border: 1px solid rgba(0,0,0,0.05); 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer;
+        }
+        .premium-item:hover { transform: translateY(-8px); border-color: var(--gold); }
+        
+        .premium-img-box { 
+            height: 220px; background: #0f172a; /* Dark BG for better contrast */
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+            position: relative;
+        }
+        .premium-img-box img { 
+            width: 100%; height: 100%; 
+            object-fit: contain; /* Ensures full image is visible without cropping */
+            transition: 0.5s;
+        }
+        .premium-item:hover .premium-img-box img { transform: scale(1.05); opacity: 0.9; }
+        
+        .premium-caption { padding: 15px; text-align: center; border-top: 1px solid #f1f5f9; background: var(--white); position: relative; z-index: 2; }
+        .pc-title { font-weight: 700; color: var(--navy); font-size: 0.9rem; font-family: 'Playfair Display', serif; line-height: 1.3; }
+
+        /* ==============================================
+           7. SIDEBAR (NOTICES & CONTACT)
+        =============================================== */
+        .sidebar { position: sticky; top: 110px; height: fit-content; }
+
+        /* Notice Board Widget */
         .notice-board { 
-            background: white; border: var(--border-gold); border-radius: 8px; 
-            box-shadow: var(--shadow-card); overflow: hidden; margin-bottom: 30px; 
+            background: var(--white); border: 1px solid #e2e8f0; border-radius: 8px; 
+            box-shadow: var(--shadow-card); overflow: hidden; margin-bottom: 40px; 
         }
         .nb-header { 
-            background: var(--navy); color: white; padding: 15px; 
-            font-family: 'Cinzel'; font-size: 1rem; border-bottom: 3px solid #d4af37;
-            display: flex; align-items: center; gap: 10px;
+            background: var(--navy); color: var(--white); padding: 18px 20px; 
+            font-family: 'Cinzel', serif; font-size: 1.1rem; border-bottom: 3px solid var(--gold);
+            display: flex; align-items: center; gap: 12px;
         }
-        .nb-content { max-height: 400px; overflow-y: auto; }
-        .n-item { 
-            padding: 15px; border-bottom: 1px solid #f1f5f9; cursor: pointer; transition: 0.2s; 
-            border-left: 3px solid transparent;
-        }
-        .n-item:hover { background: #fffbeb; border-left-color: #d4af37; }
-        .n-date { font-size: 0.7rem; color: #b38728; font-weight: 700; display: block; margin-bottom: 3px; }
-        .n-title { font-size: 0.9rem; color: #334155; line-height: 1.3; font-weight: 600; }
-
-        .adm-banner { 
-            background: linear-gradient(135deg, #0a192f 0%, #172a45 100%); 
-            padding: 30px 20px; text-align: center; border-radius: 8px; border: 2px solid #d4af37;
-            color: white; box-shadow: var(--shadow-card);
-        }
-        .adm-banner.closed { background: #f1f5f9; color: #64748b; border-color: #cbd5e1; }
-
-        /* --- FOOTER --- */
-        footer { 
-            background: var(--navy-dark); color: #94a3b8; padding: 50px 20px 20px; margin-top: 60px; 
-            border-top: 4px solid #d4af37; text-align: center; 
-        }
-        .ft-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; text-align: left; }
+        .nb-content { max-height: 450px; overflow-y: auto; background: #fff; }
         
-        /* --- MOBILE DRAWER & FAB --- */
-        .drawer-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 2999; display: none; backdrop-filter: blur(2px); }
-        .drawer {
-            position: fixed; top: 0; right: -280px; width: 260px; height: 100vh;
-            background: var(--navy-dark); z-index: 3000; padding: 25px;
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: -5px 0 20px rgba(0,0,0,0.5);
-            border-left: 1px solid #d4af37;
+        .n-item { 
+            padding: 16px 20px; border-bottom: 1px solid #f1f5f9; cursor: pointer; transition: 0.2s; 
+            border-left: 3px solid transparent; display: flex; flex-direction: column; gap: 4px;
+        }
+        .n-item:last-child { border-bottom: none; }
+        .n-item:hover { background: #fffbeb; border-left-color: var(--gold); padding-left: 25px; }
+        
+        .n-date { font-size: 0.7rem; color: #b38728; font-weight: 800; text-transform: uppercase; display: flex; align-items: center; gap: 5px; }
+        .n-title { font-size: 0.95rem; color: var(--text-dark); line-height: 1.4; font-weight: 600; }
+        .n-badge { background: #ef4444; color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.6rem; margin-left: auto; }
+
+        /* Contact Form Widget */
+        .contact-box { 
+            background: var(--white); padding: 30px; border-radius: 8px; 
+            border: 1px solid #e2e8f0; border-top: 4px solid var(--navy);
+            box-shadow: var(--shadow-card); 
+        }
+        .c-head { 
+            display: flex; align-items: center; gap: 10px; margin-bottom: 25px; 
+            color: var(--navy); font-family: 'Cinzel', serif; font-weight: 700; font-size: 1.2rem; 
+            padding-bottom: 15px; border-bottom: 1px solid #f1f5f9;
+        }
+        
+        .c-group { margin-bottom: 20px; position: relative; }
+        .c-icon { position: absolute; left: 0; top: 12px; color: #cbd5e1; font-size: 20px; transition: 0.3s; }
+        
+        .c-field { 
+            width: 100%; padding: 12px 0 12px 30px; border: none; border-bottom: 1px solid #cbd5e1; 
+            font-size: 0.95rem; transition: 0.3s; background: transparent; color: var(--text-dark); font-family: 'Lato', sans-serif;
+        }
+        .c-field:focus { border-bottom-color: var(--gold); outline: none; }
+        .c-field:focus + .c-icon { color: var(--gold); }
+        .c-field::placeholder { color: #94a3b8; font-size: 0.9rem; }
+        
+        .c-btn { 
+            width: 100%; padding: 14px; background: var(--navy); color: var(--white); 
+            border: none; border-radius: 4px; font-weight: 700; cursor: pointer; 
+            font-family: 'Cinzel', serif; transition: 0.3s; margin-top: 10px;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+        .c-btn:hover { background: var(--gold); color: var(--navy); box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4); }
+        .c-btn:disabled { background: #94a3b8; cursor: not-allowed; }
+
+        .success-overlay { display: none; text-align: center; padding: 40px 10px; animation: fadeInUp 0.5s; }
+
+        /* ==============================================
+           8. FOOTER
+        =============================================== */
+        footer { 
+            background: var(--navy-dark); color: #94a3b8; padding: 70px 20px 30px; 
+            margin-top: 80px; border-top: 5px solid var(--gold); text-align: center; 
+        }
+        
+        .ft-grid { 
+            max-width: 1200px; margin: 0 auto; display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left; 
+        }
+        
+        .ft-col h4 { color: #fbf5b7; font-family: 'Cinzel', serif; margin-bottom: 25px; font-size: 1.1rem; letter-spacing: 1px; }
+        .ft-col p, .ft-col a { display: block; margin-bottom: 12px; font-size: 0.9rem; color: #cbd5e1; transition: 0.2s; }
+        .ft-col a:hover { color: var(--gold); transform: translateX(5px); }
+        .ft-icon { vertical-align: middle; margin-right: 8px; font-size: 18px; color: var(--gold); }
+
+        .ft-bottom { margin-top: 60px; padding-top: 25px; border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.8rem; opacity: 0.6; }
+
+        /* ==============================================
+           9. MOBILE DRAWER & FAB
+        =============================================== */
+        .drawer-overlay { 
+            position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 2999; 
+            display: none; backdrop-filter: blur(4px); 
+        }
+        .drawer { 
+            position: fixed; top: 0; right: -300px; width: 280px; height: 100vh; 
+            background: var(--navy-dark); z-index: 3000; padding: 30px; 
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+            box-shadow: -5px 0 30px rgba(0,0,0,0.6); border-left: 1px solid var(--gold); 
         }
         .drawer.active { right: 0; }
+        
         .d-link { 
-            display: block; color: rgba(255,255,255,0.9); text-decoration: none; 
-            font-size: 1.1rem; padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.1); 
-            font-family: 'Cinzel';
+            display: flex; align-items: center; justify-content: space-between;
+            color: rgba(255,255,255,0.9); text-decoration: none; 
+            font-size: 1.1rem; padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,0.08); 
+            font-family: 'Cinzel', serif; transition: 0.2s;
         }
+        .d-link:active { color: var(--gold); padding-left: 10px; }
 
         .fab {
-            display: none; position: fixed; bottom: 20px; right: 20px; z-index: 2000;
+            display: none; position: fixed; bottom: 25px; right: 25px; z-index: 2000;
             background: var(--gold-gradient); color: var(--navy);
-            padding: 12px 20px; border-radius: 50px; font-weight: 700; font-family: 'Cinzel';
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4); border: 2px solid white; cursor: pointer;
-            align-items: center; gap: 8px; font-size: 0.9rem;
+            padding: 14px 24px; border-radius: 50px; font-weight: 700; font-family: 'Cinzel', serif;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5); border: 2px solid var(--white); cursor: pointer;
+            align-items: center; gap: 10px; font-size: 0.9rem; animation: float 3s ease-in-out infinite;
         }
 
-        /* --- LIGHTBOX (FIXED) --- */
+        /* ==============================================
+           10. MODALS & LIGHTBOX
+        =============================================== */
+        .modal-bg { 
+            display: none; position: fixed; inset: 0; background: rgba(2, 12, 27, 0.9); 
+            z-index: 4000; justify-content: center; align-items: center; padding: 20px; 
+            backdrop-filter: blur(8px); 
+        }
+        
+        .modal-content { 
+            background: var(--white); width: 100%; max-width: 550px; border-radius: 12px; 
+            padding: 30px; position: relative; max-height: 85vh; overflow-y: auto; 
+            border: 1px solid var(--gold); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .close-modal { position: absolute; top: 20px; right: 20px; cursor: pointer; color: #94a3b8; transition: 0.2s; }
+        .close-modal:hover { color: #ef4444; transform: rotate(90deg); }
+
+        /* Lightbox */
         #lightbox { 
-            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 5000; 
-            justify-content: center; align-items: center; padding: 10px;
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); 
+            z-index: 5000; justify-content: center; align-items: center; padding: 20px;
         }
         #lb-img { 
-            max-width: 100%; max-height: 90vh; 
-            width: auto; height: auto; 
-            object-fit: contain; /* Ensures actual ratio without stretching */
-            box-shadow: 0 0 30px rgba(0,0,0,0.8);
-            border: 2px solid var(--gold);
+            max-width: 100%; max-height: 90vh; width: auto; height: auto; 
+            object-fit: contain; /* CRITICAL: Prevents stretching */
+            box-shadow: 0 0 50px rgba(0,0,0,0.8); border: 2px solid var(--gold); 
+            animation: zoomIn 0.3s ease;
         }
-        .close-lb { position: absolute; top: 20px; right: 20px; color: white; font-size: 30px; cursor: pointer; background: rgba(0,0,0,0.5); border-radius: 50%; padding: 5px;}
-
-        /* --- MODAL --- */
-        .modal-bg { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 4000; justify-content: center; align-items: center; padding: 20px; }
-        .modal-content { 
-            background: white; width: 100%; max-width: 500px; border-radius: 8px; padding: 25px; 
-            position: relative; max-height: 80vh; overflow-y: auto; 
+        .close-lb {
+            position: absolute; top: 30px; right: 30px; color: white; font-size: 35px; 
+            cursor: pointer; background: rgba(255,255,255,0.1); border-radius: 50%; padding: 8px;
+            transition: 0.2s;
         }
+        .close-lb:hover { background: rgba(255,255,255,0.3); transform: scale(1.1); }
 
-        /* --- RESPONSIVE --- */
+        @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        /* ==============================================
+           11. RESPONSIVE DESIGN
+        =============================================== */
         @media (max-width: 900px) {
-            .nav-container { height: 70px; padding: 0 15px; }
+            .nav-container { height: 70px; padding: 0 20px; }
             .desk-menu { display: none; } .menu-toggle { display: block; }
-            .brand-txt h1 { font-size: 1.1rem; } .brand-txt p { display: none; }
-            .main-container { grid-template-columns: 1fr; padding: 30px 15px; gap: 40px; }
-            .notice-board { display: none; } .fab { display: flex; }
-            .royal-card { flex-direction: column; padding: 20px; gap: 20px; }
-            .royal-img { width: 100%; height: 200px; }
-            .stats-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+            .brand-text h1 { font-size: 1.2rem; } .brand-text p { display: none; }
+            
+            .main-container { grid-template-columns: 1fr; padding: 40px 15px; gap: 60px; }
+            
+            /* Hide Desktop Sidebar components on mobile */
+            .sidebar .notice-board { display: none; } 
+            .fab { display: flex; } /* Show FAB */
+            
+            .royal-card { flex-direction: column; padding: 25px; gap: 20px; }
+            .royal-img { width: 100%; height: 220px; }
+            
+            .stats-grid { grid-template-columns: 1fr 1fr; gap: 25px; }
             .sec-title { font-size: 1.8rem; }
+            
             .ft-grid { text-align: center; }
             .premium-img-box { height: 200px; }
         }
-        @keyframes fadeInUp { from { opacity:0; transform: translateY(20px); } to { opacity:1; transform: translateY(0); } }
     </style>
+    
+    <script>
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.onkeydown = function(e) {
+            if(e.keyCode == 123) return false; // F12
+            if(e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) return false;
+            if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
+        }
+    </script>
 </head>
 <body>
 
     <div id="preloader">
-        <img src="./assets/images/logo.jpeg" class="loader-logo" onerror="this.src='https://via.placeholder.com/80?text=BVM'">
+        <div class="loader-logo-wrap">
+            <div class="loader-ring"></div>
+            <img src="./assets/images/logo.jpeg" class="loader-logo" onerror="this.src='https://via.placeholder.com/100?text=BVM'">
+        </div>
         <div class="loader-text">BAL VINAY MANDIR</div>
     </div>
 
     <header>
         <div class="nav-container">
             <a href="#" class="brand">
-                <div class="logo-box"><img src="./assets/images/logo.jpeg" class="logo" onerror="this.src='https://via.placeholder.com/50'"></div>
-                <div class="brand-txt">
+                <div class="brand-logo-box">
+                    <img src="./assets/images/logo.jpeg" class="brand-logo" onerror="this.src='https://via.placeholder.com/50'">
+                </div>
+                <div class="brand-text">
                     <h1>Bal Vinay Mandir</h1>
                     <p>School of Excellence</p>
                 </div>
             </a>
-            <div style="display:flex; align-items:center; gap:15px;">
-                <ul class="desk-menu" id="nav-desk"></ul>
+            
+            <div style="display:flex; align-items:center; gap:20px;">
+                <ul class="desk-menu" id="nav-desk">
+                    </ul>
                 <button class="btn-lang" onclick="toggleLang()">EN / HI</button>
                 <span class="material-icons menu-toggle" onclick="toggleDrawer()">menu</span>
             </div>
@@ -292,81 +494,156 @@
 
     <div class="drawer-overlay" id="drawer-ol" onclick="toggleDrawer()"></div>
     <div class="drawer" id="drawer">
-        <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:15px; border-bottom:1px solid rgba(255,255,255,0.1); margin-bottom:15px;">
-            <span style="color:var(--gold); font-family:'Cinzel'; font-weight:700;">MENU</span>
-            <span class="material-icons" style="color:white; cursor:pointer;" onclick="toggleDrawer()">close</span>
+        <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:20px; border-bottom:1px solid rgba(255,255,255,0.1); margin-bottom:20px;">
+            <span style="color:var(--gold); font-family:'Cinzel', serif; font-weight:700; font-size:1.2rem;">MENU</span>
+            <span class="material-icons" style="color:white; cursor:pointer; font-size:28px;" onclick="toggleDrawer()">close</span>
         </div>
-        <div id="nav-mob"></div>
+        <div id="nav-mob">
+            </div>
     </div>
 
     <div class="fab" onclick="openAllNotices()">
-        <span class="material-icons">campaign</span> NOTICE BOARD
+        <span class="material-icons">notifications_active</span> NOTICE BOARD
     </div>
 
     <section class="hero">
         <div class="hero-bg"></div>
         <div class="hero-content">
             <h1 class="hero-title" id="hero-head">Empowering Minds,<br>Creating Leaders</h1>
-            <div class="hero-badge" id="hero-sub">Excellence in Education Since 1980</div>
+            <div class="hero-badge" id="hero-sub">
+                <span class="material-icons" style="font-size:16px;">verified</span>
+                Excellence in Education Since 1980
+            </div>
         </div>
     </section>
 
     <div class="main-container">
         <main>
-            <div id="dynamic-content"></div>
-            <div id="custom-pages"></div>
+            <div id="dynamic-content">
+                </div>
+            <div id="custom-pages">
+                </div>
         </main>
 
         <aside class="sidebar">
             <div class="notice-board">
-                <div class="nb-header"><span class="material-icons">notifications_active</span> &nbsp; Latest Notices</div>
-                <div class="nb-content" id="notice-list-desk"></div>
+                <div class="nb-header">
+                    <span class="material-icons">campaign</span> Latest Updates
+                </div>
+                <div class="nb-content" id="notice-list-desk">
+                    <div style="padding:20px; text-align:center; color:#94a3b8;">Loading Notices...</div>
+                </div>
+                <div style="padding:10px; text-align:center; background:#f8fafc; border-top:1px solid #e2e8f0;">
+                    <button onclick="openAllNotices()" style="background:none; border:none; color:var(--navy); font-weight:700; cursor:pointer; font-size:0.8rem;">VIEW ALL</button>
+                </div>
             </div>
 
-            <div id="adm-box"></div>
+            <div class="contact-box" id="contact">
+                <div class="c-head">
+                    <span class="material-icons" style="color:var(--gold);">mail_outline</span> Contact Us
+                </div>
+                
+                <form id="contact-form" onsubmit="submitContact(event)">
+                    <input type="hidden" name="access_key" value="7bad7b42-fa57-4466-9f19-7883860795b2">
+                    
+                    <div class="c-group">
+                        <input type="text" name="name" class="c-field" placeholder="Full Name" required>
+                        <span class="material-icons c-icon">person</span>
+                    </div>
+
+                    <div class="c-group">
+                        <input type="tel" name="mobile" class="c-field" placeholder="Mobile Number" required>
+                        <span class="material-icons c-icon">smartphone</span>
+                    </div>
+
+                    <div class="c-group">
+                        <input type="email" name="email" class="c-field" placeholder="Email Address">
+                        <span class="material-icons c-icon">email</span>
+                    </div>
+
+                    <div class="c-group">
+                        <input type="text" name="address" class="c-field" placeholder="City & State" required>
+                        <span class="material-icons c-icon">location_city</span>
+                    </div>
+
+                    <div class="c-group">
+                        <textarea name="message" class="c-field" rows="3" placeholder="Your Message..." required style="resize:vertical;"></textarea>
+                        <span class="material-icons c-icon">chat</span>
+                    </div>
+                    
+                    <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+                    
+                    <button type="submit" class="c-btn" id="c-btn-txt">
+                        <span>SEND MESSAGE</span> <span class="material-icons">send</span>
+                    </button>
+                </form>
+                
+                <div id="c-success" class="success-overlay">
+                    <span class="material-icons" style="font-size:60px; color:var(--gold); margin-bottom:15px;">check_circle</span>
+                    <h3 style="color:var(--navy); font-size:1.5rem;">Message Sent!</h3>
+                    <p style="color:#64748b; margin-top:10px; font-size:0.95rem;">Thank you for contacting Bal Vinay Mandir.<br>We will get back to you shortly.</p>
+                    <button onclick="document.getElementById('c-success').style.display='none'; document.getElementById('contact-form').style.display='block'; document.getElementById('contact-form').reset();" style="margin-top:20px; background:none; border:none; color:var(--navy); text-decoration:underline; cursor:pointer;">Send Another</button>
+                </div>
+            </div>
         </aside>
     </div>
 
     <footer>
         <div class="ft-grid">
-            <div>
-                <img src="./assets/images/logo.jpeg" style="width:60px; border-radius:50%; border:2px solid #b38728; margin-bottom:15px;">
-                <p>Chatri Bagh, Indore (M.P.)</p>
-                <p>Phone: 0731-123456</p>
+            <div class="ft-col">
+                <img src="./assets/images/logo.jpeg" style="width:70px; border-radius:50%; border:2px solid var(--gold); margin-bottom:20px; box-shadow:0 0 15px rgba(212,175,55,0.3);">
+                <p><span class="material-icons ft-icon">location_on</span> Chatri Bagh, Indore (M.P.)</p>
+                <p><span class="material-icons ft-icon">call</span> 0731-123456</p>
+                <p><span class="material-icons ft-icon">email</span> info@bvmindore.com</p>
             </div>
-            <div>
-                <h4 style="color:#fbf5b7; font-family:'Cinzel'; margin-bottom:15px;">Academics</h4>
-                <p>CBSE Affiliated</p>
-                <p>Science & Commerce</p>
-                <p>Sports Academy</p>
+            
+            <div class="ft-col">
+                <h4>Academics</h4>
+                <a href="#">CBSE Curriculum</a>
+                <a href="#">Faculty Members</a>
+                <a href="#">Result Analysis</a>
+                <a href="#">Sports Academy</a>
             </div>
-            <div>
-                <h4 style="color:#fbf5b7; font-family:'Cinzel'; margin-bottom:15px;">Quick Links</h4>
-                <p onclick="openAllNotices()" style="cursor:pointer;">Notices</p>
-                <p onclick="document.getElementById('gallery').scrollIntoView()" style="cursor:pointer;">Gallery</p>
+            
+            <div class="ft-col">
+                <h4>Quick Access</h4>
+                <a href="#" onclick="openAllNotices(); return false;">Notice Board</a>
+                <a href="#" onclick="document.getElementById('gallery').scrollIntoView(); return false;">Photo Gallery</a>
+                <a href="#" onclick="document.getElementById('contact').scrollIntoView(); return false;">Admission Enquiry</a>
+            </div>
+
+            <div class="ft-col">
+                <h4>Location</h4>
+                <div style="width:100%; height:150px; background:#112240; border-radius:4px; display:flex; align-items:center; justify-content:center; border:1px solid rgba(255,255,255,0.1);">
+                    <span style="font-size:0.8rem; opacity:0.7;">[Map Placeholder]</span>
+                </div>
             </div>
         </div>
-        <div style="margin-top:40px; font-size:0.75rem; opacity:0.6;">&copy; 2026 Bal Vinay Mandir. All Rights Reserved.</div>
+        
+        <div class="ft-bottom">
+            &copy; 2026 Bal Vinay Mandir H.S. School. All Rights Reserved. | Premium Education Since 1980.
+        </div>
     </footer>
 
     <div id="notice-modal" class="modal-bg">
         <div class="modal-content">
-            <span class="material-icons" onclick="document.getElementById('notice-modal').style.display='none'" style="position:absolute; top:15px; right:15px; cursor:pointer; color:#999;">close</span>
-            <div id="m-date" style="color:#b38728; font-weight:700; font-size:0.8rem; margin-bottom:5px;"></div>
-            <h3 id="m-title" style="margin-bottom:15px; font-size:1.3rem;"></h3>
-            <div style="width:50px; height:3px; background:var(--gold); margin-bottom:15px;"></div>
-            <div id="m-desc" style="color:#475569; line-height:1.6; white-space:pre-line; margin-bottom:20px;"></div>
+            <span class="material-icons close-modal" onclick="document.getElementById('notice-modal').style.display='none'">close</span>
+            <div id="m-date" style="color:var(--gold); font-weight:800; font-size:0.85rem; letter-spacing:1px; margin-bottom:8px;"></div>
+            <h3 id="m-title" style="margin-bottom:15px; font-size:1.4rem; line-height:1.3; color:var(--navy);"></h3>
+            <div style="width:60px; height:3px; background:var(--gold); margin-bottom:20px;"></div>
+            <div id="m-desc" style="color:#475569; line-height:1.7; white-space:pre-line; margin-bottom:25px; font-size:1rem;"></div>
             <div id="m-link"></div>
         </div>
     </div>
 
     <div id="all-notices-modal" class="modal-bg">
-        <div class="modal-content" style="height:80vh; display:flex; flex-direction:column;">
-            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #eee; padding-bottom:10px; margin-bottom:10px;">
-                <h3 style="margin:0; font-family:'Cinzel';">All Notices</h3>
+        <div class="modal-content" style="height:80vh; display:flex; flex-direction:column; padding:0; overflow:hidden;">
+            <div style="padding:20px; background:var(--navy); color:white; display:flex; justify-content:space-between; align-items:center;">
+                <h3 style="margin:0; font-family:'Cinzel', serif; color:var(--gold);">Notice Board</h3>
                 <span class="material-icons" style="cursor:pointer;" onclick="document.getElementById('all-notices-modal').style.display='none'">close</span>
             </div>
-            <div id="notice-list-mob" style="overflow-y:auto; flex:1;"></div>
+            <div id="notice-list-mob" style="overflow-y:auto; flex:1; padding:10px;">
+                </div>
         </div>
     </div>
 
@@ -376,145 +653,311 @@
     </div>
 
     <script>
-        // --- CONFIG ---
-        const firebaseConfig = { apiKey: "AIzaSyBEqzUbus1kXmcIXwI0QlOIGa3IV1zqXVw", authDomain: "ebvmindore.firebaseapp.com", projectId: "ebvmindore", storageBucket: "ebvmindore.firebasestorage.app", messagingSenderId: "545685474288", appId: "1:545685474288:web:0bc816ef47dfaf63acab35", measurementId: "G-5HL4PRSHV9" };
-        firebase.initializeApp(firebaseConfig);
+        // --- 1. FIREBASE CONFIGURATION ---
+        const firebaseConfig = { 
+            apiKey: "AIzaSyBEqzUbus1kXmcIXwI0QlOIGa3IV1zqXVw", 
+            authDomain: "ebvmindore.firebaseapp.com", 
+            projectId: "ebvmindore", 
+            storageBucket: "ebvmindore.firebasestorage.app", 
+            messagingSenderId: "545685474288", 
+            appId: "1:545685474288:web:0bc816ef47dfaf63acab35", 
+            measurementId: "G-5HL4PRSHV9" 
+        };
+        
+        // Initialize Firebase
+        try {
+            firebase.initializeApp(firebaseConfig);
+        } catch(e) { console.error("Firebase Error:", e); }
+        
         const db = firebase.firestore();
 
-        let lang='en'; let notices=[];
+        // --- 2. GLOBAL STATE ---
+        let lang = 'en'; 
+        let notices = [];
+        
         const SECTIONS = [
             { id:'about', en:'About Us', hi:'परिचय' }, 
             { id:'principal', en:'Principal Desk', hi:'प्राचार्य संदेश' },
             { id:'facilities', en:'Facilities', hi:'सुविधाएं' }, 
-            { id:'admission', en:'Admission', hi:'प्रवेश' },
             { id:'achievements', en:'Achievements', hi:'उपलब्धियां' },
             { id:'gallery', en:'Gallery', hi:'गैलरी' }, 
             { id:'contact', en:'Contact', hi:'संपर्क' }
         ];
 
-        // --- UTILS ---
-        function toggleDrawer(){ const d=document.getElementById('drawer'); const o=document.getElementById('drawer-ol'); if(d.classList.contains('active')){d.classList.remove('active'); o.style.display='none';}else{d.classList.add('active'); o.style.display='block';} }
-        function toggleLang(){ lang=lang==='en'?'hi':'en'; document.getElementById('hero-head').innerHTML=lang==='en'?"Empowering Minds,<br>Creating Leaders":"सशक्त मन,<br>नेतृत्व का निर्माण"; initLoad(); }
-        function openAllNotices(){ document.getElementById('notice-list-mob').innerHTML=document.getElementById('notice-list-desk').innerHTML; document.getElementById('all-notices-modal').style.display='flex'; }
-        const resolveImg=(src)=>(!src)?'':(src.startsWith('http')||src.startsWith('data:')?src:`./assets/images/${src}`);
+        // --- 3. UI UTILITIES ---
+        function toggleDrawer(){ 
+            const d=document.getElementById('drawer'); 
+            const o=document.getElementById('drawer-ol'); 
+            if(d.classList.contains('active')){
+                d.classList.remove('active'); o.style.display='none';
+            }else{
+                d.classList.add('active'); o.style.display='block';
+            } 
+        }
+
+        function toggleLang(){ 
+            lang = (lang === 'en') ? 'hi' : 'en'; 
+            document.getElementById('hero-head').innerHTML = (lang === 'en') 
+                ? "Empowering Minds,<br>Creating Leaders" 
+                : "सशक्त मन,<br>नेतृत्व का निर्माण";
+            initLoad(); // Reload content with new language
+        }
+
+        function openAllNotices(){ 
+            // Copy content from sidebar to modal
+            const content = document.getElementById('notice-list-desk').innerHTML;
+            document.getElementById('notice-list-mob').innerHTML = content; 
+            document.getElementById('all-notices-modal').style.display = 'flex'; 
+        }
+
+        const resolveImg = (src) => (!src) ? '' : (src.startsWith('http') || src.startsWith('data:') ? src : `./assets/images/${src}`);
         
-        // --- MAIN RENDER LOGIC ---
+        // --- 4. MAIN DATA FETCHING & RENDERING ---
         async function initLoad() {
-            // Preloader is ALREADY visible via CSS. We wait for data, then hide it.
             try {
+                // Fetch all collections in parallel for speed
                 const [cSnap, tSnap, pSnap, nSnap] = await Promise.all([
                     db.collection('siteConfig').get(), 
                     db.collection('siteContent').get(), 
                     db.collection('custom_pages').get(),
-                    db.collection('notices').orderBy('date','desc').limit(15).get()
+                    db.collection('notices').orderBy('date','desc').limit(20).get()
                 ]);
 
                 let config={}; cSnap.forEach(d=>config[d.id]=d.data());
                 let content={}; tSnap.forEach(d=>content[d.id]=d.data());
                 
-                // 1. Build Navigation & Sections
-                const main=document.getElementById('dynamic-content'); main.innerHTML='';
-                const dNav=document.getElementById('nav-desk'); const mNav=document.getElementById('nav-mob');
-                let dh=`<li><a href="#">${lang==='en'?'Home':'होम'}</a></li>`; let mh=`<a href="#" class="d-link" onclick="toggleDrawer()">${lang==='en'?'Home':'होम'}</a>`;
+                const main = document.getElementById('dynamic-content'); 
+                main.innerHTML='';
+                
+                // Navigation Builders
+                const dNav = document.getElementById('nav-desk'); 
+                const mNav = document.getElementById('nav-mob');
+                let dh = `<li><a href="#" class="nav-link">${lang==='en'?'Home':'होम'}</a></li>`; 
+                let mh = `<a href="#" class="d-link" onclick="toggleDrawer()">${lang==='en'?'Home':'होम'} <span class="material-icons">home</span></a>`;
 
+                // --- BUILD SECTIONS ---
                 SECTIONS.forEach(sec => {
-                    if(config[sec.id]?.isVisible!==false){
-                        const d=content[sec.id]||{}; const t=lang==='en'?(d.title_en||sec.en):(d.title_hi||sec.hi);
-                        dh+=`<li><a href="#${sec.id}">${t}</a></li>`; mh+=`<a href="#${sec.id}" class="d-link" onclick="toggleDrawer()">${t}</a>`;
+                    if(config[sec.id]?.isVisible !== false){
+                        const d = content[sec.id] || {}; 
+                        const t = lang==='en' ? (d.title_en||sec.en) : (d.title_hi||sec.hi);
                         
-                        let body=''; const img=resolveImg(d.image); const txt=lang==='en'?(d.text_en||''):(d.text_hi||'');
+                        dh += `<li><a href="#${sec.id}" class="nav-link">${t}</a></li>`; 
+                        mh += `<a href="#${sec.id}" class="d-link" onclick="toggleDrawer()">${t} <span class="material-icons">chevron_right</span></a>`;
                         
-                        // Section Specific Layouts
-                        if(sec.id==='facilities'){
-                            body=`<div class="stats-grid"><div><div class="sr-num">${d.stat1||'40+'}</div><div class="sr-lbl">Years</div></div><div><div class="sr-num">${d.stat2||'2K'}</div><div class="sr-lbl">Students</div></div><div><div class="sr-num">${d.stat3||'100%'}</div><div class="sr-lbl">Results</div></div><div><div class="sr-num">${d.stat4||'50+'}</div><div class="sr-lbl">Faculty</div></div></div>`;
-                            if(txt||img) body+=`<div class="royal-card" style="margin-top:30px;">${img?`<img src="${img}" class="royal-img">`:''}<div class="royal-txt">${txt}</div></div>`;
+                        let body = ''; 
+                        const img = resolveImg(d.image); 
+                        const txt = lang==='en' ? (d.text_en||'') : (d.text_hi||'');
+                        
+                        // Specific Layouts
+                        if(sec.id === 'facilities'){
+                            body = `<div class="stats-grid">
+                                <div><div class="sr-num">${d.stat1||'45+'}</div><div class="sr-lbl">Years</div></div>
+                                <div><div class="sr-num">${d.stat2||'2.5K'}</div><div class="sr-lbl">Students</div></div>
+                                <div><div class="sr-num">${d.stat3||'100%'}</div><div class="sr-lbl">Results</div></div>
+                                <div><div class="sr-num">${d.stat4||'70+'}</div><div class="sr-lbl">Faculty</div></div>
+                            </div>`;
+                            if(txt||img) body += `<div class="royal-card" style="margin-top:35px;">${img?`<img src="${img}" class="royal-img">`:''}<div class="royal-txt">${txt}</div></div>`;
                         }
-                        else if(sec.id==='gallery'){ body=`<div class="grid-premium" id="gal-grid">Loading Photos...</div>`; loadGallery(); }
-                        else if(sec.id==='achievements'){ body=`<div class="grid-premium" id="ach-grid">Loading...</div>`; loadAchievements(); }
-                        else if(sec.id==='contact'){
-                            body=`<div class="royal-card"><div style="flex:1; background:#f8fafc; padding:25px; border-radius:4px;"><p style="display:flex; gap:10px; margin-bottom:15px;"><span class="material-icons" style="color:var(--gold);">location_on</span><span>${d.address||'School Address'}</span></p><p style="display:flex; gap:10px;"><span class="material-icons" style="color:var(--gold);">call</span><span>${d.phone||'Contact Number'}</span></p></div>${d.map?`<div style="flex:1; height:250px; border-radius:4px; overflow:hidden;"><iframe src="${d.map}" width="100%" height="100%" style="border:0;"></iframe></div>`:''}</div>`;
+                        else if(sec.id === 'gallery'){ 
+                            body = `<div class="grid-premium" id="gal-grid"><p style="grid-column:1/-1; text-align:center;">Loading Photos...</p></div>`; 
+                            setTimeout(loadGallery, 500); 
+                        }
+                        else if(sec.id === 'achievements'){ 
+                            body = `<div class="grid-premium" id="ach-grid"><p style="grid-column:1/-1; text-align:center;">Loading...</p></div>`; 
+                            setTimeout(loadAchievements, 500); 
+                        }
+                        else if(sec.id === 'contact'){
+                            // Contact is in sidebar, this is just info
+                            body = `<div class="royal-card">
+                                <div style="flex:1; background:#f8fafc; padding:25px; border-radius:4px; border:1px solid #e2e8f0;">
+                                    <h4 style="color:var(--navy); margin-bottom:15px; border-bottom:1px solid #ddd; padding-bottom:10px;">Visit Us</h4>
+                                    <p style="display:flex; gap:12px; margin-bottom:15px;"><span class="material-icons" style="color:var(--gold);">location_on</span><span>${d.address||'Chatri Bagh, Indore (M.P.)'}</span></p>
+                                    <p style="display:flex; gap:12px; margin-bottom:15px;"><span class="material-icons" style="color:var(--gold);">call</span><span>${d.phone||'0731-123456'}</span></p>
+                                    <p style="display:flex; gap:12px;"><span class="material-icons" style="color:var(--gold);">email</span><span>info@bvmindore.com</span></p>
+                                </div>
+                                ${d.map ? `<div style="flex:1; height:280px; border-radius:4px; overflow:hidden; border:1px solid #e2e8f0;"><iframe src="${d.map}" width="100%" height="100%" style="border:0;" loading="lazy"></iframe></div>` : ''}
+                            </div>`;
                         } else {
-                            body=`<div class="royal-card">${img?`<img src="${img}" class="royal-img">`:''}<div class="royal-txt">${txt}</div></div>`;
+                            // Standard Text/Image Section
+                            body = `<div class="royal-card">${img?`<img src="${img}" class="royal-img">`:''}<div class="royal-txt">${txt}</div></div>`;
                         }
                         
-                        main.innerHTML+=`<section id="${sec.id}" class="section-wrap"><div class="sec-head"><h2 class="sec-title">${t}</h2><div class="sec-line"></div></div>${body}</section>`;
+                        main.innerHTML += `<section id="${sec.id}" class="section-wrap">
+                            <div class="sec-head"><h2 class="sec-title">${t}</h2><div class="sec-line"></div></div>
+                            ${body}
+                        </section>`;
                     }
                 });
 
-                // 2. Custom Pages
-                const cust=document.getElementById('custom-pages'); cust.innerHTML='';
-                pSnap.forEach(doc=>{
-                    const d=doc.data(); const cid=`p-${doc.id}`; const t=lang==='en'?d.title_en:(d.title_hi||d.title_en);
-                    dh+=`<li><a href="#${cid}">${t}</a></li>`; mh+=`<a href="#${cid}" class="d-link" onclick="toggleDrawer()">${t}</a>`;
-                    cust.innerHTML+=`<section id="${cid}" class="section-wrap"><div class="sec-head"><h2 class="sec-title">${t}</h2><div class="sec-line"></div></div><div class="royal-card">${d.image?`<img src="${resolveImg(d.image)}" class="royal-img">`:''}<div class="royal-txt">${lang==='en'?d.content_en:d.content_hi}</div></div></section>`;
+                // --- CUSTOM PAGES ---
+                const cust = document.getElementById('custom-pages'); 
+                cust.innerHTML='';
+                pSnap.forEach(doc => {
+                    const d = doc.data(); 
+                    const cid = `p-${doc.id}`; 
+                    const t = lang==='en' ? d.title_en : (d.title_hi||d.title_en);
+                    
+                    dh += `<li><a href="#${cid}" class="nav-link">${t}</a></li>`; 
+                    mh += `<a href="#${cid}" class="d-link" onclick="toggleDrawer()">${t} <span class="material-icons">article</span></a>`;
+                    
+                    cust.innerHTML += `<section id="${cid}" class="section-wrap">
+                        <div class="sec-head"><h2 class="sec-title">${t}</h2><div class="sec-line"></div></div>
+                        <div class="royal-card">
+                            ${d.image ? `<img src="${resolveImg(d.image)}" class="royal-img">` : ''}
+                            <div class="royal-txt">${lang==='en' ? d.content_en : d.content_hi}</div>
+                        </div>
+                    </section>`;
                 });
                 
-                dNav.innerHTML=dh; mNav.innerHTML=mh;
+                dNav.innerHTML = dh; 
+                mNav.innerHTML = mh;
 
-                // 3. Admission Banner Logic
-                const admOpen = config['admission']?.isOpen !== false; // Default true if undefined
-                const admBox = document.getElementById('adm-box');
-                if(admOpen) {
-                    admBox.innerHTML = `<div class="adm-banner"><span class="material-icons" style="font-size:36px; color:#fbf5b7; margin-bottom:10px;">school</span><h3 style="color:white; font-family:'Cinzel'; margin-bottom:5px;">Admissions Open</h3><p style="opacity:0.8; font-size:0.9rem; margin-bottom:20px;">Session 2026-27</p><button onclick="document.getElementById('contact').scrollIntoView()" style="background:var(--gold-gradient); color:var(--navy); padding:10px 25px; border-radius:50px; font-weight:700; border:none; cursor:pointer; font-family:'Cinzel';">Apply Now</button></div>`;
-                } else {
-                    admBox.innerHTML = `<div class="adm-banner closed"><h3 style="color:#64748b; font-family:'Cinzel';">Admissions Closed</h3><p>Please check back later.</p></div>`;
+                // --- NOTICES ---
+                let nh = ''; 
+                notices = [];
+                if(nSnap.empty) nh = '<div style="padding:20px; text-align:center; color:#94a3b8;">No Active Notices</div>';
+                
+                nSnap.forEach(doc => {
+                    const d = doc.data(); 
+                    const title = lang==='en' ? (d.title_en||d.title) : (d.title_hi||d.title);
+                    notices.push({...d, title}); // Store for modal
+                    
+                    nh += `<div class="n-item" onclick="openNotice(${notices.length-1})">
+                        <span class="n-date"><span class="material-icons" style="font-size:12px;">event</span> ${d.date}</span>
+                        <div class="n-title">${title}</div>
+                        ${d.priority === 'high' ? '<span class="n-badge">IMPORTANT</span>' : ''}
+                    </div>`;
+                });
+                document.getElementById('notice-list-desk').innerHTML = nh;
+
+                // --- AUTO POPUP LOGIC ---
+                // Wait 2 seconds after load, then show notices popup automatically
+                if(notices.length > 0) {
+                   setTimeout(() => {
+                       openAllNotices();
+                   }, 2000); 
                 }
 
-                // 4. Render Notices (Already fetched in Promise.all)
-                let nh=''; notices=[];
-                if(nSnap.empty) nh='<div style="padding:20px; text-align:center;">No Notices</div>';
-                nSnap.forEach(doc => {
-                    const d=doc.data(); const title=lang==='en'?(d.title_en||d.title):(d.title_hi||d.title);
-                    notices.push({...d, title});
-                    nh+=`<div class="n-item" onclick="openNotice(${notices.length-1})"><span class="n-date">${d.date}</span><div class="n-title">${title}</div></div>`;
-                });
-                document.getElementById('notice-list-desk').innerHTML=nh;
+            } catch(e) { console.error("Loading Error:", e); }
 
-            } catch(e) { console.error(e); }
-
-            // HIDE PRELOADER SMOOTHLY
+            // HIDE PRELOADER
             setTimeout(() => {
                 const pre = document.getElementById('preloader');
                 pre.style.opacity = '0';
-                setTimeout(()=>pre.style.display='none', 500);
-            }, 800); // Small buffer for visual smoothness
+                setTimeout(() => pre.style.display='none', 600);
+            }, 1000);
         }
 
-        // --- DYNAMIC SECTIONS ---
-        function loadGallery() {
-            db.collection('gallery').orderBy('timestamp','desc').limit(12).get().then(s => {
-                let h=''; s.forEach(d=>{ 
-                    const u=resolveImg(d.data().image); const t=(lang==='en'?d.data().title:d.data().title_hi)||''; 
-                    h+=`<div class="premium-item" onclick="viewImage('${u}')"><div class="premium-img-box"><img src="${u}"></div>${t?`<div class="premium-caption"><div class="pc-title">${t}</div></div>`:''}</div>`; 
-                });
-                document.getElementById('gal-grid').innerHTML=h||'No images found.';
+        // --- 5. CONTACT FORM LOGIC (WEB3FORMS) ---
+        function submitContact(e) {
+            e.preventDefault();
+            const form = document.getElementById('contact-form');
+            const btn = document.getElementById('c-btn-txt');
+            const originalHTML = btn.innerHTML;
+            
+            // Loading State
+            btn.innerHTML = `<span>SENDING...</span> <span class="material-icons" style="animation:spin 1s linear infinite;">refresh</span>`;
+            btn.disabled = true;
+            btn.style.opacity = '0.7';
+
+            const formData = new FormData(form);
+            const object = Object.fromEntries(formData);
+            const json = JSON.stringify(object);
+
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: json
+            })
+            .then(async (response) => {
+                if (response.status == 200) {
+                    // Success UI
+                    form.style.display = 'none';
+                    document.getElementById('c-success').style.display = 'block';
+                } else {
+                    alert("Submission failed. Please check your internet connection.");
+                }
+            })
+            .catch(error => { console.log(error); alert("Error sending message."); })
+            .finally(() => { 
+                btn.innerHTML = originalHTML; 
+                btn.disabled = false; 
+                btn.style.opacity = '1';
             });
+        }
+
+        // --- 6. DYNAMIC CONTENT LOADERS ---
+        function loadGallery() { 
+            db.collection('gallery').orderBy('timestamp','desc').limit(16).get().then(s => { 
+                let h=''; 
+                s.forEach(d => { 
+                    const u = resolveImg(d.data().image); 
+                    const t = (lang==='en' ? d.data().title : d.data().title_hi) || ''; 
+                    h += `<div class="premium-item" onclick="viewImage('${u}')">
+                        <div class="premium-img-box"><img src="${u}"></div>
+                        ${t ? `<div class="premium-caption"><div class="pc-title">${t}</div></div>` : ''}
+                    </div>`; 
+                }); 
+                document.getElementById('gal-grid').innerHTML = h || '<p style="text-align:center; width:100%;">Gallery Updating...</p>'; 
+            }); 
         }
         
-        function loadAchievements() {
-            db.collection('achievements').orderBy('timestamp','desc').limit(8).get().then(s => {
-                let h=''; s.forEach(d=>{ 
-                    const u=resolveImg(d.data().image); const t=(lang==='en'?d.data().title:d.data().title_hi)||'Achievement'; 
-                    h+=`<div class="premium-item" onclick="viewImage('${u}')"><div class="premium-img-box"><img src="${u}"></div><div class="premium-caption"><div class="pc-title">${t}</div></div></div>`; 
-                });
-                document.getElementById('ach-grid').innerHTML=h||'No achievements yet.';
-            });
+        function loadAchievements() { 
+            db.collection('achievements').orderBy('timestamp','desc').limit(8).get().then(s => { 
+                let h=''; 
+                s.forEach(d => { 
+                    const u = resolveImg(d.data().image); 
+                    const t = (lang==='en' ? d.data().title : d.data().title_hi) || 'Achievement'; 
+                    h += `<div class="premium-item" onclick="viewImage('${u}')">
+                        <div class="premium-img-box"><img src="${u}"></div>
+                        <div class="premium-caption">
+                            <div class="pc-title">${t}</div>
+                            <div style="font-size:0.7rem; color:var(--gold); text-transform:uppercase; margin-top:5px; font-weight:700;">Proud Moment</div>
+                        </div>
+                    </div>`; 
+                }); 
+                document.getElementById('ach-grid').innerHTML = h || '<p style="text-align:center; width:100%;">No records found.</p>'; 
+            }); 
         }
 
-        function openNotice(i){
-            const d=notices[i]; document.getElementById('m-date').innerText=d.date; document.getElementById('m-title').innerText=d.title;
-            document.getElementById('m-desc').innerText=(lang==='en'?d.desc:d.desc_hi)||d.desc||'';
-            document.getElementById('m-link').innerHTML=d.link?`<a href="${d.link}" target="_blank" style="display:inline-block; padding:10px 20px; background:var(--navy); color:white; border-radius:50px; text-decoration:none; margin-top:10px;">View Document</a>`:'';
-            document.getElementById('all-notices-modal').style.display='none'; document.getElementById('notice-modal').style.display='flex';
+        // --- 7. MODAL ACTIONS ---
+        function openNotice(i){ 
+            const d = notices[i]; 
+            document.getElementById('m-date').innerText = d.date; 
+            document.getElementById('m-title').innerText = d.title; 
+            document.getElementById('m-desc').innerText = (lang==='en' ? d.desc : d.desc_hi) || d.desc || ''; 
+            
+            const linkHtml = d.link ? `<a href="${d.link}" target="_blank" style="display:inline-flex; align-items:center; gap:8px; padding:10px 25px; background:var(--navy); color:white; border-radius:50px; text-decoration:none; font-weight:600; font-size:0.9rem; transition:0.3s;">
+                <span class="material-icons">description</span> Download Attachment
+            </a>` : '';
+            
+            document.getElementById('m-link').innerHTML = linkHtml; 
+            
+            document.getElementById('all-notices-modal').style.display = 'none'; 
+            document.getElementById('notice-modal').style.display = 'flex'; 
         }
 
         function viewImage(src){ 
-            document.getElementById('lb-img').src=src; 
-            document.getElementById('lightbox').style.display='flex'; 
+            document.getElementById('lb-img').src = src; 
+            document.getElementById('lightbox').style.display = 'flex'; 
         }
 
-        // START
+        // Start App
         window.onload = initLoad;
+
+        // --- 8. HIGH SECURITY MODULE (ANTI-INSPECT) ---
+        // Warning: This will freeze the browser if DevTools is opened
+        setInterval(function() {
+            var before = new Date().getTime();
+            debugger; // THE TRAP
+            var after = new Date().getTime();
+            if (after - before > 100) {
+                // If execution paused significantly, user is likely inspecting.
+                // We can reload to annoy them or just let the loop run.
+                window.location.href = "about:blank"; // Redirects inspector to blank page
+            }
+        }, 500);
+
     </script>
 </body>
 </html>
