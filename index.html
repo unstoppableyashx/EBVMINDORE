@@ -2,15 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#0a192f">
-    <meta name="description" content="Bal Vinay Mandir - A legacy of excellence in education. Providing holistic development since 1980.">
-    <meta name="keywords" content="School, Education, Indore, CBSE, Bal Vinay Mandir, Best School, MPBSE">
-    <meta name="author" content="Bal Vinay Mandir IT Team">
     
-    <title>School of Excellence | Bal Vinay Mandir</title>
+    <meta name="description" content="School Of Excellence Bal Vinay Mandir Indore - Providing world-class education with a legacy of excellence since 1980. Affiliated with MPBSE.">
+    <meta name="keywords" content="School, Indore, Best School, Bal Vinay Mandir, Education, CBSE, MPBSE, Results, Toppers">
+    <meta name="author" content="Bal Vinay Mandir IT Cell">
+    <meta name="theme-color" content="#0a192f">
+    
+    <title>School Of Excellence | Bal Vinay Mandir Indore</title>
     
     <link rel="icon" type="image/jpeg" href="./assets/images/logo.jpeg">
+    <link rel="apple-touch-icon" href="./assets/images/logo.jpeg">
     
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -18,1055 +21,2048 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
     
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <style>
-        /* -----------------------------------------------------------
-           1. ROOT VARIABLES (THEME CONFIGURATION)
-        ----------------------------------------------------------- */
+        /* ---------------------------------------------------------------------
+           1. CSS VARIABLES & THEMING
+           ---------------------------------------------------------------------
+        */
         :root {
-            /* --- PRIMARY PALETTE (ROYAL NAVY) --- */
-            --navy-dark: #020c1b;
-            --navy: #0a192f;
-            --navy-light: #112240;
-            --navy-lighter: #233554;
+            /* BRAND COLORS - ROYAL NAVY */
+            --navy-darkest: #020c1b;
+            --navy-dark: #0a192f;
+            --navy-medium: #112240;
+            --navy-light: #233554;
             
-            /* --- ACCENT PALETTE (GOLD) --- */
-            --gold: #d4af37;
-            --gold-dim: #c5a028;
-            --gold-light: #fbf5b7;
-            --gold-gradient: linear-gradient(135deg, #bf953f 0%, #fcf6ba 40%, #b38728 60%, #fbf5b7 100%);
+            /* BRAND COLORS - LUXURY GOLD */
+            --gold-primary: #d4af37;
+            --gold-secondary: #c5a028;
+            --gold-highlight: #fbf5b7;
+            --gold-gradient: linear-gradient(
+                135deg, 
+                #bf953f 0%, 
+                #fcf6ba 25%, 
+                #b38728 50%, 
+                #fbf5b7 75%, 
+                #aa771c 100%
+            );
             --gold-text: #eebb4d;
             
-            /* --- NEUTRALS --- */
-            --text-dark: #1e293b;
-            --text-muted: #64748b;
-            --text-light: #8892b0;
+            /* TEXT COLORS */
+            --text-main: #1e293b;
+            --text-secondary: #64748b;
+            --text-light: #94a3b8;
             --text-white: #e6f1ff;
+            
+            /* BACKGROUNDS */
             --bg-body: #f8fafc;
-            --white: #ffffff;
+            --bg-card: #ffffff;
+            --bg-glass: rgba(255, 255, 255, 0.95);
             
-            /* --- GLASSMORPHISM --- */
-            --glass: rgba(255, 255, 255, 0.95);
-            --glass-dark: rgba(10, 25, 47, 0.95);
+            /* SHADOWS & ELEVATION */
+            --shadow-sm: 0 2px 5px rgba(0,0,0,0.05);
+            --shadow-md: 0 10px 30px -10px rgba(2, 12, 27, 0.15);
+            --shadow-lg: 0 20px 40px -15px rgba(2, 12, 27, 0.25);
+            --shadow-gold: 0 10px 30px -10px rgba(212, 175, 55, 0.3);
             
-            /* --- SHADOWS --- */
-            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
-            --shadow-card: 0 10px 30px -15px rgba(2, 12, 27, 0.2);
-            --shadow-hover: 0 20px 40px -15px rgba(2, 12, 27, 0.3);
+            /* BORDERS */
+            --border-subtle: 1px solid #e2e8f0;
+            --border-gold: 1px solid rgba(212, 175, 55, 0.25);
             
-            /* --- BORDERS & SPACING --- */
-            --border-gold: 1px solid rgba(212, 175, 55, 0.3);
-            --border-light: 1px solid #e2e8f0;
+            /* SIZES & SPACING */
             --header-height: 90px;
-            --container-width: 1350px;
+            --container-max: 1440px;
+            --radius-sm: 4px;
             --radius-md: 8px;
-            --radius-lg: 12px;
+            --radius-lg: 16px;
+            --radius-full: 999px;
+            
+            /* ANIMATION TIMINGS */
+            --ease-out-back: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* -----------------------------------------------------------
-           2. GLOBAL RESET & BASE STYLES
-        ----------------------------------------------------------- */
-        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
-        
-        html { scroll-behavior: smooth; font-size: 16px; }
-        
-        body { 
-            background: var(--bg-body); 
-            color: var(--text-dark); 
-            font-family: 'Lato', sans-serif; 
-            overflow-x: hidden; 
+        /* ---------------------------------------------------------------------
+           2. RESET & BASE CONFIGURATION
+           ---------------------------------------------------------------------
+        */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: 'Lato', sans-serif;
+            font-weight: 400;
             line-height: 1.6;
-            -webkit-user-select: none; /* Security */
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Typography Override */
-        h1, h2, h3, h4, h5, h6 { font-family: 'Playfair Display', serif; color: var(--navy); font-weight: 700; line-height: 1.2; }
-        p { margin-bottom: 15px; }
-        img { display: block; width: 100%; height: auto; pointer-events: none; }
-        a { text-decoration: none; color: inherit; transition: 0.3s; }
-        ul { list-style: none; }
-        button { font-family: 'Cinzel', serif; }
+        /* Typography Defaults */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            color: var(--navy-dark);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        img {
+            display: block;
+            width: 100%;
+            height: auto;
+            pointer-events: none; /* Security: Disable drag */
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        button {
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-family: 'Cinzel', serif;
+        }
 
         /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 10px; }
-        ::-webkit-scrollbar-track { background: var(--bg-body); }
-        ::-webkit-scrollbar-thumb { background: var(--navy-light); border-radius: 5px; border: 1px solid var(--gold); }
-        ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
-
-        /* -----------------------------------------------------------
-           3. PRELOADER ANIMATION
-        ----------------------------------------------------------- */
-        #preloader {
-            position: fixed; inset: 0; z-index: 9999;
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-body);
+        }
+        ::-webkit-scrollbar-thumb {
             background: var(--navy-dark);
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: opacity 0.8s ease, visibility 0.8s;
+            border-radius: 10px;
+            border: 2px solid var(--gold-primary);
         }
-        
-        .loader-wrap { position: relative; width: 120px; height: 120px; display: flex; align-items: center; justify-content: center; }
-        
-        .loader-logo {
-            width: 100px; height: 100px; border-radius: 50%; 
-            border: 3px solid var(--gold); object-fit: cover;
-            animation: pulse 2s infinite; z-index: 2;
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gold-primary);
         }
-        
+
+        /* ---------------------------------------------------------------------
+           3. PRELOADER & ANIMATIONS
+           ---------------------------------------------------------------------
+        */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--navy-darkest);
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .loader-wrapper {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
         .loader-ring {
-            position: absolute; width: 100%; height: 100%; border-radius: 50%;
-            border: 2px solid transparent; border-top-color: var(--gold); border-bottom-color: var(--gold);
-            animation: spin 1.5s linear infinite; z-index: 1;
+            position: absolute;
+            border-radius: 50%;
+            border: 3px solid transparent;
+        }
+
+        .loader-ring:nth-child(1) {
+            width: 100%;
+            height: 100%;
+            border-top-color: var(--gold-primary);
+            border-bottom-color: var(--gold-primary);
+            animation: spin 2.5s linear infinite;
+        }
+
+        .loader-ring:nth-child(2) {
+            width: 75%;
+            height: 75%;
+            border-left-color: var(--gold-highlight);
+            border-right-color: var(--gold-highlight);
+            animation: spin 3s reverse linear infinite;
+        }
+
+        .loader-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--bg-card);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+            animation: pulse 2s infinite ease-in-out;
         }
 
         .loader-text {
-            margin-top: 30px; color: var(--gold-text); 
-            font-family: 'Cinzel', serif; letter-spacing: 5px; font-weight: 700; font-size: 1.4rem;
-            animation: fadeInUp 0.8s ease; text-transform: uppercase;
+            margin-top: 40px;
+            color: var(--gold-text);
+            font-family: 'Cinzel', serif;
+            font-size: 1.25rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-align: center;
+            line-height: 1.6;
+            animation: fadeInUp 1s ease 0.5s backwards;
         }
 
-        @keyframes pulse { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); } 70% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(212, 175, 55, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); } }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes pulse { 0% { transform: scale(0.95); opacity: 0.8; } 50% { transform: scale(1.05); opacity: 1; } 100% { transform: scale(0.95); opacity: 0.8; } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* -----------------------------------------------------------
+        /* ---------------------------------------------------------------------
            4. HEADER & NAVIGATION
-        ----------------------------------------------------------- */
+           ---------------------------------------------------------------------
+        */
         header {
-            background: var(--glass); 
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(212, 175, 55, 0.15);
-            position: sticky; top: 0; z-index: 1000;
-            box-shadow: 0 4px 30px rgba(0,0,0,0.03);
-            transition: 0.3s;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            height: var(--header-height);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
         }
 
         .nav-container {
-            max-width: var(--container-width); margin: 0 auto; padding: 0 25px; height: var(--header-height);
-            display: flex; justify-content: space-between; align-items: center;
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 30px;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        /* LOGO & BRANDING */
-        .brand { display: flex; align-items: center; gap: 18px; }
-        
-        .brand-logo-box { 
-            width: 65px; height: 65px; /* INCREASED SIZE */
-            padding: 3px; border-radius: 50%; 
-            background: var(--gold-gradient); 
-            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
-            transition: 0.3s;
-        }
-        .brand-logo-box:hover { transform: rotate(10deg); }
-        .brand-logo { width: 100%; height: 100%; border-radius: 50%; border: 2px solid var(--white); object-fit: cover; }
-        
-        .brand-text h1 { 
-            font-size: 1.8rem; /* BIGGER FONT */
-            font-weight: 800; line-height: 1; color: var(--navy); 
-            letter-spacing: -0.5px; 
-            text-shadow: 1px 1px 0px rgba(212,175,55,0.2); /* Contrast Boost */
-        }
-        .brand-text p { 
-            font-size: 0.75rem; color: #b38728; font-weight: 700; 
-            text-transform: uppercase; letter-spacing: 2.5px; 
-            margin-top: 5px; font-family: 'Cinzel', serif; 
+        .brand-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
         }
 
-        /* DESKTOP MENU */
-        .desk-menu { display: flex; gap: 30px; align-items: center; }
-        .nav-link { 
-            font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--navy);
-            position: relative; padding: 8px 0; font-family: 'Lato', sans-serif; cursor: pointer;
-        }
-        .nav-link::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 3px; background: var(--gold-gradient); transition: width 0.3s ease; border-radius: 2px; }
-        .nav-link:hover::after { width: 100%; }
-        .nav-link.active { color: #b38728; }
-        .nav-link.active::after { width: 100%; }
-
-        .btn-lang {
-            padding: 10px 20px; border: 1px solid #b38728; border-radius: 4px;
-            background: transparent; color: #b38728; font-weight: 700; font-size: 0.8rem; 
-            cursor: pointer; font-family: 'Cinzel', serif; transition: 0.3s; letter-spacing: 1px;
-        }
-        .btn-lang:hover { background: var(--gold-gradient); color: var(--navy); border-color: transparent; box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3); transform: translateY(-2px); }
-        
-        .menu-toggle { display: none; font-size: 34px; color: var(--navy); cursor: pointer; }
-
-        /* -----------------------------------------------------------
-           5. HERO SECTION
-        ----------------------------------------------------------- */
-        .hero { 
-            height: 85vh; min-height: 600px; position: relative; display: flex; 
-            align-items: center; justify-content: center; text-align: center; overflow: hidden;
-        }
-        .hero-bg {
-            position: absolute; inset: 0; z-index: 1;
-            background: linear-gradient(to bottom, rgba(10, 25, 47, 0.80), rgba(10, 25, 47, 0.4)), url('./assets/images/school.jpg') center/cover fixed;
-        }
-        .hero-content { position: relative; z-index: 2; max-width: 1000px; padding: 20px; animation: fadeInUp 1s ease 0.5s backwards; }
-        .hero-title { 
-            font-size: clamp(3rem, 7vw, 6rem); color: var(--white); line-height: 1.1; margin-bottom: 30px; 
-            text-shadow: 0 10px 50px rgba(0,0,0,0.7); font-family: 'Cinzel', serif; letter-spacing: -1px;
-        }
-        .hero-badge {
-            display: inline-flex; align-items: center; gap: 10px;
-            padding: 15px 40px; background: rgba(255,255,255,0.08); 
-            backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);
-            color: var(--gold-text); text-transform: uppercase; letter-spacing: 3px; font-weight: 700; 
-            font-size: 0.9rem; border-radius: 50px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            transition: 0.3s;
-        }
-        .hero-badge:hover { background: rgba(255,255,255,0.15); transform: translateY(-3px); }
-
-        /* -----------------------------------------------------------
-           6. VIRTUAL TOUR SECTION (Positioned at Bottom)
-        ----------------------------------------------------------- */
-        #video-tour-section {
-            display: none; /* Controlled by JS */
-            background: var(--navy-dark); padding: 90px 20px;
-            color: white; text-align: center;
-            border-top: 4px solid var(--gold); border-bottom: 4px solid var(--gold);
-            position: relative; overflow: hidden; margin-bottom: 50px;
-        }
-        #video-tour-section::before {
-            content:''; position: absolute; inset: 0; 
-            background: radial-gradient(circle at center, rgba(212, 175, 55, 0.15), transparent 70%);
-            pointer-events: none;
-        }
-        .vt-container { max-width: 1100px; margin: 0 auto; position: relative; z-index: 2; }
-        .vt-title { font-family: 'Cinzel', serif; font-size: 2.8rem; color: var(--gold-text); margin-bottom: 15px; }
-        .vt-sub { color: #8892b0; margin-bottom: 50px; font-size: 1.2rem; }
-        
-        .video-wrapper {
-            position: relative; padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-            height: 0; overflow: hidden; border-radius: 16px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.6); border: 2px solid var(--gold);
-            background: #000;
-        }
-        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-
-        /* -----------------------------------------------------------
-           7. MAIN LAYOUT SYSTEM
-        ----------------------------------------------------------- */
-        .main-container { 
-            max-width: var(--container-width); margin: 0 auto; padding: 70px 20px; 
-            display: grid; grid-template-columns: 1fr 360px; gap: 70px; 
+        .brand-wrapper:hover {
+            transform: translateX(5px);
         }
 
-        /* VIEW CONTAINERS (SPA Logic) */
-        #view-home { display: block; animation: fadeIn 0.5s; }
-        #view-gallery { display: none; animation: fadeIn 0.5s; }
-        #view-achievements { display: none; animation: fadeIn 0.5s; }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        .section-wrap { margin-bottom: 100px; scroll-margin-top: 130px; animation: fadeInUp 0.5s ease-out; }
-
-        .sec-head { text-align: center; margin-bottom: 50px; position: relative; display: flex; align-items: center; justify-content: center; width: 100%; }
-        .sec-title { 
-            font-size: 2.5rem; color: var(--navy); font-family: 'Cinzel', serif; 
-            background: var(--bg-body); padding: 0 30px; position: relative; z-index: 2; 
+        .brand-logo-container {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            background: var(--gold-gradient);
+            padding: 3px;
+            box-shadow: var(--shadow-gold);
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        .sec-line { position: absolute; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: 0.6; z-index: 1; }
 
-        /* Royal Card */
-        .royal-card { 
-            background: var(--white); padding: 45px; border-radius: var(--radius-lg); 
-            box-shadow: var(--shadow-card); border: 1px solid rgba(212, 175, 55, 0.2);
-            display: flex; gap: 50px; align-items: flex-start; transition: 0.4s;
-        }
-        .royal-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); border-color: var(--gold); }
-        .royal-img { 
-            width: 45%; border-radius: var(--radius-md); 
-            box-shadow: 15px 15px 0 var(--bg-body), 15px 15px 0 1px var(--gold);
+        .brand-logo {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid white;
             object-fit: cover;
         }
-        .royal-txt { flex: 1; font-size: 1.15rem; line-height: 1.9; color: #475569; text-align: justify; }
 
-        /* Facilities Stats */
-        .stats-grid {
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
-            background: var(--navy); color: var(--white); padding: 60px; border-radius: var(--radius-lg);
-            position: relative; overflow: hidden; text-align: center;
-            box-shadow: var(--shadow-card);
+        .brand-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
-        .stats-grid::before { content:''; position:absolute; top:0; left:0; width:100%; height:6px; background: var(--gold-gradient); }
-        .sr-num { font-family: 'Cinzel', serif; font-size: 3.2rem; color: var(--gold-text); margin-bottom: 5px; font-weight: 700; }
-        .sr-lbl { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; opacity: 0.9; }
 
-        /* GRID SYSTEMS */
-        .grid-premium { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 30px; }
-        .premium-item { 
-            background: var(--white); border-radius: var(--radius-md); overflow: hidden; 
-            box-shadow: var(--shadow-card); border: 1px solid rgba(0,0,0,0.05); 
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer;
+        .brand-title {
+            font-size: 1.4rem;
+            line-height: 1.1;
+            color: var(--navy-dark);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
         }
-        .premium-item:hover { transform: translateY(-10px); border-color: var(--gold); box-shadow: var(--shadow-hover); }
-        
-        .premium-img-box { 
-            height: 260px; background: #0f172a; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;
-        }
-        .premium-img-box img { width: 100%; height: 100%; object-fit: contain; transition: 0.5s; }
-        .premium-item:hover .premium-img-box img { transform: scale(1.1); opacity: 0.9; }
-        
-        .premium-caption { padding: 20px; text-align: center; border-top: 1px solid #f1f5f9; background: var(--white); position: relative; z-index: 2; }
-        .pc-title { font-weight: 700; color: var(--navy); font-size: 1.1rem; font-family: 'Playfair Display', serif; }
 
-        /* -----------------------------------------------------------
-           8. SIDEBAR & WIDGETS
-        ----------------------------------------------------------- */
-        .sidebar { position: sticky; top: 120px; height: fit-content; }
+        .brand-subtitle {
+            font-size: 0.7rem;
+            color: #b38728;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 4px;
+            font-family: 'Cinzel', serif;
+        }
 
-        /* Notice Board */
-        .notice-board { 
-            background: var(--white); border: 1px solid #e2e8f0; border-radius: var(--radius-md); 
-            box-shadow: var(--shadow-card); overflow: hidden; margin-bottom: 50px; 
+        /* Desktop Menu */
+        .desktop-nav {
+            display: flex;
+            align-items: center;
+            gap: 35px;
         }
-        .nb-header { 
-            background: var(--navy); color: var(--white); padding: 20px 25px; 
-            font-family: 'Cinzel', serif; font-size: 1.2rem; border-bottom: 3px solid var(--gold);
-            display: flex; align-items: center; gap: 12px;
-        }
-        .nb-content { max-height: 500px; overflow-y: auto; background: #fff; }
-        .n-item { 
-            padding: 20px 25px; border-bottom: 1px solid #f1f5f9; cursor: pointer; transition: 0.2s; 
-            border-left: 4px solid transparent; display: flex; flex-direction: column; gap: 6px;
-        }
-        .n-item:hover { background: #fffbeb; border-left-color: var(--gold); padding-left: 30px; }
-        .n-date { font-size: 0.75rem; color: #b38728; font-weight: 800; text-transform: uppercase; display: flex; align-items: center; gap: 5px; }
-        .n-title { font-size: 1rem; color: var(--text-dark); line-height: 1.4; font-weight: 600; }
-        .n-badge { background: #ef4444; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.65rem; margin-left: auto; letter-spacing: 0.5px; font-weight: 700; }
 
-        /* Contact Form */
-        .contact-box { 
-            background: var(--white); padding: 40px; border-radius: var(--radius-md); 
-            border: 1px solid #e2e8f0; border-top: 5px solid var(--navy);
-            box-shadow: var(--shadow-card); 
+        .nav-link {
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--navy-dark);
+            position: relative;
+            padding: 10px 0;
+            cursor: pointer;
+            transition: color 0.3s ease;
         }
-        .c-head { 
-            display: flex; align-items: center; gap: 12px; margin-bottom: 30px; 
-            color: var(--navy); font-family: 'Cinzel', serif; font-weight: 700; font-size: 1.3rem; 
-            padding-bottom: 15px; border-bottom: 1px solid #f1f5f9;
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold-gradient);
+            transition: width 0.3s ease;
         }
-        .c-group { margin-bottom: 25px; position: relative; }
-        .c-icon { position: absolute; left: 0; top: 12px; color: #cbd5e1; font-size: 22px; transition: 0.3s; }
-        .c-field { 
-            width: 100%; padding: 12px 0 12px 35px; border: none; border-bottom: 1px solid #cbd5e1; 
-            font-size: 1rem; transition: 0.3s; background: transparent; color: var(--text-dark); font-family: 'Lato', sans-serif;
+
+        .nav-link:hover {
+            color: var(--gold-secondary);
         }
-        .c-field:focus { border-bottom-color: var(--gold); outline: none; }
-        .c-field:focus + .c-icon { color: var(--gold); }
-        .c-btn { 
-            width: 100%; padding: 16px; background: var(--navy); color: var(--white); 
-            border: none; border-radius: 4px; font-weight: 700; cursor: pointer; 
-            font-family: 'Cinzel', serif; transition: 0.3s; margin-top: 15px; letter-spacing: 1px;
-            display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1rem;
+
+        .nav-link:hover::after {
+            width: 100%;
         }
-        .c-btn:hover { background: var(--gold); color: var(--navy); box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4); }
-        .success-overlay { display: none; text-align: center; padding: 50px 10px; animation: fadeInUp 0.5s; }
+
+        .btn-language {
+            padding: 10px 22px;
+            border: 1px solid var(--gold-primary);
+            border-radius: 4px;
+            background: transparent;
+            color: var(--navy-dark);
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: 10px;
+        }
+
+        .btn-language:hover {
+            background: var(--gold-gradient);
+            color: var(--navy-dark);
+            border-color: transparent;
+            box-shadow: var(--shadow-gold);
+            transform: translateY(-2px);
+        }
+
+        .menu-toggle-btn {
+            display: none;
+            font-size: 32px;
+            color: var(--navy-dark);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .menu-toggle-btn:active {
+            transform: scale(0.9);
+        }
+
+        /* ---------------------------------------------------------------------
+           5. HERO SECTION
+           ---------------------------------------------------------------------
+        */
+        .hero-section {
+            position: relative;
+            height: 90vh;
+            min-height: 650px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            background-color: var(--navy-dark);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(10, 25, 47, 0.85),
+                rgba(10, 25, 47, 0.5)
+            ), url('./assets/images/school.jpg') center/cover no-repeat;
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 30px;
+            max-width: 1100px;
+            animation: floatUp 1.2s var(--ease-out-back);
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 5.5rem);
+            color: var(--text-white);
+            line-height: 1.1;
+            margin-bottom: 25px;
+            font-family: 'Cinzel', serif;
+            text-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            color: var(--gold-text);
+            margin-bottom: 40px;
+            font-weight: 400;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 35px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            color: var(--text-white);
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: var(--shadow-md);
+            transition: 0.3s;
+        }
+
+        .hero-badge:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+        }
+
+        @keyframes floatUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ---------------------------------------------------------------------
+           6. MAIN CONTENT GRID SYSTEM
+           ---------------------------------------------------------------------
+        */
+        .app-container {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 80px 25px;
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 60px;
+            position: relative;
+        }
+
+        /* Section Reveal Animation */
+        .reveal-section {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s var(--ease-out-back);
+        }
+
+        .reveal-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .section-title {
+            font-size: 2.4rem;
+            font-family: 'Cinzel', serif;
+            color: var(--navy-dark);
+            background: var(--bg-body);
+            padding: 0 25px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+            opacity: 0.5;
+            z-index: 1;
+        }
+
+        /* ---------------------------------------------------------------------
+           7. CARDS & CONTENT MODULES
+           ---------------------------------------------------------------------
+        */
+        .content-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 50px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            display: flex;
+            gap: 50px;
+            margin-bottom: 80px;
+            transition: all 0.4s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--gold-primary);
+        }
+
+        .card-image-wrapper {
+            width: 45%;
+            flex-shrink: 0;
+            border-radius: var(--radius-md);
+            position: relative;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: var(--radius-md);
+            box-shadow: 15px 15px 0 var(--gold-highlight);
+        }
+
+        .card-text-wrapper {
+            flex: 1;
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            text-align: justify;
+        }
+
+        /* Facilities Grid */
+        .facilities-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            background: var(--navy-dark);
+            padding: 60px 40px;
+            border-radius: var(--radius-lg);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .facilities-grid::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: var(--gold-gradient);
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .stat-number {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            color: var(--gold-text);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        /* Premium Grid (Gallery/Achievements) */
+        .premium-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 30px;
+        }
+
+        .grid-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-subtle);
+            cursor: pointer;
+            transition: all 0.4s var(--ease-smooth);
+        }
+
+        .grid-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--gold-primary);
+        }
+
+        .grid-image-box {
+            height: 240px;
+            background: var(--navy-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .grid-image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.5s ease;
+        }
+
+        .grid-card:hover .grid-image-box img {
+            transform: scale(1.1);
+        }
+
+        .grid-caption {
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid var(--bg-body);
+        }
+
+        .grid-title {
+            font-weight: 700;
+            color: var(--navy-dark);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+        }
+
+        .grid-subtitle {
+            font-size: 0.75rem;
+            color: var(--gold-secondary);
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-top: 5px;
+            letter-spacing: 1px;
+        }
+
+        /* ---------------------------------------------------------------------
+           8. SIDEBAR WIDGETS
+           ---------------------------------------------------------------------
+        */
+        .sidebar-wrapper {
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+        }
+
+        .widget-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-subtle);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+
+        .widget-header {
+            background: var(--navy-dark);
+            color: white;
+            padding: 20px 25px;
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            border-bottom: 4px solid var(--gold-primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Notices List */
+        .notices-list {
+            max-height: 500px;
+            overflow-y: auto;
+            background: #fff;
+        }
+
+        .notice-item {
+            padding: 20px 25px;
+            border-bottom: 1px solid var(--bg-body);
+            cursor: pointer;
+            transition: 0.2s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .notice-item:hover {
+            background: var(--gold-highlight);
+            border-left-color: var(--gold-primary);
+            padding-left: 30px;
+        }
+
+        .notice-date {
+            font-size: 0.75rem;
+            color: var(--gold-secondary);
+            font-weight: 800;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 6px;
+        }
+
+        .notice-text {
+            font-size: 1rem;
+            color: var(--text-main);
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .notice-badge {
+            display: inline-block;
+            background: #ef4444;
+            color: white;
+            font-size: 0.65rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-left: auto;
+            font-weight: 700;
+        }
+
+        /* Contact Widget */
+        .contact-widget {
+            padding: 30px;
+            border-top: 5px solid var(--navy-dark);
+        }
+
+        .form-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            font-family: 'Cinzel', serif;
+            color: var(--navy-dark);
+            font-size: 1.2rem;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 14px 14px 40px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-family: 'Lato', sans-serif;
+            transition: 0.3s;
+        }
+
+        .form-input:focus {
+            border-color: var(--gold-primary);
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 20px;
+            transition: 0.3s;
+        }
+
+        .form-input:focus + .input-icon {
+            color: var(--gold-primary);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            background: var(--navy-dark);
+            color: white;
+            font-weight: 700;
+            border-radius: 6px;
+            letter-spacing: 1px;
+            font-size: 0.95rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
+            background: var(--gold-primary);
+            color: var(--navy-dark);
+            box-shadow: var(--shadow-gold);
+        }
 
         /* Map Widget */
-        .map-container {
-            width: 100%; height: 280px; border-radius: var(--radius-md); overflow: hidden;
-            border: 2px solid var(--gold); box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            margin-top: 40px;
-        }
-        .map-container iframe { width: 100%; height: 100%; border: 0; filter: grayscale(20%) contrast(1.1); transition: 0.3s; }
-        .map-container iframe:hover { filter: grayscale(0%); }
-
-        /* -----------------------------------------------------------
-           9. FOOTER
-        ----------------------------------------------------------- */
-        footer { 
-            background: var(--navy-dark); color: #94a3b8; padding: 90px 20px 30px; 
-            margin-top: 100px; border-top: 6px solid var(--gold); text-align: center; 
-        }
-        .ft-grid { 
-            max-width: 1200px; margin: 0 auto; display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 50px; text-align: left; 
-        }
-        .ft-col h4 { color: #fbf5b7; font-family: 'Cinzel', serif; margin-bottom: 30px; font-size: 1.3rem; letter-spacing: 1px; }
-        .ft-col p, .ft-col a { display: block; margin-bottom: 15px; font-size: 1rem; color: #cbd5e1; transition: 0.2s; }
-        .ft-col a:hover { color: var(--gold); transform: translateX(5px); }
-        .ft-icon { vertical-align: middle; margin-right: 10px; font-size: 20px; color: var(--gold); }
-        .ft-bottom { margin-top: 80px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.9rem; opacity: 0.6; }
-
-        /* -----------------------------------------------------------
-           10. MOBILE MENU
-        ----------------------------------------------------------- */
-        .drawer-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 2999; display: none; backdrop-filter: blur(4px); }
-        .drawer { 
-            position: fixed; top: 0; right: -320px; width: 300px; height: 100vh; 
-            background: var(--navy-dark); z-index: 3000; padding: 35px; 
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
-            box-shadow: -5px 0 30px rgba(0,0,0,0.6); border-left: 2px solid var(--gold); 
-        }
-        .drawer.active { right: 0; }
-        .d-link { 
-            display: flex; align-items: center; justify-content: space-between;
-            color: rgba(255,255,255,0.9); text-decoration: none; 
-            font-size: 1.2rem; padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.08); 
-            font-family: 'Cinzel', serif; transition: 0.2s; cursor: pointer;
-        }
-        .d-link:active { color: var(--gold); padding-left: 10px; }
-
-        .fab {
-            display: none; position: fixed; bottom: 30px; right: 25px; z-index: 2000;
-            background: var(--gold-gradient); color: var(--navy);
-            padding: 15px 25px; border-radius: 50px; font-weight: 700; font-family: 'Cinzel', serif;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5); border: 2px solid var(--white); cursor: pointer;
-            align-items: center; gap: 10px; font-size: 0.95rem; animation: float 3s ease-in-out infinite;
+        .map-wrapper {
+            height: 280px;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 2px solid var(--gold-primary);
+            box-shadow: var(--shadow-md);
         }
 
-        /* -----------------------------------------------------------
-           11. MODALS & LIGHTBOX (WITH ZOOM)
-        ----------------------------------------------------------- */
-        .modal-bg { 
-            display: none; position: fixed; inset: 0; background: rgba(2, 12, 27, 0.95); 
-            z-index: 4000; justify-content: center; align-items: center; padding: 20px; 
-            backdrop-filter: blur(8px); 
-        }
-        .modal-content { 
-            background: var(--white); width: 100%; max-width: 650px; border-radius: var(--radius-lg); 
-            padding: 40px; position: relative; max-height: 85vh; overflow-y: auto; 
-            border: 1px solid var(--gold); box-shadow: 0 30px 60px -10px rgba(0, 0, 0, 0.7);
-            animation: fadeInUp 0.3s ease;
-        }
-        .close-modal { position: absolute; top: 25px; right: 25px; cursor: pointer; color: #94a3b8; transition: 0.2s; font-size: 30px; }
-        .close-modal:hover { color: #ef4444; transform: rotate(90deg); }
-
-        /* LIGHTBOX & ZOOM CONTROLS */
-        #lightbox { 
-            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); 
-            z-index: 5000; justify-content: center; align-items: center; padding: 0; 
-            overflow: hidden; /* For Zoom Panning */
+        .map-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            filter: grayscale(10%) contrast(1.1);
+            transition: 0.3s;
         }
         
-        #lb-container {
-            width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
-            overflow: auto; /* Enable scrolling when zoomed */
+        .map-wrapper iframe:hover { filter: grayscale(0%); }
+
+        /* ---------------------------------------------------------------------
+           9. VIRTUAL TOUR (BOTTOM SECTION)
+           ---------------------------------------------------------------------
+        */
+        .tour-section {
+            background: var(--navy-dark);
+            padding: 100px 20px;
+            text-align: center;
+            color: white;
+            border-top: 4px solid var(--gold-primary);
+            border-bottom: 4px solid var(--gold-primary);
+            margin-bottom: 60px;
+            position: relative;
+            display: none; /* Controlled by JS */
         }
 
-        #lb-img { 
-            max-width: 90vw; max-height: 85vh; width: auto; height: auto; 
-            object-fit: contain; box-shadow: 0 0 50px rgba(0,0,0,0.8); border: 2px solid var(--gold); 
-            transition: transform 0.2s ease; cursor: grab;
+        .tour-bg-effect {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(212, 175, 55, 0.1), transparent 70%);
+            pointer-events: none;
         }
 
-        .lb-controls {
-            position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
-            display: flex; gap: 20px; z-index: 5002;
+        .tour-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
         }
-        
-        .lb-btn {
-            background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.3); color: white;
-            width: 50px; height: 50px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 24px; cursor: pointer; transition: 0.3s;
-        }
-        .lb-btn:hover { background: var(--gold); color: var(--navy); transform: scale(1.1); }
-        
-        .close-lb { 
-            position: absolute; top: 30px; right: 30px; color: white; font-size: 40px; 
-            cursor: pointer; background: rgba(255,255,255,0.1); border-radius: 50%; 
-            padding: 10px; transition: 0.2s; z-index: 5002;
-        }
-        .close-lb:hover { background: rgba(255,255,255,0.3); transform: scale(1.1); }
 
-        /* Animations */
+        .tour-title {
+            font-size: 2.8rem;
+            color: var(--gold-text);
+            margin-bottom: 15px;
+            font-family: 'Cinzel', serif;
+        }
+
+        .tour-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 50px;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect */
+            height: 0;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+            border: 2px solid var(--gold-primary);
+            background: black;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* ---------------------------------------------------------------------
+           10. FOOTER
+           ---------------------------------------------------------------------
+        */
+        .site-footer {
+            background: var(--navy-darkest);
+            color: var(--text-light);
+            padding: 100px 20px 30px;
+            border-top: 6px solid var(--gold-primary);
+            margin-top: 100px;
+        }
+
+        .footer-grid {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 50px;
+        }
+
+        .footer-col {
+            text-align: left;
+        }
+
+        .footer-logo {
+            width: 90px;
+            border-radius: 50%;
+            border: 2px solid var(--gold-primary);
+            margin-bottom: 25px;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+
+        .footer-heading {
+            color: var(--gold-highlight);
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+
+        .footer-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            color: #cbd5e1;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        .footer-link:hover {
+            color: var(--gold-primary);
+            transform: translateX(8px);
+        }
+
+        .footer-icon {
+            color: var(--gold-primary);
+            font-size: 18px;
+        }
+
+        .footer-bottom {
+            max-width: var(--container-max);
+            margin: 80px auto 0;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* ---------------------------------------------------------------------
+           11. MOBILE DRAWER & FAB
+           ---------------------------------------------------------------------
+        */
+        .drawer-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 2999;
+            display: none;
+            backdrop-filter: blur(5px);
+        }
+
+        .mobile-drawer {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 300px;
+            height: 100vh;
+            background: var(--navy-dark);
+            z-index: 3000;
+            padding: 35px;
+            transition: 0.4s var(--ease-smooth);
+            border-left: 2px solid var(--gold-primary);
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mobile-drawer.is-open {
+            right: 0;
+        }
+
+        .drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .drawer-title {
+            color: var(--gold-primary);
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .drawer-close {
+            color: white;
+            font-size: 32px;
+            cursor: pointer;
+        }
+
+        .mobile-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.15rem;
+            font-family: 'Cinzel', serif;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .mobile-link:active {
+            color: var(--gold-primary);
+            padding-left: 10px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .fab-button {
+            position: fixed;
+            bottom: 30px;
+            right: 20px;
+            background: var(--gold-gradient);
+            color: var(--navy-dark);
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-family: 'Cinzel', serif;
+            z-index: 2000;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            border: 2px solid white;
+            cursor: pointer;
+            display: none; /* Mobile only */
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* ---------------------------------------------------------------------
+           12. MODALS & LIGHTBOX
+           ---------------------------------------------------------------------
+        */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 12, 27, 0.96);
+            z-index: 4000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-box {
+            background: var(--bg-card);
+            width: 100%;
+            max-width: 650px;
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            position: relative;
+            max-height: 85vh;
+            overflow-y: auto;
+            border: 1px solid var(--gold-primary);
+            box-shadow: 0 30px 60px -10px rgba(0, 0, 0, 0.7);
+            animation: fadeInUp 0.4s ease;
+        }
+
+        .modal-close-icon {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            font-size: 30px;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .modal-close-icon:hover {
+            color: #ef4444;
+            transform: rotate(90deg);
+        }
+
+        /* Lightbox */
+        #lightbox-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: black;
+            z-index: 5000;
+            overflow: hidden;
+        }
+
+        .lightbox-controls {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 5002;
+        }
+
+        .zoom-btn {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .zoom-btn:hover {
+            background: var(--gold-primary);
+            color: var(--navy-dark);
+            transform: scale(1.1);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            padding: 10px;
+            transition: 0.3s;
+            z-index: 5002;
+        }
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .lightbox-img-wrapper {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: auto;
+        }
+
+        #lightbox-image {
+            max-width: 90vw;
+            max-height: 85vh;
+            object-fit: contain;
+            transition: transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: grab;
+        }
+
+        /* ---------------------------------------------------------------------
+           13. MEDIA QUERIES (RESPONSIVE ENGINE)
+           ---------------------------------------------------------------------
+        */
+        @media (max-width: 1200px) {
+            .app-container {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .app-container {
+                grid-template-columns: 1fr;
+                gap: 50px;
+                padding: 50px 20px;
+            }
+            /* Hide non-critical sidebar widgets on mobile main flow */
+            .sidebar-wrapper .widget-card:not(.contact-widget):not(.map-widget-wrapper) {
+                display: none;
+            }
+            .fab-button {
+                display: flex;
+            }
+            .content-card {
+                flex-direction: column;
+                padding: 30px;
+                gap: 30px;
+            }
+            .card-image-wrapper {
+                width: 100%;
+                height: 300px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0 20px;
+            }
+            .desktop-nav {
+                display: none;
+            }
+            .menu-toggle-btn {
+                display: block;
+            }
+            
+            /* Enhanced Mobile Branding */
+            .brand-logo-container {
+                width: 50px;
+                height: 50px;
+            }
+            .brand-title {
+                font-size: 0.95rem;
+                white-space: nowrap;
+            }
+            .brand-subtitle {
+                display: none; /* Cleaner look on mobile */
+            }
+
+            .hero-title {
+                font-size: 2.8rem;
+                margin-bottom: 20px;
+            }
+            .hero-subtitle {
+                font-size: 0.9rem;
+            }
+            .hero-badge {
+                padding: 12px 25px;
+                font-size: 0.8rem;
+            }
+
+            .facilities-grid {
+                grid-template-columns: 1fr 1fr;
+                padding: 40px 20px;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .footer-col {
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .footer-link {
+                justify-content: center;
+            }
+            
+            .lightbox-controls {
+                bottom: 80px;
+            }
+        }
+
         @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
 
-        /* -----------------------------------------------------------
-           12. RESPONSIVE MEDIA QUERIES
-        ----------------------------------------------------------- */
-        @media (max-width: 1024px) {
-            .main-container { grid-template-columns: 1fr; padding: 50px 20px; gap: 60px; }
-            .sidebar .notice-board { display: none; } 
-            .fab { display: flex; } 
-            .royal-card { flex-direction: column; }
-            .royal-img { width: 100%; height: 300px; margin-bottom: 25px; }
+        /* Views Visibility Classes */
+        .view-container {
+            display: none;
+            animation: fadeIn 0.5s ease;
         }
-        
-        @media (max-width: 768px) {
-            .nav-container { height: 80px; padding: 0 20px; }
-            .desk-menu { display: none; } .menu-toggle { display: block; }
-            
-            .brand-logo-box { width: 50px; height: 50px; }
-            .brand-text h1 { font-size: 1.4rem; } 
-            .brand-text p { display: none; }
-            
-            .hero-title { font-size: 3rem; margin-bottom: 20px; }
-            .hero-badge { padding: 10px 25px; font-size: 0.8rem; }
-            
-            .stats-grid { grid-template-columns: 1fr 1fr; padding: 40px 20px; }
-            .ft-grid { grid-template-columns: 1fr; text-align: center; }
-            .contact-box { padding: 30px 20px; }
-            .lb-controls { bottom: 80px; }
+        .view-container.active {
+            display: block;
         }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
     </style>
-    
+
     <script>
+        // Disable Right Click
         document.addEventListener('contextmenu', event => event.preventDefault());
+        
+        // Disable Key Combos
         document.onkeydown = function(e) {
-            if(e.keyCode == 123) return false;
+            if(e.keyCode == 123) return false; // F12
             if(e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) return false;
             if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
         }
     </script>
+
 </head>
 <body>
 
     <div id="preloader">
-        <div class="loader-wrap">
+        <div class="loader-wrapper">
             <div class="loader-ring"></div>
-            <img src="./assets/images/logo.jpeg" class="loader-logo" onerror="this.src='https://via.placeholder.com/120?text=BVM'">
+            <div class="loader-ring"></div>
+            <img src="./assets/images/logo.jpeg" class="loader-logo" onerror="this.src='https://via.placeholder.com/150?text=BVM'">
         </div>
-        <div class="loader-text">BAL VINAY MANDIR</div>
+        <div class="loader-text">
+            School Of Excellence<br>
+            Bal Vinay Mandir
+        </div>
     </div>
 
     <header>
         <div class="nav-container">
-            <div class="brand" onclick="loadView('home')" style="cursor: pointer;">
-                <div class="brand-logo-box">
-                    <img src="./assets/images/logo.jpeg" class="brand-logo" onerror="this.src='https://via.placeholder.com/60'">
+            <div class="brand-wrapper" onclick="App.router.loadView('home')">
+                <div class="brand-logo-container">
+                    <img src="./assets/images/logo.jpeg" class="brand-logo" alt="BVM Logo" onerror="this.src='https://via.placeholder.com/65'">
                 </div>
-                <div class="brand-text">
-                    <h1>Bal Vinay Mandir</h1>
-                    <p>School of Excellence</p>
+                <div class="brand-info">
+                    <h1 class="brand-title">School Of Excellence</h1>
+                    <p class="brand-subtitle">Bal Vinay Mandir, Indore</p>
                 </div>
             </div>
             
-            <div style="display:flex; align-items:center; gap:25px;">
-                <ul class="desk-menu" id="nav-desk">
-                    </ul>
-                <button class="btn-lang" onclick="toggleLang()">EN / HI</button>
-                <span class="material-icons menu-toggle" onclick="toggleDrawer()">menu</span>
+            <div style="display:flex; align-items:center;">
+                <nav class="desktop-nav" id="desktop-nav-container">
+                    </nav>
+
+                <button class="btn-language" onclick="App.utils.toggleLanguage()">
+                    EN / HI
+                </button>
+
+                <span class="material-icons menu-toggle-btn" onclick="App.ui.toggleDrawer()">
+                    menu
+                </span>
             </div>
         </div>
     </header>
 
-    <div class="drawer-overlay" id="drawer-ol" onclick="toggleDrawer()"></div>
-    <div class="drawer" id="drawer">
-        <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:20px; border-bottom:1px solid rgba(255,255,255,0.1); margin-bottom:20px;">
-            <span style="color:var(--gold); font-family:'Cinzel', serif; font-weight:700; font-size:1.5rem;">MENU</span>
-            <span class="material-icons" style="color:white; cursor:pointer; font-size:32px;" onclick="toggleDrawer()">close</span>
+    <div class="drawer-backdrop" id="drawer-backdrop" onclick="App.ui.toggleDrawer()"></div>
+    <div class="mobile-drawer" id="mobile-drawer">
+        <div class="drawer-header">
+            <span class="drawer-title">MENU</span>
+            <span class="material-icons drawer-close" onclick="App.ui.toggleDrawer()">close</span>
         </div>
-        <div id="nav-mob">
+        <div id="mobile-nav-container">
             </div>
     </div>
 
-    <div class="fab" onclick="openAllNotices()">
-        <span class="material-icons">notifications_active</span> NOTICE BOARD
+    <div class="fab-button" onclick="App.ui.openNoticesModal()">
+        <span class="material-icons">notifications_active</span> NOTICES
     </div>
 
-    <section class="hero" id="hero-section">
-        <div class="hero-bg"></div>
+    <section class="hero-section" id="hero-section">
+        <div class="hero-overlay"></div>
         <div class="hero-content">
-            <h1 class="hero-title" id="hero-head">Empowering Minds,<br>Creating Leaders</h1>
-            <div class="hero-badge" id="hero-sub">
-                <span class="material-icons" style="font-size:18px;">verified</span>
-                Excellence in Education Since 1980
+            <h1 class="hero-title" id="hero-heading">
+                School Of Excellence<br>Bal Vinay Mandir
+            </h1>
+            <div class="hero-subtitle" id="hero-subheading">
+                Empowering Minds, Creating Leaders Since 1980
+            </div>
+            <div class="hero-badge">
+                <span class="material-icons" style="font-size:16px; margin-right:8px;">verified</span>
+                Indore • MPBSE Affiliated
             </div>
         </div>
     </section>
 
-    <div class="main-container">
+    <div class="app-container">
         
         <main>
             
-            <div id="view-home">
-                <div id="home-content"></div>
-                <div id="custom-pages"></div>
+            <div id="view-home" class="view-container active">
+                <div id="home-sections-wrapper"></div>
+                <div id="custom-pages-wrapper"></div>
                 
-                <section id="video-tour-section">
-                    <div class="vt-container">
-                        <h2 class="vt-title">Virtual Campus Tour</h2>
-                        <p class="vt-sub" id="vt-sub-text">Experience the world-class infrastructure of Bal Vinay Mandir.</p>
-                        <div class="video-wrapper">
-                            <iframe id="tour-iframe" src="" title="Campus Tour" allowfullscreen></iframe>
+                <section class="tour-section" id="tour-section">
+                    <div class="tour-bg-effect"></div>
+                    <div class="tour-container">
+                        <h2 class="tour-title">Virtual Campus Tour</h2>
+                        <p class="tour-subtitle" id="tour-desc">Take a digital walk through our state-of-the-art campus infrastructure.</p>
+                        
+                        <div class="video-container">
+                            <iframe id="tour-frame" src="" title="Campus Tour" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
                     </div>
                 </section>
             </div>
 
-            <div id="view-gallery">
-                <div class="sec-head"><h2 class="sec-title">Photo Gallery</h2><div class="sec-line"></div></div>
-                <div class="grid-premium" id="gal-grid">
+            <div id="view-gallery" class="view-container">
+                <div class="section-header">
+                    <h2 class="section-title">Photo Gallery</h2>
+                    <div class="section-line"></div>
+                </div>
+                <div class="premium-grid" id="gallery-grid">
                     <p style="text-align:center; width:100%; grid-column:1/-1;">Loading Gallery...</p>
                 </div>
             </div>
 
-            <div id="view-achievements">
-                <div class="sec-head"><h2 class="sec-title">Our Achievements</h2><div class="sec-line"></div></div>
-                <div class="grid-premium" id="ach-grid">
+            <div id="view-achievements" class="view-container">
+                <div class="section-header">
+                    <h2 class="section-title">Our Achievements</h2>
+                    <div class="section-line"></div>
+                </div>
+                <div class="premium-grid" id="achievements-grid">
                     <p style="text-align:center; width:100%; grid-column:1/-1;">Loading Achievements...</p>
                 </div>
             </div>
 
         </main>
 
-        <aside class="sidebar">
+        <aside class="sidebar-wrapper">
             
-            <div class="notice-board">
-                <div class="nb-header">
+            <div class="widget-card">
+                <div class="widget-header">
                     <span class="material-icons">campaign</span> Latest Updates
                 </div>
-                <div class="nb-content" id="notice-list-desk">
+                <div class="notices-list" id="sidebar-notices-list">
                     <div style="padding:30px; text-align:center; color:#94a3b8;">
                         <span class="material-icons" style="animation:spin 1s infinite;">refresh</span><br>Loading Notices...
                     </div>
                 </div>
                 <div style="padding:15px; text-align:center; background:#f8fafc; border-top:1px solid #e2e8f0;">
-                    <button onclick="openAllNotices()" style="background:none; border:none; color:var(--navy); font-weight:700; cursor:pointer;">VIEW ALL NOTICES</button>
+                    <button onclick="App.ui.openNoticesModal()" style="font-weight:700; color:var(--navy-dark); font-size:0.85rem; letter-spacing:1px;">VIEW ALL</button>
                 </div>
             </div>
 
-            <div class="contact-box" id="contact-widget">
-                <div class="c-head">
-                    <span class="material-icons" style="color:var(--gold);">mail_outline</span> Contact Us
+            <div class="widget-card contact-widget" id="contact-widget-marker">
+                <div class="form-header">
+                    <span class="material-icons" style="color:var(--gold-primary);">mail_outline</span> Contact Us
                 </div>
                 
-                <form id="contact-form" onsubmit="submitContact(event)">
+                <form id="main-contact-form" onsubmit="App.data.submitContactForm(event)">
                     <input type="hidden" name="access_key" value="7bad7b42-fa57-4466-9f19-7883860795b2">
                     
-                    <div class="c-group">
-                        <input type="text" name="name" class="c-field" placeholder="Full Name" required>
-                        <span class="material-icons c-icon">person</span>
+                    <div class="form-group">
+                        <input type="text" name="student_name" class="form-input" placeholder="Student Name" required>
+                        <span class="material-icons input-icon">person</span>
                     </div>
 
-                    <div class="c-group">
-                        <input type="tel" name="mobile" class="c-field" placeholder="Mobile Number" required>
-                        <span class="material-icons c-icon">smartphone</span>
+                    <div class="form-group">
+                        <input type="tel" name="mobile" class="form-input" placeholder="Mobile Number" required>
+                        <span class="material-icons input-icon">smartphone</span>
                     </div>
 
-                    <div class="c-group">
-                        <input type="email" name="email" class="c-field" placeholder="Email Address">
-                        <span class="material-icons c-icon">email</span>
+                    <div class="form-group">
+                        <input type="text" name="city" class="form-input" placeholder="City" required>
+                        <span class="material-icons input-icon">location_city</span>
                     </div>
 
-                    <div class="c-group">
-                        <input type="text" name="address" class="c-field" placeholder="City & State" required>
-                        <span class="material-icons c-icon">location_city</span>
-                    </div>
-
-                    <div class="c-group">
-                        <textarea name="message" class="c-field" rows="3" placeholder="Write your message..." required style="resize:vertical;"></textarea>
-                        <span class="material-icons c-icon">chat</span>
+                    <div class="form-group">
+                        <textarea name="message" class="form-input" rows="3" placeholder="Message..." style="padding-left:14px; resize:vertical;" required></textarea>
                     </div>
                     
-                    <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+                    <input type="checkbox" name="botcheck" style="display: none;">
                     
-                    <button type="submit" class="c-btn" id="c-btn-txt">
+                    <button type="submit" class="btn-submit" id="btn-submit-text">
                         <span>SEND MESSAGE</span> <span class="material-icons">send</span>
                     </button>
                 </form>
                 
-                <div id="c-success" class="success-overlay">
-                    <span class="material-icons" style="font-size:70px; color:var(--gold); margin-bottom:20px;">check_circle</span>
-                    <h3 style="color:var(--navy); font-size:1.6rem;">Message Sent!</h3>
-                    <p style="color:#64748b; margin-top:10px; font-size:1rem;">Thank you for contacting Bal Vinay Mandir.<br>Our administration team will get back to you shortly.</p>
-                    <button onclick="resetContactForm()" style="margin-top:25px; background:none; border:none; color:var(--navy); text-decoration:underline; cursor:pointer; font-weight:700;">Send Another Message</button>
+                <div id="form-success-msg" style="display:none; text-align:center; margin-top:20px; animation:fadeIn 0.5s;">
+                    <span class="material-icons" style="font-size:48px; color:green; margin-bottom:10px;">check_circle</span>
+                    <h4 style="color:var(--navy-dark);">Sent Successfully!</h4>
+                    <p style="font-size:0.9rem;">We will contact you soon.</p>
+                    <button onclick="App.data.resetForm()" style="text-decoration:underline; font-weight:700;">Send Another</button>
                 </div>
             </div>
 
-            <div style="margin-top:40px;">
-                <h4 style="color:var(--navy); font-family:'Cinzel', serif; margin-bottom:15px; border-bottom:2px solid var(--gold); display:inline-block;">Our Location</h4>
-                <div class="map-container">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29443.91293152809!2d75.81303527910154!3d22.710054700000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3962fd003f5e61c5%3A0x356d37e0b09e8049!2sSchool%20of%20exellence%20Bal%20viny%20mandir%20Indore!5e0!3m2!1sen!2sin!4v1768403242807!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <div class="map-widget-wrapper">
+                <h4 style="color:var(--navy-dark); font-family:'Cinzel', serif; margin-bottom:15px; border-bottom:2px solid var(--gold-primary); display:inline-block;">Our Location</h4>
+                <div class="map-wrapper">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29443.91293152809!2d75.81303527910154!3d22.710054700000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3962fd003f5e61c5%3A0x356d37e0b09e8049!2sSchool%20of%20exellence%20Bal%20viny%20mandir%20Indore!5e0!3m2!1sen!2sin!4v1768403242807!5m2!1sen!2sin" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
                 </div>
             </div>
 
         </aside>
     </div>
 
-    <footer>
-        <div class="ft-grid">
-            <div class="ft-col">
-                <img src="./assets/images/logo.jpeg" style="width:80px; border-radius:50%; border:2px solid var(--gold); margin-bottom:25px; box-shadow:0 0 20px rgba(212,175,55,0.4);">
-                <p><span class="material-icons ft-icon">location_on</span> Chatri Bagh, Indore (M.P.)</p>
-                <p><span class="material-icons ft-icon">call</span> 0731-123456</p>
-                <p><span class="material-icons ft-icon">email</span> info@bvmindore.com</p>
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-col" style="text-align:center; align-items:center; display:flex; flex-direction:column;">
+                <img src="./assets/images/logo.jpeg" class="footer-logo" alt="BVM Logo">
+                <p style="color:white; font-weight:700;">Chatri Bagh, Indore (M.P.)</p>
+                <p>Phone: 0731-123456</p>
+                <p>Email: info@bvmindore.com</p>
             </div>
             
-            <div class="ft-col">
-                <h4>Academics</h4>
-                <a href="#">CBSE Curriculum</a>
-                <a href="#">Faculty Members</a>
-                <a href="#">Result Analysis</a>
-                <a href="#">Sports Academy</a>
+            <div class="footer-col">
+                <h4 class="footer-heading">Quick Links</h4>
+                <a href="#" onclick="App.ui.openNoticesModal()" class="footer-link"><span class="material-icons footer-icon">campaign</span> Notices</a>
+                <a href="#" onclick="App.router.loadView('gallery')" class="footer-link"><span class="material-icons footer-icon">photo_library</span> Gallery</a>
+                <a href="#" onclick="App.router.loadView('achievements')" class="footer-link"><span class="material-icons footer-icon">emoji_events</span> Achievements</a>
             </div>
             
-            <div class="ft-col">
-                <h4>Quick Access</h4>
-                <a href="#" onclick="openAllNotices(); return false;">Notice Board</a>
-                <a href="#" onclick="loadView('gallery'); return false;">Photo Gallery</a>
-                <a href="#" onclick="document.getElementById('contact-widget').scrollIntoView(); return false;">Admission Enquiry</a>
-            </div>
-
-            <div class="ft-col">
-                <h4>Visit Us</h4>
-                <div class="map-container" style="height:200px; border-color:rgba(255,255,255,0.2); margin-top:0;">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29443.91293152809!2d75.81303527910154!3d22.710054700000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3962fd003f5e61c5%3A0x356d37e0b09e8049!2sSchool%20of%20exellence%20Bal%20viny%20mandir%20Indore!5e0!3m2!1sen!2sin!4v1768403242807!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
+            <div class="footer-col">
+                <h4 class="footer-heading">Academics</h4>
+                <a href="#" class="footer-link"><span class="material-icons footer-icon">school</span> CBSE Affiliated</a>
+                <a href="#" class="footer-link"><span class="material-icons footer-icon">science</span> Science & Commerce</a>
+                <a href="#" class="footer-link"><span class="material-icons footer-icon">sports_soccer</span> Sports Academy</a>
             </div>
         </div>
         
-        <div class="ft-bottom">
-            © 2026 Bal Vinay Mandir H.S. School. All Rights Reserved. | <span style="color:var(--gold);">Excellence Since 1980</span>
+        <div class="footer-bottom">
+            &copy; 2026 School Of Excellence Bal Vinay Mandir, Indore. All Rights Reserved.<br>
+            <span style="color:var(--gold-primary); font-size:0.8rem; margin-top:5px; display:inline-block;">Designed & Developed by IT Department</span>
         </div>
     </footer>
 
-    <div id="notice-modal" class="modal-bg">
-        <div class="modal-content">
-            <span class="material-icons close-modal" onclick="document.getElementById('notice-modal').style.display='none'">close</span>
-            <div id="m-date" style="color:var(--gold); font-weight:800; font-size:0.9rem; letter-spacing:1px; margin-bottom:10px;"></div>
-            <h3 id="m-title" style="margin-bottom:20px; font-size:1.5rem; line-height:1.3; color:var(--navy);"></h3>
-            <div style="width:80px; height:4px; background:var(--gold); margin-bottom:25px;"></div>
-            <div id="m-desc" style="color:#475569; line-height:1.8; white-space:pre-line; margin-bottom:30px; font-size:1.05rem;"></div>
-            <div id="m-link"></div>
+    <div id="notice-detail-modal" class="modal-overlay">
+        <div class="modal-box">
+            <span class="material-icons modal-close-icon" onclick="document.getElementById('notice-detail-modal').style.display='none'">close</span>
+            <div id="nd-date" style="color:var(--gold-primary); font-weight:800; font-size:0.9rem; margin-bottom:10px;"></div>
+            <h2 id="nd-title" style="margin-bottom:20px; font-size:1.6rem; line-height:1.3;"></h2>
+            <div style="width:80px; height:4px; background:var(--gold-primary); margin-bottom:25px;"></div>
+            <div id="nd-desc" style="color:#475569; line-height:1.8; white-space:pre-line; margin-bottom:30px; font-size:1.05rem;"></div>
+            <div id="nd-link-container"></div>
         </div>
     </div>
 
-    <div id="all-notices-modal" class="modal-bg">
-        <div class="modal-content" style="height:85vh; display:flex; flex-direction:column; padding:0; overflow:hidden;">
-            <div style="padding:25px; background:var(--navy); color:white; display:flex; justify-content:space-between; align-items:center;">
-                <h3 style="margin:0; font-family:'Cinzel', serif; color:var(--gold); display:flex; align-items:center; gap:10px;">
+    <div id="all-notices-modal" class="modal-overlay">
+        <div class="modal-box" style="height:85vh; display:flex; flex-direction:column; padding:0; overflow:hidden;">
+            <div style="padding:25px; background:var(--navy-dark); color:white; display:flex; justify-content:space-between; align-items:center;">
+                <h3 style="margin:0; font-family:'Cinzel', serif; color:var(--gold-primary); display:flex; align-items:center; gap:10px;">
                     <span class="material-icons">notifications</span> Notice Board
                 </h3>
                 <span class="material-icons" style="cursor:pointer; font-size:28px;" onclick="document.getElementById('all-notices-modal').style.display='none'">close</span>
             </div>
-            <div id="notice-list-mob" style="overflow-y:auto; flex:1; padding:15px; background:#f1f5f9;"></div>
+            <div id="mobile-notices-list" style="overflow-y:auto; flex:1; padding:0; background:#fff;"></div>
         </div>
     </div>
 
-    <div id="lightbox">
-        <span class="material-icons close-lb" onclick="closeLightbox()">close</span>
-        <div id="lb-container">
-            <img id="lb-img">
+    <div id="lightbox-overlay">
+        <span class="material-icons lightbox-close" onclick="App.ui.closeLightbox()">close</span>
+        <div class="lightbox-img-wrapper">
+            <img id="lightbox-image" src="" alt="Full View">
         </div>
         
-        <div class="lb-controls">
-            <div class="lb-btn" onclick="zoomImg(-0.2)"><span class="material-icons">remove</span></div>
-            <div class="lb-btn" onclick="zoomImg(0.2)"><span class="material-icons">add</span></div>
+        <div class="lightbox-controls">
+            <div class="zoom-btn" onclick="App.ui.zoomImage(-0.25)">
+                <span class="material-icons">remove</span>
+            </div>
+            <div class="zoom-btn" onclick="App.ui.zoomImage(0.25)">
+                <span class="material-icons">add</span>
+            </div>
         </div>
     </div>
 
     <script>
-        // --- 1. FIREBASE INIT ---
-        const firebaseConfig = { 
-            apiKey: "AIzaSyBEqzUbus1kXmcIXwI0QlOIGa3IV1zqXVw", 
-            authDomain: "ebvmindore.firebaseapp.com", 
-            projectId: "ebvmindore", 
-            storageBucket: "ebvmindore.firebasestorage.app", 
-            messagingSenderId: "545685474288", 
-            appId: "1:545685474288:web:0bc816ef47dfaf63acab35", 
-            measurementId: "G-5HL4PRSHV9" 
-        };
-        try { firebase.initializeApp(firebaseConfig); } catch(e) { console.error("FB Error:", e); }
-        const db = firebase.firestore();
-
-        // --- 2. APP STATE ---
-        let lang = 'en'; 
-        let notices = [];
-        let currentZoom = 1;
-        let currentView = 'home';
-
-        const HOME_SECTIONS = [
-            { id:'about', en:'About Us', hi:'परिचय' }, 
-            { id:'principal', en:'Principal Desk', hi:'प्राचार्य संदेश' },
-            { id:'facilities', en:'Facilities', hi:'सुविधाएं' }
-            // Gallery & Achievements are separate Views now
-        ];
-
-        // --- 3. HELPER FUNCTIONS ---
-        function toggleDrawer(){ 
-            const d = document.getElementById('drawer'); const o = document.getElementById('drawer-ol'); 
-            if(d.classList.contains('active')){ d.classList.remove('active'); o.style.display='none'; }
-            else{ d.classList.add('active'); o.style.display='block'; } 
-        }
-
-        function toggleLang(){ 
-            lang = (lang === 'en') ? 'hi' : 'en'; 
-            document.getElementById('hero-head').innerHTML = (lang === 'en') ? "Empowering Minds,<br>Creating Leaders" : "सशक्त मन,<br>नेतृत्व का निर्माण";
-            document.getElementById('vt-sub-text').innerText = (lang === 'en') ? "Experience the world-class infrastructure of Bal Vinay Mandir." : "बाल विनय मंदिर की विश्व स्तरीय बुनियादी ढांचे का अनुभव करें।";
-            initLoad(); 
-        }
-
-        function openAllNotices(){ 
-            const content = document.getElementById('notice-list-desk').innerHTML;
-            document.getElementById('notice-list-mob').innerHTML = content; 
-            document.getElementById('all-notices-modal').style.display = 'flex'; 
-        }
-
-        function resetContactForm(){
-            document.getElementById('c-success').style.display='none'; 
-            document.getElementById('contact-form').style.display='block'; 
-            document.getElementById('contact-form').reset();
-        }
-
-        const resolveImg = (src) => (!src) ? '' : (src.startsWith('http') || src.startsWith('data:') ? src : `./assets/images/${src}`);
-        const getYTId = (url) => { if(!url) return null; const m = url.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/); return (m && m[2].length===11) ? m[2] : null; };
-
-        // --- 4. NAVIGATION & VIEW CONTROLLER ---
-        function loadView(viewName) {
-            currentView = viewName;
+        /**
+         * APPLICATION NAMESPACE: App
+         * Architecture: Module Pattern
+         */
+        const App = {
+            config: {
+                firebase: {
+                    apiKey: "AIzaSyBEqzUbus1kXmcIXwI0QlOIGa3IV1zqXVw",
+                    authDomain: "ebvmindore.firebaseapp.com",
+                    projectId: "ebvmindore",
+                    storageBucket: "ebvmindore.firebasestorage.app",
+                    messagingSenderId: "545685474288",
+                    appId: "1:545685474288:web:0bc816ef47dfaf63acab35",
+                    measurementId: "G-5HL4PRSHV9"
+                },
+                homeSections: ['about', 'principal', 'facilities']
+            },
             
-            // Toggle Views
-            document.getElementById('view-home').style.display = (viewName === 'home') ? 'block' : 'none';
-            document.getElementById('view-gallery').style.display = (viewName === 'gallery') ? 'block' : 'none';
-            document.getElementById('view-achievements').style.display = (viewName === 'achievements') ? 'block' : 'none';
-            
-            // Toggle Hero (Only for Home)
-            document.getElementById('hero-section').style.display = (viewName === 'home') ? 'flex' : 'none';
+            state: {
+                lang: 'en',
+                notices: [],
+                currentZoom: 1,
+                db: null
+            },
 
-            // Scroll to Top
-            window.scrollTo(0,0);
-            
-            // Close Drawer if open
-            const d = document.getElementById('drawer');
-            if(d.classList.contains('active')) toggleDrawer();
-
-            // Load specific data if needed
-            if(viewName === 'gallery') loadGallery();
-            if(viewName === 'achievements') loadAchievements();
-        }
-
-        // --- 5. DATA LOADING ---
-        async function initLoad() {
-            try {
-                const [cSnap, tSnap, pSnap, nSnap] = await Promise.all([
-                    db.collection('siteConfig').get(), 
-                    db.collection('siteContent').get(), 
-                    db.collection('custom_pages').get(),
-                    db.collection('notices').orderBy('date','desc').limit(20).get()
-                ]);
-
-                let config={}; cSnap.forEach(d=>config[d.id]=d.data());
-                let content={}; tSnap.forEach(d=>content[d.id]=d.data());
+            /**
+             * INITIALIZATION MODULE
+             */
+            init: async function() {
+                console.log("App Initializing...");
                 
-                // --- SETUP VIRTUAL TOUR ---
-                const tourSec = document.getElementById('video-tour-section');
-                const tourConf = config['tour'];
-                const tourContent = content['tour'];
-                if(tourConf && tourConf.isVisible !== false && tourContent && tourContent.video){
-                    const vidId = getYTId(tourContent.video);
-                    if(vidId){ document.getElementById('tour-iframe').src = `https://www.youtube.com/embed/${vidId}?autoplay=0&rel=0`; tourSec.style.display = 'block'; }
-                } else { tourSec.style.display = 'none'; }
+                // 1. Init Firebase
+                try {
+                    firebase.initializeApp(this.config.firebase);
+                    this.state.db = firebase.firestore();
+                } catch(e) { console.error("Firebase Init Error:", e); }
 
-                // --- RENDER NAV MENUS ---
-                const dNav = document.getElementById('nav-desk'); 
-                const mNav = document.getElementById('nav-mob');
-                
-                // Base Links
-                let dh = `<li><div onclick="loadView('home')" class="nav-link">${lang==='en'?'Home':'होम'}</div></li>`; 
-                let mh = `<div onclick="loadView('home')" class="d-link">${lang==='en'?'Home':'होम'} <span class="material-icons">home</span></div>`;
+                // 2. Fetch Data
+                await this.data.fetchAll();
 
-                // Sections (Scroll to ID in Home View)
-                HOME_SECTIONS.forEach(sec => {
-                    if(config[sec.id]?.isVisible !== false){
-                        const d = content[sec.id] || {}; 
-                        const t = lang==='en' ? (d.title_en||sec.en) : (d.title_hi||sec.hi);
-                        // If current view is NOT home, switch to home then scroll
-                        const action = `loadView('home'); setTimeout(() => document.getElementById('${sec.id}').scrollIntoView(), 100);`;
+                // 3. Setup Observers (Scroll Animations)
+                this.ui.setupIntersectionObserver();
+
+                // 4. Hide Preloader
+                setTimeout(() => {
+                    const pre = document.getElementById('preloader');
+                    pre.style.opacity = '0';
+                    setTimeout(() => pre.style.display = 'none', 800);
+                }, 1200);
+
+                // 5. Auto Popup Notice
+                if(this.state.notices.length > 0) {
+                    setTimeout(() => { this.ui.openNoticesModal(); }, 3000);
+                }
+
+                // 6. Security Loop
+                this.security.startWatchdog();
+            },
+
+            /**
+             * DATA HANDLING MODULE
+             */
+            data: {
+                fetchAll: async function() {
+                    try {
+                        const db = App.state.db;
+                        const [confSnap, contSnap, pagesSnap, noteSnap] = await Promise.all([
+                            db.collection('siteConfig').get(),
+                            db.collection('siteContent').get(),
+                            db.collection('custom_pages').get(),
+                            db.collection('notices').orderBy('date', 'desc').limit(20).get()
+                        ]);
+
+                        const config = {}; confSnap.forEach(d => config[d.id] = d.data());
+                        const content = {}; contSnap.forEach(d => content[d.id] = d.data());
                         
-                        dh += `<li><div onclick="${action}" class="nav-link">${t}</div></li>`; 
-                        mh += `<div onclick="${action}" class="d-link">${t} <span class="material-icons">chevron_right</span></div>`;
-                    }
-                });
+                        // Parse Notices
+                        App.state.notices = [];
+                        noteSnap.forEach(doc => {
+                            const d = doc.data();
+                            const t = App.state.lang === 'en' ? (d.title_en || d.title) : (d.title_hi || d.title);
+                            App.state.notices.push({ ...d, title: t });
+                        });
 
-                // Custom Pages
-                const cust = document.getElementById('custom-pages'); cust.innerHTML='';
-                pSnap.forEach(doc => {
-                    const d = doc.data(); const cid = `p-${doc.id}`; 
-                    const t = lang==='en' ? d.title_en : (d.title_hi||d.title_en);
-                    // Add to Nav
-                    const action = `loadView('home'); setTimeout(() => document.getElementById('${cid}').scrollIntoView(), 100);`;
-                    dh += `<li><div onclick="${action}" class="nav-link">${t}</div></li>`; 
-                    mh += `<div onclick="${action}" class="d-link">${t} <span class="material-icons">article</span></div>`;
+                        // Render All
+                        App.render.navigation(config, content, pagesSnap);
+                        App.render.homeSections(config, content);
+                        App.render.virtualTour(config, content);
+                        App.render.noticesWidget();
+
+                    } catch(e) { console.error("Data Fetch Error:", e); }
+                },
+
+                submitContactForm: function(e) {
+                    e.preventDefault();
+                    const btn = document.getElementById('btn-submit-text');
+                    const form = document.getElementById('main-contact-form');
+                    const originalText = btn.innerHTML;
+
+                    btn.innerHTML = `<span>SENDING...</span> <span class="material-icons" style="animation:spin 1s linear infinite;">refresh</span>`;
+                    btn.disabled = true;
+
+                    const formData = new FormData(form);
+                    const json = JSON.stringify(Object.fromEntries(formData));
+
+                    fetch('https://api.web3forms.com/submit', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                        body: json
+                    })
+                    .then(response => {
+                        if (response.status == 200) {
+                            form.style.display = 'none';
+                            document.getElementById('form-success-msg').style.display = 'block';
+                        } else { alert("Error: Submission failed."); }
+                    })
+                    .catch(error => { console.log(error); alert("Network Error."); })
+                    .finally(() => { 
+                        btn.innerHTML = originalText; 
+                        btn.disabled = false; 
+                    });
+                },
+
+                resetForm: function() {
+                    document.getElementById('form-success-msg').style.display = 'none';
+                    document.getElementById('main-contact-form').style.display = 'block';
+                    document.getElementById('main-contact-form').reset();
+                }
+            },
+
+            /**
+             * RENDERING MODULE (HTML Generators)
+             */
+            render: {
+                navigation: function(config, content, pagesSnap) {
+                    const dNav = document.getElementById('desktop-nav-container');
+                    const mNav = document.getElementById('mobile-nav-container');
+                    const lang = App.state.lang;
                     
-                    // Render in Home
-                    cust.innerHTML += `<section id="${cid}" class="section-wrap">
-                        <div class="sec-head"><h2 class="sec-title">${t}</h2><div class="sec-line"></div></div>
-                        <div class="royal-card">${d.image ? `<img src="${resolveImg(d.image)}" class="royal-img">` : ''}<div class="royal-txt">${lang==='en' ? d.content_en : d.content_hi}</div></div>
-                    </section>`;
-                });
+                    let dHtml = `<div class="nav-link" onclick="App.router.loadView('home')">${lang==='en'?'Home':'होम'}</div>`;
+                    let mHtml = `<div class="mobile-link" onclick="App.router.loadView('home'); App.ui.toggleDrawer()">${lang==='en'?'Home':'होम'} <span class="material-icons">home</span></div>`;
 
-                // --- RENDER HOME CONTENT ---
-                const homeCont = document.getElementById('home-content'); homeCont.innerHTML='';
-                HOME_SECTIONS.forEach(sec => {
-                    if(config[sec.id]?.isVisible !== false){
-                        const d = content[sec.id] || {}; 
-                        const t = lang==='en' ? (d.title_en||sec.en) : (d.title_hi||sec.hi);
-                        let body = ''; 
-                        const img = resolveImg(d.image); 
-                        const txt = lang==='en' ? (d.text_en||'') : (d.text_hi||'');
-                        
-                        if(sec.id === 'facilities'){
-                            body = `<div class="stats-grid">
-                                <div><div class="sr-num">${d.stat1||'45+'}</div><div class="sr-lbl">Years</div></div>
-                                <div><div class="sr-num">${d.stat2||'2K+'}</div><div class="sr-lbl">Students</div></div>
-                                <div><div class="sr-num">${d.stat3||'100%'}</div><div class="sr-lbl">Results</div></div>
-                                <div><div class="sr-num">${d.stat4||'80+'}</div><div class="sr-lbl">Faculty</div></div>
-                            </div>`;
-                            if(txt||img) body += `<div class="royal-card" style="margin-top:50px;">${img?`<img src="${img}" class="royal-img">`:''}<div class="royal-txt">${txt}</div></div>`;
-                        } else {
-                            body = `<div class="royal-card">${img?`<img src="${img}" class="royal-img">`:''}<div class="royal-txt">${txt}</div></div>`;
+                    // Standard Sections
+                    App.config.homeSections.forEach(id => {
+                        if(config[id]?.isVisible !== false) {
+                            const d = content[id] || {};
+                            const t = lang === 'en' ? (d.title_en || id) : (d.title_hi || id);
+                            const action = `App.router.goToSection('${id}')`;
+                            
+                            dHtml += `<div class="nav-link" onclick="${action}">${t}</div>`;
+                            mHtml += `<div class="mobile-link" onclick="${action}; App.ui.toggleDrawer()">${t} <span class="material-icons">chevron_right</span></div>`;
                         }
-                        
-                        homeCont.innerHTML += `<section id="${sec.id}" class="section-wrap">
-                            <div class="sec-head"><h2 class="sec-title">${t}</h2><div class="sec-line"></div></div>
-                            ${body}
-                        </section>`;
+                    });
+
+                    // Custom Pages
+                    const custWrapper = document.getElementById('custom-pages-wrapper');
+                    custWrapper.innerHTML = '';
+                    
+                    pagesSnap.forEach(doc => {
+                        const d = doc.data();
+                        const id = `p-${doc.id}`;
+                        const t = lang === 'en' ? d.title_en : d.title_hi;
+                        const action = `App.router.goToSection('${id}')`;
+
+                        dHtml += `<div class="nav-link" onclick="${action}">${t}</div>`;
+                        mHtml += `<div class="mobile-link" onclick="${action}; App.ui.toggleDrawer()">${t} <span class="material-icons">article</span></div>`;
+
+                        // Inject content into home
+                        custWrapper.innerHTML += `
+                            <section id="${id}" class="reveal-section">
+                                <div class="section-header"><h2 class="section-title">${t}</h2><div class="section-line"></div></div>
+                                <div class="content-card">
+                                    ${d.image ? `<div class="card-image-wrapper"><img src="${App.utils.resolveImg(d.image)}" class="card-image"></div>` : ''}
+                                    <div class="card-text-wrapper">${lang==='en' ? d.content_en : d.content_hi}</div>
+                                </div>
+                            </section>
+                        `;
+                    });
+
+                    // Static Links
+                    dHtml += `<div class="nav-link" onclick="App.router.loadView('gallery')">${lang==='en'?'Gallery':'गैलरी'}</div>`;
+                    mHtml += `<div class="mobile-link" onclick="App.router.loadView('gallery'); App.ui.toggleDrawer()">${lang==='en'?'Gallery':'गैलरी'} <span class="material-icons">photo_library</span></div>`;
+                    
+                    dHtml += `<div class="nav-link" onclick="App.router.loadView('achievements')">${lang==='en'?'Achievements':'उपलब्धियां'}</div>`;
+                    mHtml += `<div class="mobile-link" onclick="App.router.loadView('achievements'); App.ui.toggleDrawer()">${lang==='en'?'Achievements':'उपलब्धियां'} <span class="material-icons">emoji_events</span></div>`;
+                    
+                    dHtml += `<div class="nav-link" onclick="document.getElementById('contact-widget-marker').scrollIntoView({behavior:'smooth'})">${lang==='en'?'Contact':'संपर्क'}</div>`;
+                    mHtml += `<div class="mobile-link" onclick="document.getElementById('contact-widget-marker').scrollIntoView({behavior:'smooth'}); App.ui.toggleDrawer()">${lang==='en'?'Contact':'संपर्क'} <span class="material-icons">mail</span></div>`;
+
+                    dNav.innerHTML = dHtml;
+                    mNav.innerHTML = mHtml;
+                },
+
+                homeSections: function(config, content) {
+                    const wrapper = document.getElementById('home-sections-wrapper');
+                    wrapper.innerHTML = '';
+                    const lang = App.state.lang;
+
+                    App.config.homeSections.forEach(id => {
+                        if(config[id]?.isVisible !== false) {
+                            const d = content[id] || {};
+                            const t = lang === 'en' ? (d.title_en || id) : (d.title_hi || id);
+                            const img = App.utils.resolveImg(d.image);
+                            const txt = lang === 'en' ? d.text_en : d.text_hi;
+                            
+                            let bodyHtml = '';
+
+                            if(id === 'facilities') {
+                                bodyHtml = `
+                                    <div class="facilities-grid">
+                                        <div class="stat-item"><div class="stat-number">${d.stat1||'45+'}</div><div class="stat-label">Years</div></div>
+                                        <div class="stat-item"><div class="stat-number">${d.stat2||'2K+'}</div><div class="stat-label">Students</div></div>
+                                        <div class="stat-item"><div class="stat-number">${d.stat3||'100%'}</div><div class="stat-label">Results</div></div>
+                                        <div class="stat-item"><div class="stat-number">${d.stat4||'80+'}</div><div class="stat-label">Faculty</div></div>
+                                    </div>
+                                `;
+                                if(txt) bodyHtml += `<div class="content-card" style="margin-top:60px;">${img ? `<div class="card-image-wrapper"><img src="${img}" class="card-image"></div>` : ''}<div class="card-text-wrapper">${txt}</div></div>`;
+                            } else {
+                                bodyHtml = `
+                                    <div class="content-card">
+                                        ${img ? `<div class="card-image-wrapper"><img src="${img}" class="card-image"></div>` : ''}
+                                        <div class="card-text-wrapper">${txt || ''}</div>
+                                    </div>
+                                `;
+                            }
+
+                            wrapper.innerHTML += `
+                                <section id="${id}" class="reveal-section">
+                                    <div class="section-header"><h2 class="section-title">${t}</h2><div class="section-line"></div></div>
+                                    ${bodyHtml}
+                                </section>
+                            `;
+                        }
+                    });
+                },
+
+                virtualTour: function(config, content) {
+                    const tourSec = document.getElementById('tour-section');
+                    const tConf = config['tour'];
+                    const tCont = content['tour'];
+                    
+                    if(tConf && tConf.isVisible !== false && tCont && tCont.video) {
+                        const vidId = App.utils.getYTId(tCont.video);
+                        if(vidId) {
+                            document.getElementById('tour-frame').src = `https://www.youtube.com/embed/${vidId}?autoplay=0&rel=0`;
+                            tourSec.style.display = 'block';
+                            if(App.state.lang === 'hi') {
+                                document.getElementById('tour-desc').innerText = "बाल विनय मंदिर की विश्व स्तरीय बुनियादी ढांचे का अनुभव करें।";
+                            }
+                        }
                     }
-                });
+                },
 
-                // --- ADD GALLERY & ACHIEVEMENTS TO NAV ---
-                dh += `<li><div onclick="loadView('gallery')" class="nav-link">${lang==='en'?'Gallery':'गैलरी'}</div></li>`;
-                mh += `<div onclick="loadView('gallery')" class="d-link">${lang==='en'?'Gallery':'गैलरी'} <span class="material-icons">photo_library</span></div>`;
-                
-                dh += `<li><div onclick="loadView('achievements')" class="nav-link">${lang==='en'?'Achievements':'उपलब्धियां'}</div></li>`;
-                mh += `<div onclick="loadView('achievements')" class="d-link">${lang==='en'?'Achievements':'उपलब्धियां'} <span class="material-icons">emoji_events</span></div>`;
-                
-                // CONTACT NAV
-                dh += `<li><div onclick="document.getElementById('contact-widget').scrollIntoView()" class="nav-link">${lang==='en'?'Contact':'संपर्क'}</div></li>`;
-                mh += `<div onclick="document.getElementById('contact-widget').scrollIntoView(); toggleDrawer();" class="d-link">${lang==='en'?'Contact':'संपर्क'} <span class="material-icons">call</span></div>`;
+                noticesWidget: function() {
+                    const list = document.getElementById('sidebar-notices-list');
+                    let html = '';
+                    
+                    if(App.state.notices.length === 0) {
+                        html = '<div style="padding:20px; text-align:center;">No Active Notices</div>';
+                    } else {
+                        App.state.notices.forEach((n, index) => {
+                            html += `
+                                <div class="notice-item" onclick="App.ui.openNoticeDetail(${index})">
+                                    <div class="notice-date">
+                                        <span class="material-icons" style="font-size:14px;">event</span> ${n.date}
+                                        ${n.priority === 'high' ? '<span class="notice-badge">NEW</span>' : ''}
+                                    </div>
+                                    <div class="notice-text">${n.title}</div>
+                                </div>
+                            `;
+                        });
+                    }
+                    list.innerHTML = html;
+                    
+                    // Duplicate for Mobile Modal
+                    const mobList = document.getElementById('mobile-notices-list');
+                    mobList.innerHTML = html;
+                }
+            },
 
-                dNav.innerHTML = dh; mNav.innerHTML = mh;
+            /**
+             * ROUTER MODULE (View Switching)
+             */
+            router: {
+                loadView: function(viewName) {
+                    // 1. Update UI Classes
+                    document.querySelectorAll('.view-container').forEach(el => el.classList.remove('active'));
+                    document.getElementById(`view-${viewName}`).classList.add('active');
+                    
+                    // 2. Toggle Hero Visibility
+                    const hero = document.getElementById('hero-section');
+                    hero.style.display = (viewName === 'home') ? 'flex' : 'none';
 
-                // --- NOTICES ---
-                let nh = ''; notices = [];
-                if(nSnap.empty) nh = '<div style="padding:20px; text-align:center; color:#94a3b8;">No Active Notices</div>';
-                
-                nSnap.forEach(doc => {
-                    const d = doc.data(); 
-                    const title = lang==='en' ? (d.title_en||d.title) : (d.title_hi||d.title);
-                    notices.push({...d, title}); 
-                    nh += `<div class="n-item" onclick="openNotice(${notices.length-1})">
-                        <span class="n-date"><span class="material-icons" style="font-size:14px;">event</span> ${d.date}</span>
-                        <div class="n-title">${title}</div>
-                        ${d.priority === 'high' ? '<span class="n-badge">URGENT</span>' : ''}
-                    </div>`;
-                });
-                document.getElementById('notice-list-desk').innerHTML = nh;
+                    // 3. Reset Scroll
+                    window.scrollTo(0, 0);
 
-                // Auto Popup Notice
-                if(notices.length > 0) { setTimeout(() => { openAllNotices(); }, 2500); }
+                    // 4. Load Dynamic Data if needed
+                    if(viewName === 'gallery') App.router.loadGalleryGrid();
+                    if(viewName === 'achievements') App.router.loadAchievementsGrid();
+                },
 
-            } catch(e) { console.error("Init Error:", e); }
+                goToSection: function(id) {
+                    this.loadView('home');
+                    setTimeout(() => {
+                        const el = document.getElementById(id);
+                        if(el) el.scrollIntoView({ behavior: 'smooth' });
+                    }, 100);
+                },
 
-            // Hide Preloader
-            setTimeout(() => {
-                const pre = document.getElementById('preloader');
-                pre.style.opacity = '0';
-                setTimeout(() => pre.style.display='none', 800);
-            }, 1000);
-        }
+                loadGalleryGrid: function() {
+                    const grid = document.getElementById('gallery-grid');
+                    App.state.db.collection('gallery').orderBy('timestamp', 'desc').limit(20).get().then(snap => {
+                        let h = '';
+                        snap.forEach(doc => {
+                            const d = doc.data();
+                            const img = App.utils.resolveImg(d.image);
+                            const t = (App.state.lang === 'en' ? d.title : d.title_hi) || '';
+                            h += `
+                                <div class="grid-card" onclick="App.ui.openLightbox('${img}')">
+                                    <div class="grid-image-box"><img src="${img}"></div>
+                                    <div class="grid-caption">
+                                        <div class="grid-title">${t}</div>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                        grid.innerHTML = h || '<p>No images found.</p>';
+                    });
+                },
 
-        // --- 6. DYNAMIC LOADERS ---
-        function loadGallery() { 
-            db.collection('gallery').orderBy('timestamp','desc').limit(20).get().then(s => { 
-                let h=''; s.forEach(d => { 
-                    const u = resolveImg(d.data().image); 
-                    const t = (lang==='en' ? d.data().title : d.data().title_hi) || ''; 
-                    h += `<div class="premium-item" onclick="viewImage('${u}')">
-                        <div class="premium-img-box"><img src="${u}"></div>
-                        ${t ? `<div class="premium-caption"><div class="pc-title">${t}</div></div>` : ''}
-                    </div>`; 
-                }); 
-                document.getElementById('gal-grid').innerHTML = h || '<p style="text-align:center; width:100%;">Gallery Empty.</p>'; 
-            }); 
-        }
-        
-        function loadAchievements() { 
-            db.collection('achievements').orderBy('timestamp','desc').limit(10).get().then(s => { 
-                let h=''; s.forEach(d => { 
-                    const u = resolveImg(d.data().image); 
-                    const t = (lang==='en' ? d.data().title : d.data().title_hi) || 'Achievement'; 
-                    h += `<div class="premium-item" onclick="viewImage('${u}')">
-                        <div class="premium-img-box"><img src="${u}"></div>
-                        <div class="premium-caption"><div class="pc-title">${t}</div><div style="font-size:0.7rem; color:var(--gold); text-transform:uppercase; margin-top:5px; font-weight:700;">Proud Moment</div></div>
-                    </div>`; 
-                }); 
-                document.getElementById('ach-grid').innerHTML = h || '<p style="text-align:center; width:100%;">No records found.</p>'; 
-            }); 
-        }
+                loadAchievementsGrid: function() {
+                    const grid = document.getElementById('achievements-grid');
+                    App.state.db.collection('achievements').orderBy('timestamp', 'desc').limit(15).get().then(snap => {
+                        let h = '';
+                        snap.forEach(doc => {
+                            const d = doc.data();
+                            const img = App.utils.resolveImg(d.image);
+                            const t = (App.state.lang === 'en' ? d.title : d.title_hi) || 'Achievement';
+                            h += `
+                                <div class="grid-card" onclick="App.ui.openLightbox('${img}')">
+                                    <div class="grid-image-box"><img src="${img}"></div>
+                                    <div class="grid-caption">
+                                        <div class="grid-title">${t}</div>
+                                        <div class="grid-subtitle">Proud Moment</div>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                        grid.innerHTML = h || '<p>No records found.</p>';
+                    });
+                }
+            },
 
-        // --- 7. FORM HANDLER ---
-        function submitContact(e) {
-            e.preventDefault();
-            const form = document.getElementById('contact-form');
-            const btn = document.getElementById('c-btn-txt');
-            const originalHTML = btn.innerHTML;
-            
-            btn.innerHTML = `<span>SENDING...</span> <span class="material-icons" style="animation:spin 1s linear infinite;">refresh</span>`;
-            btn.disabled = true;
+            /**
+             * UI & INTERACTION MODULE
+             */
+            ui: {
+                toggleDrawer: function() {
+                    const drawer = document.getElementById('mobile-drawer');
+                    const backdrop = document.getElementById('drawer-backdrop');
+                    if(drawer.classList.contains('is-open')) {
+                        drawer.classList.remove('is-open');
+                        backdrop.style.display = 'none';
+                    } else {
+                        drawer.classList.add('is-open');
+                        backdrop.style.display = 'block';
+                    }
+                },
 
-            const formData = new FormData(form);
-            const json = JSON.stringify(Object.fromEntries(formData));
+                setupIntersectionObserver: function() {
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('is-visible');
+                            }
+                        });
+                    }, { threshold: 0.1 });
 
-            fetch('https://api.web3forms.com/submit', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                body: json
-            })
-            .then(async (response) => {
-                if (response.status == 200) {
-                    form.style.display = 'none';
-                    document.getElementById('c-success').style.display = 'block';
-                } else { alert("Submission failed."); }
-            })
-            .catch(error => { console.log(error); alert("Error sending message."); })
-            .finally(() => { btn.innerHTML = originalHTML; btn.disabled = false; });
-        }
+                    // Observe dynamically added sections later
+                    setTimeout(() => {
+                        document.querySelectorAll('.reveal-section').forEach(el => observer.observe(el));
+                    }, 1000);
+                },
 
-        // --- 8. LIGHTBOX & ZOOM LOGIC ---
-        function viewImage(src){ 
-            currentZoom = 1;
-            const img = document.getElementById('lb-img');
-            img.src = src; 
-            img.style.transform = `scale(${currentZoom})`;
-            document.getElementById('lightbox').style.display = 'flex'; 
-        }
+                openNoticesModal: function() {
+                    document.getElementById('all-notices-modal').style.display = 'flex';
+                },
 
-        function closeLightbox() {
-            document.getElementById('lightbox').style.display = 'none';
-        }
+                openNoticeDetail: function(index) {
+                    const d = App.state.notices[index];
+                    const lang = App.state.lang;
+                    
+                    document.getElementById('nd-date').innerText = d.date;
+                    document.getElementById('nd-title').innerText = d.title;
+                    document.getElementById('nd-desc').innerText = (lang === 'en' ? d.desc : d.desc_hi) || d.desc || '';
+                    
+                    const linkBox = document.getElementById('nd-link-container');
+                    if(d.link) {
+                        linkBox.innerHTML = `
+                            <a href="${d.link}" target="_blank" style="display:inline-flex; align-items:center; gap:8px; padding:12px 25px; background:var(--navy-dark); color:white; border-radius:50px; font-weight:700; transition:0.3s;">
+                                <span class="material-icons">description</span> Download Attachment
+                            </a>
+                        `;
+                    } else { linkBox.innerHTML = ''; }
 
-        function zoomImg(factor) {
-            currentZoom += factor;
-            if(currentZoom < 1) currentZoom = 1; // Min Zoom
-            if(currentZoom > 3) currentZoom = 3; // Max Zoom
-            document.getElementById('lb-img').style.transform = `scale(${currentZoom})`;
-        }
+                    document.getElementById('all-notices-modal').style.display = 'none';
+                    document.getElementById('notice-detail-modal').style.display = 'flex';
+                },
 
-        function openNotice(i){ 
-            const d = notices[i]; 
-            document.getElementById('m-date').innerText = d.date; 
-            document.getElementById('m-title').innerText = d.title; 
-            document.getElementById('m-desc').innerText = (lang==='en' ? d.desc : d.desc_hi) || d.desc || ''; 
-            
-            const linkHtml = d.link ? `<a href="${d.link}" target="_blank" style="display:inline-flex; align-items:center; gap:8px; padding:12px 30px; background:var(--navy); color:white; border-radius:50px; text-decoration:none; font-weight:600; font-size:0.9rem; transition:0.3s; box-shadow:0 4px 15px rgba(0,0,0,0.2);">
-                <span class="material-icons">description</span> Download Document
-            </a>` : '';
-            
-            document.getElementById('m-link').innerHTML = linkHtml; 
-            document.getElementById('all-notices-modal').style.display = 'none'; 
-            document.getElementById('notice-modal').style.display = 'flex'; 
-        }
+                openLightbox: function(src) {
+                    App.state.currentZoom = 1;
+                    const img = document.getElementById('lightbox-image');
+                    img.src = src;
+                    img.style.transform = `scale(1)`;
+                    document.getElementById('lightbox-overlay').style.display = 'flex';
+                },
 
-        // --- 9. SECURITY (DEBUGGER TRAP) ---
-        setInterval(function() {
-            var before = new Date().getTime();
-            debugger; 
-            var after = new Date().getTime();
-            if (after - before > 100) { window.location.reload(); }
-        }, 500);
+                closeLightbox: function() {
+                    document.getElementById('lightbox-overlay').style.display = 'none';
+                },
 
-        window.onload = initLoad;
+                zoomImage: function(factor) {
+                    let z = App.state.currentZoom + factor;
+                    if(z < 0.5) z = 0.5;
+                    if(z > 3.5) z = 3.5;
+                    App.state.currentZoom = z;
+                    document.getElementById('lightbox-image').style.transform = `scale(${z})`;
+                }
+            },
+
+            /**
+             * UTILITIES & SECURITY MODULE
+             */
+            utils: {
+                toggleLanguage: function() {
+                    App.state.lang = (App.state.lang === 'en') ? 'hi' : 'en';
+                    // Update Hero Text Immediately
+                    if(App.state.lang === 'hi') {
+                        document.getElementById('hero-heading').innerHTML = "सशक्त मन,<br>नेतृत्व का निर्माण";
+                        document.getElementById('hero-subheading').innerText = "1980 से शिक्षा में उत्कृष्टता की विरासत";
+                    } else {
+                        document.getElementById('hero-heading').innerHTML = "School Of Excellence<br>Bal Vinay Mandir";
+                        document.getElementById('hero-subheading').innerText = "Empowering Minds, Creating Leaders Since 1980";
+                    }
+                    // Re-render Data
+                    App.init(); // Soft Reload
+                },
+
+                resolveImg: function(src) {
+                    if (!src) return '';
+                    if (src.startsWith('http') || src.startsWith('data:')) return src;
+                    return `./assets/images/${src}`;
+                },
+
+                getYTId: function(url) {
+                    if (!url) return null;
+                    const m = url.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/);
+                    return (m && m[2].length === 11) ? m[2] : null;
+                }
+            },
+
+            security: {
+                startWatchdog: function() {
+                    // Anti-Inspect Trap
+                    setInterval(function() {
+                        const t0 = Date.now();
+                        debugger;
+                        const t1 = Date.now();
+                        if (t1 - t0 > 100) {
+                            // User is likely inspecting code. Reload to clear console context.
+                            window.location.reload();
+                        }
+                    }, 1000);
+                }
+            }
+        };
+
+        // BOOTSTRAP THE APPLICATION
+        window.onload = function() {
+            App.init();
+        };
 
     </script>
 </body>
