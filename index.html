@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>School of Excellence | Bal Vinay Mandir</title>
+    <link rel="icon" type="image/jpeg" href="./assets/images/logo.jpeg">
+    
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style>
+        :root {
+            /* --- ULTRA ROYAL PALETTE --- */
+            --navy-dark: #020c1b;
+            --navy: #0a192f;
+            --navy-light: #172a45;
+            
+            /* Realistic Gold Gradient */
+            --gold: #d4af37;
+            --gold-gradient: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            --gold-text: #eebb4d;
+            
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --white: #ffffff;
+            --bg-royal: #fdfbf7; /* Slight cream for paper feel */
+            
+            --glass: rgba(255, 255, 255, 0.90);
+            --shadow-card: 0 10px 30px -15px rgba(2, 12, 27, 0.2);
+            --border-gold: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        /* --- RESET & TYPOGRAPHY --- */
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Lato', sans-serif; -webkit-tap-highlight-color: transparent; }
+        html { scroll-behavior: smooth; }
+        body { background: var(--bg-royal); color: var(--text-dark); overflow-x: hidden; }
+        
+        h1, h2, h3 { font-family: 'Playfair Display', serif; color: var(--navy); }
+        .royal-font { font-family: 'Cinzel', serif; } /* For Logos & Special Text */
+        
+        img { user-select: none; pointer-events: none; display: block; width: 100%; }
+
+        /* --- TICKER (MARQUEE) --- */
+        .top-bar {
+            background: #7f1d1d; height: 38px; display: flex; align-items: center; 
+            border-bottom: 2px solid #b38728; position: relative; z-index: 2000;
+        }
+        .ticker-lbl {
+            background: #450a0a; color: #fbf5b7; font-family: 'Cinzel', serif; font-weight: 700; font-size: 0.7rem;
+            padding: 0 20px; height: 100%; display: flex; align-items: center; position: absolute; left: 0; z-index: 10;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.3); letter-spacing: 1px;
+        }
+        .ticker-track { display: flex; white-space: nowrap; animation: scroll 40s linear infinite; padding-left: 110px; height: 100%; align-items: center; }
+        .ticker-item { color: #fff; font-size: 0.8rem; margin-right: 50px; display: flex; align-items: center; gap: 8px; font-weight: 500; }
+        .ticker-star { color: var(--gold); font-size: 14px; animation: shine 2s infinite; }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+        @keyframes shine { 50% { opacity: 0.5; transform: scale(1.2); } }
+
+        /* --- HEADER (ROYAL GLASS) --- */
+        header {
+            background: var(--glass); backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            position: sticky; top: 0; z-index: 1000; transition: 0.3s;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        .nav-container {
+            max-width: 1300px; margin: 0 auto; padding: 0 20px; height: 80px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .brand { display: flex; align-items: center; gap: 15px; text-decoration: none; }
+        .logo-box { 
+            position: relative; padding: 2px; border-radius: 50%; 
+            background: var(--gold-gradient); box-shadow: 0 4px 10px rgba(212, 175, 55, 0.4);
+        }
+        .logo { height: 50px; width: 50px; border-radius: 50%; border: 2px solid white; object-fit: cover; }
+        .brand-txt { display: flex; flex-direction: column; }
+        .brand-txt h1 { font-size: 1.4rem; font-weight: 700; line-height: 1; letter-spacing: -0.5px; }
+        .brand-txt p { font-size: 0.65rem; color: #b38728; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-top: 3px; font-family: 'Cinzel', serif; }
+
+        .desk-menu { display: flex; gap: 30px; list-style: none; align-items: center; }
+        .desk-menu a { 
+            text-decoration: none; color: var(--navy); font-weight: 600; font-size: 0.85rem; 
+            text-transform: uppercase; letter-spacing: 1px; position: relative; padding: 5px 0;
+            font-family: 'Lato', sans-serif;
+        }
+        .desk-menu a::after {
+            content:''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
+            background: var(--gold-gradient); transition: 0.3s;
+        }
+        .desk-menu a:hover { color: #b38728; }
+        .desk-menu a:hover::after { width: 100%; }
+
+        .controls { display: flex; align-items: center; gap: 15px; }
+        .btn-lang {
+            padding: 6px 16px; border: 1px solid #b38728; border-radius: 50px;
+            background: transparent; color: #b38728; font-weight: 700; font-size: 0.7rem; cursor: pointer;
+            transition: 0.3s; font-family: 'Cinzel', serif;
+        }
+        .btn-lang:hover { background: var(--gold-gradient); color: var(--navy); border-color: transparent; }
+        
+        .menu-toggle { display: none; font-size: 28px; color: var(--navy); cursor: pointer; }
+
+        /* --- HERO SECTION --- */
+        .hero { 
+            height: 80vh; min-height: 550px; position: relative; display: flex; 
+            align-items: center; justify-content: center; text-align: center; overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute; inset: 0; z-index: 1;
+            background: linear-gradient(to bottom, rgba(10, 25, 47, 0.7), rgba(10, 25, 47, 0.6)), url('./assets/images/school.jpg') center/cover fixed;
+            animation: kenburns 30s infinite alternate;
+        }
+        @keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.15); } }
+        
+        .hero-content { position: relative; z-index: 2; max-width: 900px; padding: 20px; }
+        .hero-title { 
+            font-size: clamp(2.5rem, 6vw, 5rem); color: white; line-height: 1.1; margin-bottom: 20px; 
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5); font-family: 'Cinzel', serif; letter-spacing: 1px;
+        }
+        .hero-badge {
+            display: inline-block; padding: 10px 30px; background: rgba(255,255,255,0.1); 
+            backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.3);
+            color: var(--gold-text); text-transform: uppercase; letter-spacing: 3px; font-weight: 700; font-size: 0.8rem;
+            margin-bottom: 30px; border-radius: 50px; font-family: 'Lato';
+        }
+
+        /* --- LAYOUT --- */
+        .main-container { max-width: 1300px; margin: 0 auto; padding: 60px 20px; display: grid; grid-template-columns: 3fr 1fr; gap: 50px; }
+
+        /* --- SECTIONS --- */
+        .section-wrap { margin-bottom: 80px; scroll-margin-top: 100px; }
+        
+        /* Royal Divider Header */
+        .sec-head { text-align: center; margin-bottom: 40px; position: relative; }
+        .sec-title { font-size: 2.5rem; color: var(--navy); font-family: 'Cinzel', serif; display: inline-block; background: var(--bg-royal); padding: 0 20px; position: relative; z-index: 2; }
+        .sec-line { position: absolute; top: 50%; left: 0; width: 100%; height: 1px; background: #d4af37; z-index: 1; opacity: 0.5; }
+        .sec-icon { display: block; font-size: 24px; color: var(--gold); margin-bottom: 5px; }
+
+        /* Content Card */
+        .royal-card { 
+            display: flex; gap: 40px; align-items: flex-start; 
+            background: white; padding: 30px; border-radius: 4px; /* Slightly squarish for formal look */
+            box-shadow: var(--shadow-card); border: var(--border-gold);
+        }
+        .royal-img { 
+            width: 45%; border-radius: 2px; 
+            box-shadow: 10px 10px 0 var(--gold-light), 10px 10px 0 2px #d4af37;
+            margin-bottom: 10px;
+        }
+        .royal-txt { flex: 1; font-size: 1.05rem; line-height: 1.8; color: #475569; text-align: justify; }
+
+        /* Achievements & Gallery Grid (PREMIUM) */
+        .grid-premium { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 25px; }
+        .premium-item { 
+            background: white; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow-card); 
+            border: 1px solid rgba(0,0,0,0.05); transition: 0.3s; position: relative;
+        }
+        .premium-item:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.15); border-color: #d4af37; }
+        .premium-img-box { height: 200px; overflow: hidden; background: #f8fafc; display: flex; align-items: center; justify-content: center; }
+        .premium-img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .premium-item:hover .premium-img-box img { transform: scale(1.1); }
+        
+        .premium-caption { 
+            padding: 15px; text-align: center; background: white; border-top: 1px solid #f1f5f9; position: relative; z-index: 2;
+        }
+        .pc-title { font-weight: 700; color: var(--navy); font-size: 0.95rem; line-height: 1.3; font-family: 'Playfair Display'; }
+        .pc-sub { font-size: 0.75rem; color: #b38728; text-transform: uppercase; margin-top: 5px; font-weight: 700; }
+
+        /* Facilities Stats */
+        .stats-royal {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+            background: var(--navy); color: white; padding: 40px; border-radius: 8px;
+            position: relative; overflow: hidden; text-align: center;
+        }
+        .stats-royal::before { content:''; position:absolute; top:0; left:0; width:100%; height:5px; background: var(--gold-gradient); }
+        .sr-num { font-family: 'Cinzel'; font-size: 2.5rem; color: var(--gold-text); margin-bottom: 5px; }
+        .sr-lbl { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; }
+
+        /* Sidebar & Notice */
+        .sidebar { position: sticky; top: 100px; }
+        .notice-board { 
+            background: white; border: var(--border-gold); border-radius: 8px; 
+            box-shadow: var(--shadow-card); overflow: hidden; margin-bottom: 30px; 
+        }
+        .nb-header { 
+            background: var(--navy); color: white; padding: 20px; display: flex; align-items: center; gap: 10px;
+            font-family: 'Cinzel'; letter-spacing: 1px; font-size: 1.1rem; border-bottom: 3px solid #d4af37;
+        }
+        .nb-content { max-height: 500px; overflow-y: auto; }
+        .n-item { padding: 18px 20px; border-bottom: 1px solid #f1f5f9; cursor: pointer; transition: 0.2s; border-left: 3px solid transparent; }
+        .n-item:hover { background: #fffbeb; border-left-color: #d4af37; }
+        .n-date { font-size: 0.7rem; color: #b38728; font-weight: 700; display: block; margin-bottom: 4px; text-transform: uppercase; }
+        .n-title { font-size: 0.95rem; color: #334155; line-height: 1.4; font-weight: 600; }
+
+        .adm-banner { 
+            background: linear-gradient(135deg, #0a192f 0%, #172a45 100%); 
+            padding: 40px 20px; text-align: center; border-radius: 8px; border: 2px solid #d4af37;
+            color: white; box-shadow: var(--shadow-card);
+        }
+
+        /* --- FAB & DRAWER (Mobile) --- */
+        .fab {
+            display: none; position: fixed; bottom: 25px; right: 25px; z-index: 4000;
+            background: var(--gold-gradient); color: var(--navy);
+            padding: 12px 25px; border-radius: 50px; font-weight: 700; font-family: 'Cinzel';
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4); border: 2px solid white; cursor: pointer;
+            animation: bounceIn 0.6s; align-items: center; gap: 8px;
+        }
+        @keyframes bounceIn { from { transform: scale(0); } to { transform: scale(1); } }
+        
+        .drawer-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 2999; display: none; backdrop-filter: blur(4px); }
+        .drawer {
+            position: fixed; top: 0; right: -300px; width: 280px; height: 100vh;
+            background: var(--navy-dark); z-index: 3000; padding: 30px 20px;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: -5px 0 20px rgba(0,0,0,0.5);
+            border-left: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        .drawer.active { right: 0; }
+        .d-link { 
+            display: block; color: rgba(255,255,255,0.8); text-decoration: none; 
+            font-size: 1.1rem; padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.1); 
+            font-family: 'Cinzel'; transition: 0.2s;
+        }
+        .d-link:active { color: var(--gold); padding-left: 10px; }
+
+        /* --- FOOTER --- */
+        footer { 
+            background: var(--navy-dark); color: #94a3b8; padding: 70px 20px 30px; margin-top: 80px; 
+            border-top: 6px solid #d4af37; text-align: center; 
+        }
+        .ft-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left; }
+        .ft-col h4 { color: #fbf5b7; margin-bottom: 20px; font-family: 'Cinzel'; letter-spacing: 1px; }
+        .ft-col p, .ft-col a { color: #cbd5e1; margin-bottom: 12px; display: block; text-decoration: none; font-size: 0.9rem; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 900px) {
+            .nav-container { padding: 0 15px; height: 70px; }
+            .desk-menu { display: none; } .menu-toggle { display: block; }
+            .logo { width: 45px; height: 45px; } .brand-txt h1 { font-size: 1.1rem; } .brand-txt p { display: none; }
+            
+            .main-container { grid-template-columns: 1fr; padding: 40px 15px; gap: 40px; }
+            .notice-board { display: none; } .fab { display: flex; }
+            
+            .royal-card { flex-direction: column; gap: 20px; padding: 20px; }
+            .royal-img { width: 100%; margin-bottom: 0; }
+            
+            .stats-royal { grid-template-columns: 1fr 1fr; gap: 30px; }
+            .sec-title { font-size: 1.8rem; }
+            
+            .ft-grid { text-align: center; }
+        }
+
+        /* --- MODALS --- */
+        .modal-bg { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 5000; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+        .modal-content { 
+            background: white; width: 90%; max-width: 600px; border-radius: 8px; padding: 30px; 
+            position: relative; max-height: 80vh; overflow-y: auto; border: 2px solid var(--gold);
+        }
+        .close-btn { position: absolute; top: 15px; right: 15px; font-size: 24px; color: #999; cursor: pointer; }
+    </style>
+    
+    <script>document.addEventListener('contextmenu',e=>e.preventDefault());</script>
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="ticker-lbl">UPDATES</div>
+        <div class="ticker-track" id="ticker-content"><div class="ticker-item">Loading updates...</div></div>
+    </div>
+
+    <header>
+        <div class="nav-container">
+            <a href="#" class="brand">
+                <div class="logo-box"><img src="./assets/images/logo.jpeg" class="logo" onerror="this.src='https://via.placeholder.com/60'"></div>
+                <div class="brand-txt">
+                    <h1>Bal Vinay Mandir</h1>
+                    <p>School of Excellence</p>
+                </div>
+            </a>
+            <div class="controls">
+                <ul class="desk-menu" id="nav-desk"></ul>
+                <button class="btn-lang" onclick="toggleLang()">EN / HI</button>
+                <span class="material-icons menu-toggle" onclick="toggleDrawer()">menu</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="drawer-overlay" id="drawer-ol" onclick="toggleDrawer()"></div>
+    <div class="drawer" id="drawer">
+        <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:20px; border-bottom:1px solid rgba(255,255,255,0.1); margin-bottom:20px;">
+            <span style="color:var(--gold); font-family:'Cinzel'; font-weight:700;">MENU</span>
+            <span class="material-icons" style="color:white; cursor:pointer;" onclick="toggleDrawer()">close</span>
+        </div>
+        <div id="nav-mob"></div>
+    </div>
+
+    <div class="fab" onclick="openAllNotices()">
+        <span class="material-icons">notifications_active</span> NOTICES
+    </div>
+
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <h1 class="hero-title" id="hero-head">Empowering Minds,<br>Creating Leaders</h1>
+            <div class="hero-badge" id="hero-sub">Excellence in Education Since 1980</div>
+        </div>
+    </section>
+
+    <div class="main-container">
+        <main>
+            <div id="dynamic-content" style="min-height:300px;">
+                <div style="text-align:center; padding:100px 0; color:#ccc;">LOADING...</div>
+            </div>
+            <div id="custom-pages"></div>
+        </main>
+
+        <aside class="sidebar">
+            <div class="notice-board">
+                <div class="nb-header"><span class="material-icons">campaign</span> &nbsp; Notice Board</div>
+                <div class="nb-content" id="notice-list-desk"><div style="padding:20px; text-align:center; color:#999;">Loading...</div></div>
+            </div>
+
+            <div class="adm-banner">
+                <span class="material-icons" style="font-size:40px; color:#fbf5b7; margin-bottom:10px;">school</span>
+                <h3 style="color:white; font-size:1.4rem; font-family:'Cinzel'; margin-bottom:5px;">Admissions Open</h3>
+                <p style="opacity:0.8; font-size:0.9rem; margin-bottom:20px;">Session 2026-27</p>
+                <button onclick="document.getElementById('contact').scrollIntoView()" style="background:var(--gold-gradient); color:var(--navy); padding:12px 30px; border-radius:50px; font-weight:700; border:none; cursor:pointer; font-family:'Cinzel';">Apply Now</button>
+            </div>
+        </aside>
+    </div>
+
+    <footer>
+        <div class="ft-grid">
+            <div class="ft-col">
+                <img src="./assets/images/logo.jpeg" style="width:70px; border-radius:50%; border:2px solid #b38728; margin-bottom:15px; opacity:0.9;">
+                <p>Bal Vinay Mandir H.S. School<br>Chatri Bagh, Indore (M.P.)</p>
+                <p>Phone: 0731-123456</p>
+            </div>
+            <div class="ft-col">
+                <h4>Academics</h4>
+                <a href="#">Curriculum</a>
+                <a href="#">Faculty</a>
+                <a href="#">Results</a>
+            </div>
+            <div class="ft-col">
+                <h4>Legal</h4>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Mandatory Disclosure</a>
+            </div>
+        </div>
+        <div style="margin-top:50px; font-size:0.75rem; color:#64748b;">&copy; 2026 Bal Vinay Mandir. Premium Education.</div>
+    </footer>
+
+    <div id="notice-modal" class="modal-bg">
+        <div class="modal-content">
+            <span class="material-icons close-btn" onclick="document.getElementById('notice-modal').style.display='none'">close</span>
+            <div id="m-date" style="color:#b38728; font-weight:700; font-size:0.8rem; margin-bottom:5px;"></div>
+            <h3 id="m-title" style="margin-bottom:15px; line-height:1.4;"></h3>
+            <div style="width:50px; height:3px; background:var(--gold); margin-bottom:15px;"></div>
+            <div id="m-desc" style="color:#475569; line-height:1.6; white-space:pre-line; margin-bottom:20px;"></div>
+            <div id="m-link"></div>
+        </div>
+    </div>
+
+    <div id="all-notices-modal" class="modal-bg">
+        <div class="modal-content">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #eee; padding-bottom:10px; margin-bottom:10px;">
+                <h3 style="margin:0; font-family:'Cinzel'; font-size:1.2rem;">Notices</h3>
+                <span class="material-icons" style="cursor:pointer;" onclick="document.getElementById('all-notices-modal').style.display='none'">close</span>
+            </div>
+            <div id="notice-list-mob"></div>
+        </div>
+    </div>
+
+    <div id="lightbox" class="modal-bg" onclick="this.style.display='none'">
+        <span class="material-icons close-btn" style="color:white; top:30px; right:30px;">close</span>
+        <img id="lb-img" style="max-width:90%; max-height:85vh; border:4px solid white; box-shadow:0 0 50px rgba(0,0,0,0.5);" onclick="event.stopPropagation()">
+    </div>
+
+    <script>
+        // INIT
+        const firebaseConfig = { apiKey: "AIzaSyBEqzUbus1kXmcIXwI0QlOIGa3IV1zqXVw", authDomain: "ebvmindore.firebaseapp.com", projectId: "ebvmindore", storageBucket: "ebvmindore.firebasestorage.app", messagingSenderId: "545685474288", appId: "1:545685474288:web:0bc816ef47dfaf63acab35", measurementId: "G-5HL4PRSHV9" };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        let lang='en'; let notices=[];
+        const SECTIONS = [
+            { id:'about', en:'About', hi:'परिचय' }, { id:'principal', en:'Principal', hi:'प्राचार्य' },
+            { id:'facilities', en:'Facilities', hi:'सुविधाएं' }, { id:'admission', en:'Admission', hi:'प्रवेश' },
+            { id:'tour', en:'Campus Tour', hi:'परिसर' }, { id:'achievements', en:'Achievements', hi:'उपलब्धियां' },
+            { id:'gallery', en:'Gallery', hi:'गैलरी' }, { id:'contact', en:'Contact', hi:'संपर्क' }
+        ];
+
+        // LOGIC
+        function toggleDrawer(){ const d=document.getElementById('drawer'); const o=document.getElementById('drawer-ol'); if(d.classList.contains('active')){d.classList.remove('active'); o.style.display='none';}else{d.classList.add('active'); o.style.display='block';} }
+        function toggleLang(){ lang=lang==='en'?'hi':'en'; document.getElementById('hero-head').innerHTML=lang==='en'?"Empowering Minds,<br>Creating Leaders":"सशक्त मन,<br>नेतृत्व का निर्माण"; render(); loadNotices(); }
+        function openAllNotices(){ document.getElementById('notice-list-mob').innerHTML=document.getElementById('notice-list-desk').innerHTML; document.getElementById('all-notices-modal').style.display='flex'; }
+        const resolveImg=(src)=>(!src)?'':(src.startsWith('http')||src.startsWith('data:')?src:`./assets/images/${src}`);
+        const getYTId=(url)=>{if(!url)return null;const m=url.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/);return (m&&m[2].length===11)?m[2]:null;};
+
+        async function render() {
+            const dNav=document.getElementById('nav-desk'); const mNav=document.getElementById('nav-mob');
+            const main=document.getElementById('dynamic-content'); const cust=document.getElementById('custom-pages');
+            
+            let dh=`<li><a href="#">${lang==='en'?'Home':'होम'}</a></li>`; let mh=`<a href="#" class="d-link" onclick="toggleDrawer()">${lang==='en'?'Home':'होम'}</a>`;
+            
+            const [cSnap,tSnap,pSnap] = await Promise.all([db.collection('siteConfig').get(), db.collection('siteContent').get(), db.collection('custom_pages').get()]);
+            let config={}; cSnap.forEach(d=>config[d.id]=d.data());
+            let content={}; tSnap.forEach(d=>content[d.id]=d.data());
+            
+            main.innerHTML='';
+            
+            SECTIONS.forEach(sec => {
+                if(config[sec.id]?.isVisible!==false){
+                    const d=content[sec.id]||{}; const t=lang==='en'?(d.title_en||sec.en):(d.title_hi||sec.hi);
+                    dh+=`<li><a href="#${sec.id}">${t}</a></li>`; mh+=`<a href="#${sec.id}" class="d-link" onclick="toggleDrawer()">${t}</a>`;
+                    
+                    let body=''; const img=resolveImg(d.image); const txt=lang==='en'?(d.text_en||''):(d.text_hi||'');
+                    
+                    if(sec.id==='tour'){
+                        const vid=getYTId(d.video);
+                        body=vid?`<div style="position:relative; padding-bottom:56.25%; height:0; border-radius:4px; overflow:hidden; background:black; border:2px solid #d4af37;"><iframe src="https://www.youtube.com/embed/${vid}" style="position:absolute; inset:0; width:100%; height:100%; border:0;" allowfullscreen></iframe></div>`:'<div style="padding:40px; text-align:center; background:#f1f5f9;">Video Unavailable</div>';
+                        if(txt) body+=`<p style="margin-top:20px; text-align:center;">${txt}</p>`;
+                    } else if(sec.id==='facilities'){
+                        body=`<div class="stats-royal"><div><div class="sr-num">${d.stat1||'40+'}</div><div class="sr-lbl">Years</div></div><div><div class="sr-num">${d.stat2||'2K'}</div><div class="sr-lbl">Students</div></div><div><div class="sr-num">${d.stat3||'100%'}</div><div class="sr-lbl">Results</div></div><div><div class="sr-num">${d.stat4||'50+'}</div><div class="sr-lbl">Faculty</div></div></div>`;
+                        if(txt||img) body+=`<div class="royal-card" style="margin-top:40px;">${img?`<img src="${img}" class="royal-img">`:''}<div class="royal-txt">${txt}</div></div>`;
+                    } else if(sec.id==='gallery'){ body=`<div class="grid-premium" id="gal-grid"></div>`; setTimeout(loadGallery,500); }
+                    else if(sec.id==='achievements'){ body=`<div class="grid-premium" id="ach-grid"></div>`; setTimeout(loadAchievements,500); }
+                    else if(sec.id==='contact'){
+                         body=`<div class="royal-card"><div style="flex:1; background:#f8fafc; padding:25px; border-radius:4px;"><p><strong>📍 Address:</strong><br>${d.address||''}</p><p style="margin-top:15px;"><strong>📞 Phone:</strong><br>${d.phone||''}</p></div>${d.map?`<div style="flex:1; height:250px; overflow:hidden; border-radius:4px;"><iframe src="${d.map}" width="100%" height="100%" style="border:0;"></iframe></div>`:''}</div>`;
+                    } else {
+                        body=`<div class="royal-card">${img?`<img src="${img}" class="royal-img">`:''}<div class="royal-txt">${txt}</div></div>`;
+                    }
+                    main.innerHTML+=`<section id="${sec.id}" class="section-wrap"><div class="sec-head"><span class="material-icons sec-icon">auto_awesome</span><h2 class="sec-title">${t}</h2><div class="sec-line"></div></div>${body}</section>`;
+                }
+            });
+            
+            cust.innerHTML='';
+            pSnap.forEach(doc=>{
+                const d=doc.data(); const cid=`p-${doc.id}`; const t=lang==='en'?d.title_en:(d.title_hi||d.title_en); const c=lang==='en'?d.content_en:(d.content_hi||d.content_en);
+                dh+=`<li><a href="#${cid}">${t}</a></li>`; mh+=`<a href="#${cid}" class="d-link" onclick="toggleDrawer()">${t}</a>`;
+                cust.innerHTML+=`<section id="${cid}" class="section-wrap"><div class="sec-head"><h2 class="sec-title">${t}</h2><div class="sec-line"></div></div><div class="royal-card">${d.image?`<img src="${resolveImg(d.image)}" class="royal-img">`:''}<div class="royal-txt">${c}</div></div></section>`;
+            });
+            dNav.innerHTML=dh; mNav.innerHTML=mh;
+        }
+
+        // --- DATA FETCH ---
+        function loadNotices(){
+            db.collection('notices').orderBy('date','desc').limit(20).onSnapshot(s=>{
+                let h=''; let t=''; notices=[];
+                s.forEach(doc=>{
+                    const d=doc.data(); const title=lang==='en'?(d.title_en||d.title):(d.title_hi||d.title); if(!title)return;
+                    notices.push({...d, title});
+                    h+=`<div class="n-item" onclick="openNotice(${notices.length-1})"><span class="n-date">${d.date}</span><div class="n-title">${title}</div></div>`;
+                    if(d.priority==='high') t+=`<div class="ticker-item"><span class="material-icons ticker-star">star</span> ${title}</div>`;
+                });
+                document.getElementById('notice-list-desk').innerHTML=h||'<div style="padding:20px; text-align:center;">No Notices</div>';
+                if(t) document.getElementById('ticker-content').innerHTML=t;
+            });
+        }
+        function openNotice(i){
+            const d=notices[i]; document.getElementById('m-date').innerText=d.date; document.getElementById('m-title').innerText=d.title;
+            document.getElementById('m-desc').innerText=(lang==='en'?d.desc:d.desc_hi)||d.desc||'';
+            document.getElementById('m-link').innerHTML=d.link?`<a href="${d.link}" target="_blank" style="display:inline-block; padding:10px 20px; background:var(--navy); color:white; border-radius:50px; text-decoration:none;">View Document</a>`:'';
+            document.getElementById('all-notices-modal').style.display='none'; document.getElementById('notice-modal').style.display='flex';
+        }
+        // FIXED CAPTIONS
+        function loadGallery() { db.collection('gallery').orderBy('timestamp','desc').limit(10).get().then(s => { let h=''; s.forEach(d=>{ const u=resolveImg(d.data().image); const t=(lang==='en'?d.data().title:d.data().title_hi)||'Image'; h+=`<div class="premium-item" onclick="viewImage('${u}')"><div class="premium-img-box"><img src="${u}"></div><div class="premium-caption"><div class="pc-title">${t}</div></div></div>`; }); document.getElementById('gal-grid').innerHTML=h; }); }
+        function loadAchievements() { db.collection('achievements').orderBy('timestamp','desc').limit(10).get().then(s => { let h=''; s.forEach(d=>{ const u=resolveImg(d.data().image); const t=(lang==='en'?d.data().title:d.data().title_hi)||'Achievement'; h+=`<div class="premium-item"><div class="premium-img-box"><img src="${u}"></div><div class="premium-caption"><div class="pc-title">${t}</div><div class="pc-sub">Excellent</div></div></div>`; }); document.getElementById('ach-grid').innerHTML=h; }); }
+        function viewImage(s){ document.getElementById('lb-img').src=s; document.getElementById('lightbox').style.display='flex'; }
+
+        window.onload=()=>{ render(); loadNotices(); }
+    </script>
+</body>
+</html>
