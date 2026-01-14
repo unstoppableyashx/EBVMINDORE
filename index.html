@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0a192f">
-    <meta name="description" content="Bal Vinay Mandir - School of Excellence. Providing quality education since 1980.">
+    <meta name="description" content="Bal Vinay Mandir - A legacy of excellence in education. Providing holistic development since 1980.">
+    <meta name="keywords" content="School, Education, Indore, CBSE, Bal Vinay Mandir, Best School, MPBSE">
+    <meta name="author" content="Bal Vinay Mandir IT Team">
     
     <title>School of Excellence | Bal Vinay Mandir</title>
+    
     <link rel="icon" type="image/jpeg" href="./assets/images/logo.jpeg">
     
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -14,48 +17,58 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <style>
-        /* ==============================================
-           1. CORE VARIABLES & THEME CONFIGURATION
-        =============================================== */
+        /* -----------------------------------------------------------
+           1. ROOT VARIABLES (THEME CONFIGURATION)
+        ----------------------------------------------------------- */
         :root {
-            /* --- ROYAL COLOR PALETTE --- */
+            /* --- PRIMARY PALETTE (ROYAL NAVY) --- */
             --navy-dark: #020c1b;
             --navy: #0a192f;
             --navy-light: #112240;
             --navy-lighter: #233554;
             
-            /* REALISTIC GOLD GRADIENT */
+            /* --- ACCENT PALETTE (GOLD) --- */
             --gold: #d4af37;
             --gold-dim: #c5a028;
-            --gold-gradient: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            --gold-light: #fbf5b7;
+            --gold-gradient: linear-gradient(135deg, #bf953f 0%, #fcf6ba 40%, #b38728 60%, #fbf5b7 100%);
             --gold-text: #eebb4d;
             
-            /* NEUTRALS */
+            /* --- NEUTRALS --- */
             --text-dark: #1e293b;
+            --text-muted: #64748b;
             --text-light: #8892b0;
             --text-white: #e6f1ff;
-            --bg-body: #f8fafc; /* Clean Paper White */
+            --bg-body: #f8fafc;
             --white: #ffffff;
             
-            /* EFFECTS */
+            /* --- GLASSMORPHISM --- */
             --glass: rgba(255, 255, 255, 0.95);
-            --glass-dark: rgba(10, 25, 47, 0.85);
+            --glass-dark: rgba(10, 25, 47, 0.95);
+            
+            /* --- SHADOWS --- */
             --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
             --shadow-card: 0 10px 30px -15px rgba(2, 12, 27, 0.2);
-            --shadow-hover: 0 20px 30px -15px rgba(2, 12, 27, 0.3);
+            --shadow-hover: 0 20px 40px -15px rgba(2, 12, 27, 0.3);
             
-            /* BORDERS */
+            /* --- BORDERS & SPACING --- */
             --border-gold: 1px solid rgba(212, 175, 55, 0.3);
             --border-light: 1px solid #e2e8f0;
+            --header-height: 90px;
+            --container-width: 1350px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
         }
 
-        /* ==============================================
-           2. RESET & GLOBAL STYLES
-        =============================================== */
+        /* -----------------------------------------------------------
+           2. GLOBAL RESET & BASE STYLES
+        ----------------------------------------------------------- */
         * { margin: 0; padding: 0; box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
         
         html { scroll-behavior: smooth; font-size: 16px; }
@@ -66,65 +79,63 @@
             font-family: 'Lato', sans-serif; 
             overflow-x: hidden; 
             line-height: 1.6;
-            -webkit-user-select: none; /* Security: Disable Select */
+            -webkit-user-select: none; /* Security */
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
         }
 
-        h1, h2, h3, h4, h5, h6 { font-family: 'Playfair Display', serif; color: var(--navy); font-weight: 700; }
-        
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg-body); }
-        ::-webkit-scrollbar-thumb { background: var(--navy-light); border-radius: 4px; border: 1px solid var(--gold); }
-        ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
-
-        img { display: block; width: 100%; height: auto; pointer-events: none; /* Security: Disable drag */ }
+        /* Typography Override */
+        h1, h2, h3, h4, h5, h6 { font-family: 'Playfair Display', serif; color: var(--navy); font-weight: 700; line-height: 1.2; }
+        p { margin-bottom: 15px; }
+        img { display: block; width: 100%; height: auto; pointer-events: none; }
         a { text-decoration: none; color: inherit; transition: 0.3s; }
         ul { list-style: none; }
+        button { font-family: 'Cinzel', serif; }
 
-        /* ==============================================
-           3. PRELOADER & ANIMATIONS
-        =============================================== */
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg-body); }
+        ::-webkit-scrollbar-thumb { background: var(--navy-light); border-radius: 5px; border: 1px solid var(--gold); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+        /* -----------------------------------------------------------
+           3. PRELOADER ANIMATION
+        ----------------------------------------------------------- */
         #preloader {
             position: fixed; inset: 0; z-index: 9999;
             background: var(--navy-dark);
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: opacity 0.6s ease, visibility 0.6s;
+            transition: opacity 0.8s ease, visibility 0.8s;
         }
         
-        .loader-logo-wrap {
-            position: relative; width: 100px; height: 100px;
-            display: flex; align-items: center; justify-content: center;
-        }
+        .loader-wrap { position: relative; width: 120px; height: 120px; display: flex; align-items: center; justify-content: center; }
         
         .loader-logo {
-            width: 90px; height: 90px; border-radius: 50%; 
+            width: 100px; height: 100px; border-radius: 50%; 
             border: 3px solid var(--gold); object-fit: cover;
             animation: pulse 2s infinite; z-index: 2;
         }
         
         .loader-ring {
             position: absolute; width: 100%; height: 100%; border-radius: 50%;
-            border: 2px solid transparent; border-top-color: var(--gold);
-            animation: spin 1s linear infinite; z-index: 1;
+            border: 2px solid transparent; border-top-color: var(--gold); border-bottom-color: var(--gold);
+            animation: spin 1.5s linear infinite; z-index: 1;
         }
 
         .loader-text {
-            margin-top: 25px; color: var(--gold-text); 
-            font-family: 'Cinzel', serif; letter-spacing: 4px; font-weight: 700; font-size: 1.2rem;
-            animation: fadeInUp 0.8s ease;
+            margin-top: 30px; color: var(--gold-text); 
+            font-family: 'Cinzel', serif; letter-spacing: 5px; font-weight: 700; font-size: 1.4rem;
+            animation: fadeInUp 0.8s ease; text-transform: uppercase;
         }
 
-        @keyframes pulse { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); } 70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(212, 175, 55, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); } }
+        @keyframes pulse { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); } 70% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(212, 175, 55, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); } }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
 
-        /* ==============================================
-           4. NAVIGATION & HEADER
-        =============================================== */
+        /* -----------------------------------------------------------
+           4. HEADER & NAVIGATION
+        ----------------------------------------------------------- */
         header {
             background: var(--glass); 
             backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
@@ -135,327 +146,373 @@
         }
 
         .nav-container {
-            max-width: 1300px; margin: 0 auto; padding: 0 25px; height: 85px;
+            max-width: var(--container-width); margin: 0 auto; padding: 0 25px; height: var(--header-height);
             display: flex; justify-content: space-between; align-items: center;
         }
 
-        .brand { display: flex; align-items: center; gap: 15px; }
+        /* LOGO & BRANDING */
+        .brand { display: flex; align-items: center; gap: 18px; }
         
         .brand-logo-box { 
-            width: 54px; height: 54px; padding: 2px; border-radius: 50%; 
+            width: 65px; height: 65px; /* INCREASED SIZE */
+            padding: 3px; border-radius: 50%; 
             background: var(--gold-gradient); 
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+            transition: 0.3s;
         }
-        
+        .brand-logo-box:hover { transform: rotate(10deg); }
         .brand-logo { width: 100%; height: 100%; border-radius: 50%; border: 2px solid var(--white); object-fit: cover; }
         
-        .brand-text h1 { font-size: 1.5rem; font-weight: 800; line-height: 1; color: var(--navy); letter-spacing: -0.5px; }
-        .brand-text p { font-size: 0.7rem; color: #b38728; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-top: 4px; font-family: 'Cinzel', serif; }
+        .brand-text h1 { 
+            font-size: 1.8rem; /* BIGGER FONT */
+            font-weight: 800; line-height: 1; color: var(--navy); 
+            letter-spacing: -0.5px; 
+            text-shadow: 1px 1px 0px rgba(212,175,55,0.2); /* Contrast Boost */
+        }
+        .brand-text p { 
+            font-size: 0.75rem; color: #b38728; font-weight: 700; 
+            text-transform: uppercase; letter-spacing: 2.5px; 
+            margin-top: 5px; font-family: 'Cinzel', serif; 
+        }
 
+        /* DESKTOP MENU */
         .desk-menu { display: flex; gap: 30px; align-items: center; }
-        
         .nav-link { 
-            font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--navy);
-            position: relative; padding: 5px 0; font-family: 'Lato', sans-serif;
+            font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--navy);
+            position: relative; padding: 8px 0; font-family: 'Lato', sans-serif; cursor: pointer;
         }
-        
-        .nav-link::after {
-            content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
-            background: var(--gold-gradient); transition: width 0.3s ease;
-        }
-        
+        .nav-link::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 3px; background: var(--gold-gradient); transition: width 0.3s ease; border-radius: 2px; }
         .nav-link:hover::after { width: 100%; }
-        .nav-link:hover { color: #b38728; }
+        .nav-link.active { color: #b38728; }
+        .nav-link.active::after { width: 100%; }
 
         .btn-lang {
-            padding: 8px 16px; border: 1px solid #b38728; border-radius: 4px;
-            background: transparent; color: #b38728; font-weight: 700; font-size: 0.75rem; 
+            padding: 10px 20px; border: 1px solid #b38728; border-radius: 4px;
+            background: transparent; color: #b38728; font-weight: 700; font-size: 0.8rem; 
             cursor: pointer; font-family: 'Cinzel', serif; transition: 0.3s; letter-spacing: 1px;
         }
-        .btn-lang:hover { background: var(--gold-gradient); color: var(--navy); border-color: transparent; box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3); }
+        .btn-lang:hover { background: var(--gold-gradient); color: var(--navy); border-color: transparent; box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3); transform: translateY(-2px); }
+        
+        .menu-toggle { display: none; font-size: 34px; color: var(--navy); cursor: pointer; }
 
-        .menu-toggle { display: none; font-size: 30px; color: var(--navy); cursor: pointer; }
-
-        /* ==============================================
+        /* -----------------------------------------------------------
            5. HERO SECTION
-        =============================================== */
+        ----------------------------------------------------------- */
         .hero { 
-            height: 75vh; min-height: 550px; position: relative; display: flex; 
+            height: 85vh; min-height: 600px; position: relative; display: flex; 
             align-items: center; justify-content: center; text-align: center; overflow: hidden;
         }
-        
         .hero-bg {
             position: absolute; inset: 0; z-index: 1;
-            background: linear-gradient(to bottom, rgba(10, 25, 47, 0.8), rgba(10, 25, 47, 0.6)), url('./assets/images/school.jpg') center/cover fixed;
-            /* Static background for performance, overlay handles the mood */
+            background: linear-gradient(to bottom, rgba(10, 25, 47, 0.80), rgba(10, 25, 47, 0.4)), url('./assets/images/school.jpg') center/cover fixed;
         }
-        
-        .hero-content { position: relative; z-index: 2; max-width: 900px; padding: 20px; animation: fadeInUp 1s ease 0.5s backwards; }
-        
+        .hero-content { position: relative; z-index: 2; max-width: 1000px; padding: 20px; animation: fadeInUp 1s ease 0.5s backwards; }
         .hero-title { 
-            font-size: clamp(2.5rem, 6vw, 5rem); color: var(--white); line-height: 1.1; margin-bottom: 25px; 
-            text-shadow: 0 10px 30px rgba(0,0,0,0.5); font-family: 'Cinzel', serif;
+            font-size: clamp(3rem, 7vw, 6rem); color: var(--white); line-height: 1.1; margin-bottom: 30px; 
+            text-shadow: 0 10px 50px rgba(0,0,0,0.7); font-family: 'Cinzel', serif; letter-spacing: -1px;
         }
-        
         .hero-badge {
             display: inline-flex; align-items: center; gap: 10px;
-            padding: 12px 30px; background: rgba(255,255,255,0.05); 
+            padding: 15px 40px; background: rgba(255,255,255,0.08); 
             backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2);
             color: var(--gold-text); text-transform: uppercase; letter-spacing: 3px; font-weight: 700; 
-            font-size: 0.8rem; border-radius: 50px; box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            font-size: 0.9rem; border-radius: 50px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: 0.3s;
         }
+        .hero-badge:hover { background: rgba(255,255,255,0.15); transform: translateY(-3px); }
 
-        /* ==============================================
-           6. MAIN LAYOUT (GRID SYSTEM)
-        =============================================== */
+        /* -----------------------------------------------------------
+           6. VIRTUAL TOUR SECTION (Positioned at Bottom)
+        ----------------------------------------------------------- */
+        #video-tour-section {
+            display: none; /* Controlled by JS */
+            background: var(--navy-dark); padding: 90px 20px;
+            color: white; text-align: center;
+            border-top: 4px solid var(--gold); border-bottom: 4px solid var(--gold);
+            position: relative; overflow: hidden; margin-bottom: 50px;
+        }
+        #video-tour-section::before {
+            content:''; position: absolute; inset: 0; 
+            background: radial-gradient(circle at center, rgba(212, 175, 55, 0.15), transparent 70%);
+            pointer-events: none;
+        }
+        .vt-container { max-width: 1100px; margin: 0 auto; position: relative; z-index: 2; }
+        .vt-title { font-family: 'Cinzel', serif; font-size: 2.8rem; color: var(--gold-text); margin-bottom: 15px; }
+        .vt-sub { color: #8892b0; margin-bottom: 50px; font-size: 1.2rem; }
+        
+        .video-wrapper {
+            position: relative; padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0; overflow: hidden; border-radius: 16px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6); border: 2px solid var(--gold);
+            background: #000;
+        }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+        /* -----------------------------------------------------------
+           7. MAIN LAYOUT SYSTEM
+        ----------------------------------------------------------- */
         .main-container { 
-            max-width: 1300px; margin: 0 auto; padding: 60px 20px; 
-            display: grid; grid-template-columns: 1fr 340px; gap: 50px; 
+            max-width: var(--container-width); margin: 0 auto; padding: 70px 20px; 
+            display: grid; grid-template-columns: 1fr 360px; gap: 70px; 
         }
 
-        .section-wrap { margin-bottom: 90px; scroll-margin-top: 120px; }
+        /* VIEW CONTAINERS (SPA Logic) */
+        #view-home { display: block; animation: fadeIn 0.5s; }
+        #view-gallery { display: none; animation: fadeIn 0.5s; }
+        #view-achievements { display: none; animation: fadeIn 0.5s; }
 
-        /* Section Headers */
-        .sec-head { text-align: center; margin-bottom: 45px; position: relative; display: flex; align-items: center; justify-content: center; width: 100%; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .section-wrap { margin-bottom: 100px; scroll-margin-top: 130px; animation: fadeInUp 0.5s ease-out; }
+
+        .sec-head { text-align: center; margin-bottom: 50px; position: relative; display: flex; align-items: center; justify-content: center; width: 100%; }
         .sec-title { 
-            font-size: 2.2rem; color: var(--navy); font-family: 'Cinzel', serif; 
-            background: var(--bg-body); padding: 0 25px; position: relative; z-index: 2; 
+            font-size: 2.5rem; color: var(--navy); font-family: 'Cinzel', serif; 
+            background: var(--bg-body); padding: 0 30px; position: relative; z-index: 2; 
         }
-        .sec-line { position: absolute; width: 100%; height: 1px; background: var(--gold); opacity: 0.4; z-index: 1; }
+        .sec-line { position: absolute; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: 0.6; z-index: 1; }
 
-        /* Royal Card (Content Box) */
+        /* Royal Card */
         .royal-card { 
-            background: var(--white); padding: 35px; border-radius: 8px; 
-            box-shadow: var(--shadow-card); border: 1px solid rgba(212, 175, 55, 0.15);
-            display: flex; gap: 35px; align-items: flex-start; transition: 0.3s;
+            background: var(--white); padding: 45px; border-radius: var(--radius-lg); 
+            box-shadow: var(--shadow-card); border: 1px solid rgba(212, 175, 55, 0.2);
+            display: flex; gap: 50px; align-items: flex-start; transition: 0.4s;
         }
-        .royal-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); border-color: rgba(212, 175, 55, 0.4); }
-
+        .royal-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); border-color: var(--gold); }
         .royal-img { 
-            width: 45%; border-radius: 4px; 
-            box-shadow: 10px 10px 0 var(--bg-body), 10px 10px 0 1px var(--gold);
+            width: 45%; border-radius: var(--radius-md); 
+            box-shadow: 15px 15px 0 var(--bg-body), 15px 15px 0 1px var(--gold);
             object-fit: cover;
         }
-        
-        .royal-txt { flex: 1; font-size: 1.05rem; line-height: 1.8; color: #475569; text-align: justify; }
+        .royal-txt { flex: 1; font-size: 1.15rem; line-height: 1.9; color: #475569; text-align: justify; }
 
         /* Facilities Stats */
         .stats-grid {
             display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
-            background: var(--navy); color: var(--white); padding: 40px; border-radius: 8px;
+            background: var(--navy); color: var(--white); padding: 60px; border-radius: var(--radius-lg);
             position: relative; overflow: hidden; text-align: center;
             box-shadow: var(--shadow-card);
         }
-        .stats-grid::before { content:''; position:absolute; top:0; left:0; width:100%; height:4px; background: var(--gold-gradient); }
-        .sr-num { font-family: 'Cinzel', serif; font-size: 2.5rem; color: var(--gold-text); margin-bottom: 5px; font-weight: 700; }
-        .sr-lbl { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; }
+        .stats-grid::before { content:''; position:absolute; top:0; left:0; width:100%; height:6px; background: var(--gold-gradient); }
+        .sr-num { font-family: 'Cinzel', serif; font-size: 3.2rem; color: var(--gold-text); margin-bottom: 5px; font-weight: 700; }
+        .sr-lbl { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; opacity: 0.9; }
 
-        /* Image Grids (Gallery/Achievements) */
-        .grid-premium { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; }
-        
+        /* GRID SYSTEMS */
+        .grid-premium { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 30px; }
         .premium-item { 
-            background: var(--white); border-radius: 6px; overflow: hidden; 
+            background: var(--white); border-radius: var(--radius-md); overflow: hidden; 
             box-shadow: var(--shadow-card); border: 1px solid rgba(0,0,0,0.05); 
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer;
         }
-        .premium-item:hover { transform: translateY(-8px); border-color: var(--gold); }
+        .premium-item:hover { transform: translateY(-10px); border-color: var(--gold); box-shadow: var(--shadow-hover); }
         
         .premium-img-box { 
-            height: 220px; background: #0f172a; /* Dark BG for better contrast */
-            display: flex; align-items: center; justify-content: center; overflow: hidden;
-            position: relative;
+            height: 260px; background: #0f172a; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;
         }
-        .premium-img-box img { 
-            width: 100%; height: 100%; 
-            object-fit: contain; /* Ensures full image is visible without cropping */
-            transition: 0.5s;
-        }
-        .premium-item:hover .premium-img-box img { transform: scale(1.05); opacity: 0.9; }
+        .premium-img-box img { width: 100%; height: 100%; object-fit: contain; transition: 0.5s; }
+        .premium-item:hover .premium-img-box img { transform: scale(1.1); opacity: 0.9; }
         
-        .premium-caption { padding: 15px; text-align: center; border-top: 1px solid #f1f5f9; background: var(--white); position: relative; z-index: 2; }
-        .pc-title { font-weight: 700; color: var(--navy); font-size: 0.9rem; font-family: 'Playfair Display', serif; line-height: 1.3; }
+        .premium-caption { padding: 20px; text-align: center; border-top: 1px solid #f1f5f9; background: var(--white); position: relative; z-index: 2; }
+        .pc-title { font-weight: 700; color: var(--navy); font-size: 1.1rem; font-family: 'Playfair Display', serif; }
 
-        /* ==============================================
-           7. SIDEBAR (NOTICES & CONTACT)
-        =============================================== */
-        .sidebar { position: sticky; top: 110px; height: fit-content; }
+        /* -----------------------------------------------------------
+           8. SIDEBAR & WIDGETS
+        ----------------------------------------------------------- */
+        .sidebar { position: sticky; top: 120px; height: fit-content; }
 
-        /* Notice Board Widget */
+        /* Notice Board */
         .notice-board { 
-            background: var(--white); border: 1px solid #e2e8f0; border-radius: 8px; 
-            box-shadow: var(--shadow-card); overflow: hidden; margin-bottom: 40px; 
+            background: var(--white); border: 1px solid #e2e8f0; border-radius: var(--radius-md); 
+            box-shadow: var(--shadow-card); overflow: hidden; margin-bottom: 50px; 
         }
         .nb-header { 
-            background: var(--navy); color: var(--white); padding: 18px 20px; 
-            font-family: 'Cinzel', serif; font-size: 1.1rem; border-bottom: 3px solid var(--gold);
+            background: var(--navy); color: var(--white); padding: 20px 25px; 
+            font-family: 'Cinzel', serif; font-size: 1.2rem; border-bottom: 3px solid var(--gold);
             display: flex; align-items: center; gap: 12px;
         }
-        .nb-content { max-height: 450px; overflow-y: auto; background: #fff; }
-        
+        .nb-content { max-height: 500px; overflow-y: auto; background: #fff; }
         .n-item { 
-            padding: 16px 20px; border-bottom: 1px solid #f1f5f9; cursor: pointer; transition: 0.2s; 
-            border-left: 3px solid transparent; display: flex; flex-direction: column; gap: 4px;
+            padding: 20px 25px; border-bottom: 1px solid #f1f5f9; cursor: pointer; transition: 0.2s; 
+            border-left: 4px solid transparent; display: flex; flex-direction: column; gap: 6px;
         }
-        .n-item:last-child { border-bottom: none; }
-        .n-item:hover { background: #fffbeb; border-left-color: var(--gold); padding-left: 25px; }
-        
-        .n-date { font-size: 0.7rem; color: #b38728; font-weight: 800; text-transform: uppercase; display: flex; align-items: center; gap: 5px; }
-        .n-title { font-size: 0.95rem; color: var(--text-dark); line-height: 1.4; font-weight: 600; }
-        .n-badge { background: #ef4444; color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.6rem; margin-left: auto; }
+        .n-item:hover { background: #fffbeb; border-left-color: var(--gold); padding-left: 30px; }
+        .n-date { font-size: 0.75rem; color: #b38728; font-weight: 800; text-transform: uppercase; display: flex; align-items: center; gap: 5px; }
+        .n-title { font-size: 1rem; color: var(--text-dark); line-height: 1.4; font-weight: 600; }
+        .n-badge { background: #ef4444; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.65rem; margin-left: auto; letter-spacing: 0.5px; font-weight: 700; }
 
-        /* Contact Form Widget */
+        /* Contact Form */
         .contact-box { 
-            background: var(--white); padding: 30px; border-radius: 8px; 
-            border: 1px solid #e2e8f0; border-top: 4px solid var(--navy);
+            background: var(--white); padding: 40px; border-radius: var(--radius-md); 
+            border: 1px solid #e2e8f0; border-top: 5px solid var(--navy);
             box-shadow: var(--shadow-card); 
         }
         .c-head { 
-            display: flex; align-items: center; gap: 10px; margin-bottom: 25px; 
-            color: var(--navy); font-family: 'Cinzel', serif; font-weight: 700; font-size: 1.2rem; 
+            display: flex; align-items: center; gap: 12px; margin-bottom: 30px; 
+            color: var(--navy); font-family: 'Cinzel', serif; font-weight: 700; font-size: 1.3rem; 
             padding-bottom: 15px; border-bottom: 1px solid #f1f5f9;
         }
-        
-        .c-group { margin-bottom: 20px; position: relative; }
-        .c-icon { position: absolute; left: 0; top: 12px; color: #cbd5e1; font-size: 20px; transition: 0.3s; }
-        
+        .c-group { margin-bottom: 25px; position: relative; }
+        .c-icon { position: absolute; left: 0; top: 12px; color: #cbd5e1; font-size: 22px; transition: 0.3s; }
         .c-field { 
-            width: 100%; padding: 12px 0 12px 30px; border: none; border-bottom: 1px solid #cbd5e1; 
-            font-size: 0.95rem; transition: 0.3s; background: transparent; color: var(--text-dark); font-family: 'Lato', sans-serif;
+            width: 100%; padding: 12px 0 12px 35px; border: none; border-bottom: 1px solid #cbd5e1; 
+            font-size: 1rem; transition: 0.3s; background: transparent; color: var(--text-dark); font-family: 'Lato', sans-serif;
         }
         .c-field:focus { border-bottom-color: var(--gold); outline: none; }
         .c-field:focus + .c-icon { color: var(--gold); }
-        .c-field::placeholder { color: #94a3b8; font-size: 0.9rem; }
-        
         .c-btn { 
-            width: 100%; padding: 14px; background: var(--navy); color: var(--white); 
+            width: 100%; padding: 16px; background: var(--navy); color: var(--white); 
             border: none; border-radius: 4px; font-weight: 700; cursor: pointer; 
-            font-family: 'Cinzel', serif; transition: 0.3s; margin-top: 10px;
-            display: flex; align-items: center; justify-content: center; gap: 10px;
+            font-family: 'Cinzel', serif; transition: 0.3s; margin-top: 15px; letter-spacing: 1px;
+            display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1rem;
         }
         .c-btn:hover { background: var(--gold); color: var(--navy); box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4); }
-        .c-btn:disabled { background: #94a3b8; cursor: not-allowed; }
+        .success-overlay { display: none; text-align: center; padding: 50px 10px; animation: fadeInUp 0.5s; }
 
-        .success-overlay { display: none; text-align: center; padding: 40px 10px; animation: fadeInUp 0.5s; }
-
-        /* ==============================================
-           8. FOOTER
-        =============================================== */
-        footer { 
-            background: var(--navy-dark); color: #94a3b8; padding: 70px 20px 30px; 
-            margin-top: 80px; border-top: 5px solid var(--gold); text-align: center; 
+        /* Map Widget */
+        .map-container {
+            width: 100%; height: 280px; border-radius: var(--radius-md); overflow: hidden;
+            border: 2px solid var(--gold); box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            margin-top: 40px;
         }
-        
+        .map-container iframe { width: 100%; height: 100%; border: 0; filter: grayscale(20%) contrast(1.1); transition: 0.3s; }
+        .map-container iframe:hover { filter: grayscale(0%); }
+
+        /* -----------------------------------------------------------
+           9. FOOTER
+        ----------------------------------------------------------- */
+        footer { 
+            background: var(--navy-dark); color: #94a3b8; padding: 90px 20px 30px; 
+            margin-top: 100px; border-top: 6px solid var(--gold); text-align: center; 
+        }
         .ft-grid { 
             max-width: 1200px; margin: 0 auto; display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: left; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 50px; text-align: left; 
         }
-        
-        .ft-col h4 { color: #fbf5b7; font-family: 'Cinzel', serif; margin-bottom: 25px; font-size: 1.1rem; letter-spacing: 1px; }
-        .ft-col p, .ft-col a { display: block; margin-bottom: 12px; font-size: 0.9rem; color: #cbd5e1; transition: 0.2s; }
+        .ft-col h4 { color: #fbf5b7; font-family: 'Cinzel', serif; margin-bottom: 30px; font-size: 1.3rem; letter-spacing: 1px; }
+        .ft-col p, .ft-col a { display: block; margin-bottom: 15px; font-size: 1rem; color: #cbd5e1; transition: 0.2s; }
         .ft-col a:hover { color: var(--gold); transform: translateX(5px); }
-        .ft-icon { vertical-align: middle; margin-right: 8px; font-size: 18px; color: var(--gold); }
+        .ft-icon { vertical-align: middle; margin-right: 10px; font-size: 20px; color: var(--gold); }
+        .ft-bottom { margin-top: 80px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.9rem; opacity: 0.6; }
 
-        .ft-bottom { margin-top: 60px; padding-top: 25px; border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.8rem; opacity: 0.6; }
-
-        /* ==============================================
-           9. MOBILE DRAWER & FAB
-        =============================================== */
-        .drawer-overlay { 
-            position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 2999; 
-            display: none; backdrop-filter: blur(4px); 
-        }
+        /* -----------------------------------------------------------
+           10. MOBILE MENU
+        ----------------------------------------------------------- */
+        .drawer-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 2999; display: none; backdrop-filter: blur(4px); }
         .drawer { 
-            position: fixed; top: 0; right: -300px; width: 280px; height: 100vh; 
-            background: var(--navy-dark); z-index: 3000; padding: 30px; 
+            position: fixed; top: 0; right: -320px; width: 300px; height: 100vh; 
+            background: var(--navy-dark); z-index: 3000; padding: 35px; 
             transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
-            box-shadow: -5px 0 30px rgba(0,0,0,0.6); border-left: 1px solid var(--gold); 
+            box-shadow: -5px 0 30px rgba(0,0,0,0.6); border-left: 2px solid var(--gold); 
         }
         .drawer.active { right: 0; }
-        
         .d-link { 
             display: flex; align-items: center; justify-content: space-between;
             color: rgba(255,255,255,0.9); text-decoration: none; 
-            font-size: 1.1rem; padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,0.08); 
-            font-family: 'Cinzel', serif; transition: 0.2s;
+            font-size: 1.2rem; padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.08); 
+            font-family: 'Cinzel', serif; transition: 0.2s; cursor: pointer;
         }
         .d-link:active { color: var(--gold); padding-left: 10px; }
 
         .fab {
-            display: none; position: fixed; bottom: 25px; right: 25px; z-index: 2000;
+            display: none; position: fixed; bottom: 30px; right: 25px; z-index: 2000;
             background: var(--gold-gradient); color: var(--navy);
-            padding: 14px 24px; border-radius: 50px; font-weight: 700; font-family: 'Cinzel', serif;
+            padding: 15px 25px; border-radius: 50px; font-weight: 700; font-family: 'Cinzel', serif;
             box-shadow: 0 10px 25px rgba(0,0,0,0.5); border: 2px solid var(--white); cursor: pointer;
-            align-items: center; gap: 10px; font-size: 0.9rem; animation: float 3s ease-in-out infinite;
+            align-items: center; gap: 10px; font-size: 0.95rem; animation: float 3s ease-in-out infinite;
         }
 
-        /* ==============================================
-           10. MODALS & LIGHTBOX
-        =============================================== */
+        /* -----------------------------------------------------------
+           11. MODALS & LIGHTBOX (WITH ZOOM)
+        ----------------------------------------------------------- */
         .modal-bg { 
-            display: none; position: fixed; inset: 0; background: rgba(2, 12, 27, 0.9); 
+            display: none; position: fixed; inset: 0; background: rgba(2, 12, 27, 0.95); 
             z-index: 4000; justify-content: center; align-items: center; padding: 20px; 
             backdrop-filter: blur(8px); 
         }
-        
         .modal-content { 
-            background: var(--white); width: 100%; max-width: 550px; border-radius: 12px; 
-            padding: 30px; position: relative; max-height: 85vh; overflow-y: auto; 
-            border: 1px solid var(--gold); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            background: var(--white); width: 100%; max-width: 650px; border-radius: var(--radius-lg); 
+            padding: 40px; position: relative; max-height: 85vh; overflow-y: auto; 
+            border: 1px solid var(--gold); box-shadow: 0 30px 60px -10px rgba(0, 0, 0, 0.7);
             animation: fadeInUp 0.3s ease;
         }
-
-        .close-modal { position: absolute; top: 20px; right: 20px; cursor: pointer; color: #94a3b8; transition: 0.2s; }
+        .close-modal { position: absolute; top: 25px; right: 25px; cursor: pointer; color: #94a3b8; transition: 0.2s; font-size: 30px; }
         .close-modal:hover { color: #ef4444; transform: rotate(90deg); }
 
-        /* Lightbox */
+        /* LIGHTBOX & ZOOM CONTROLS */
         #lightbox { 
             display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); 
-            z-index: 5000; justify-content: center; align-items: center; padding: 20px;
+            z-index: 5000; justify-content: center; align-items: center; padding: 0; 
+            overflow: hidden; /* For Zoom Panning */
         }
+        
+        #lb-container {
+            width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+            overflow: auto; /* Enable scrolling when zoomed */
+        }
+
         #lb-img { 
-            max-width: 100%; max-height: 90vh; width: auto; height: auto; 
-            object-fit: contain; /* CRITICAL: Prevents stretching */
-            box-shadow: 0 0 50px rgba(0,0,0,0.8); border: 2px solid var(--gold); 
-            animation: zoomIn 0.3s ease;
+            max-width: 90vw; max-height: 85vh; width: auto; height: auto; 
+            object-fit: contain; box-shadow: 0 0 50px rgba(0,0,0,0.8); border: 2px solid var(--gold); 
+            transition: transform 0.2s ease; cursor: grab;
         }
-        .close-lb {
-            position: absolute; top: 30px; right: 30px; color: white; font-size: 35px; 
-            cursor: pointer; background: rgba(255,255,255,0.1); border-radius: 50%; padding: 8px;
-            transition: 0.2s;
+
+        .lb-controls {
+            position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 20px; z-index: 5002;
+        }
+        
+        .lb-btn {
+            background: rgba(255,255,255,0.1); backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.3); color: white;
+            width: 50px; height: 50px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; cursor: pointer; transition: 0.3s;
+        }
+        .lb-btn:hover { background: var(--gold); color: var(--navy); transform: scale(1.1); }
+        
+        .close-lb { 
+            position: absolute; top: 30px; right: 30px; color: white; font-size: 40px; 
+            cursor: pointer; background: rgba(255,255,255,0.1); border-radius: 50%; 
+            padding: 10px; transition: 0.2s; z-index: 5002;
         }
         .close-lb:hover { background: rgba(255,255,255,0.3); transform: scale(1.1); }
 
-        @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        /* Animations */
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
 
-        /* ==============================================
-           11. RESPONSIVE DESIGN
-        =============================================== */
-        @media (max-width: 900px) {
-            .nav-container { height: 70px; padding: 0 20px; }
-            .desk-menu { display: none; } .menu-toggle { display: block; }
-            .brand-text h1 { font-size: 1.2rem; } .brand-text p { display: none; }
-            
-            .main-container { grid-template-columns: 1fr; padding: 40px 15px; gap: 60px; }
-            
-            /* Hide Desktop Sidebar components on mobile */
+        /* -----------------------------------------------------------
+           12. RESPONSIVE MEDIA QUERIES
+        ----------------------------------------------------------- */
+        @media (max-width: 1024px) {
+            .main-container { grid-template-columns: 1fr; padding: 50px 20px; gap: 60px; }
             .sidebar .notice-board { display: none; } 
-            .fab { display: flex; } /* Show FAB */
+            .fab { display: flex; } 
+            .royal-card { flex-direction: column; }
+            .royal-img { width: 100%; height: 300px; margin-bottom: 25px; }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container { height: 80px; padding: 0 20px; }
+            .desk-menu { display: none; } .menu-toggle { display: block; }
             
-            .royal-card { flex-direction: column; padding: 25px; gap: 20px; }
-            .royal-img { width: 100%; height: 220px; }
+            .brand-logo-box { width: 50px; height: 50px; }
+            .brand-text h1 { font-size: 1.4rem; } 
+            .brand-text p { display: none; }
             
-            .stats-grid { grid-template-columns: 1fr 1fr; gap: 25px; }
-            .sec-title { font-size: 1.8rem; }
+            .hero-title { font-size: 3rem; margin-bottom: 20px; }
+            .hero-badge { padding: 10px 25px; font-size: 0.8rem; }
             
-            .ft-grid { text-align: center; }
-            .premium-img-box { height: 200px; }
+            .stats-grid { grid-template-columns: 1fr 1fr; padding: 40px 20px; }
+            .ft-grid { grid-template-columns: 1fr; text-align: center; }
+            .contact-box { padding: 30px 20px; }
+            .lb-controls { bottom: 80px; }
         }
     </style>
     
     <script>
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.onkeydown = function(e) {
-            if(e.keyCode == 123) return false; // F12
+            if(e.keyCode == 123) return false;
             if(e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) return false;
             if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
         }
@@ -464,26 +521,26 @@
 <body>
 
     <div id="preloader">
-        <div class="loader-logo-wrap">
+        <div class="loader-wrap">
             <div class="loader-ring"></div>
-            <img src="./assets/images/logo.jpeg" class="loader-logo" onerror="this.src='https://via.placeholder.com/100?text=BVM'">
+            <img src="./assets/images/logo.jpeg" class="loader-logo" onerror="this.src='https://via.placeholder.com/120?text=BVM'">
         </div>
         <div class="loader-text">BAL VINAY MANDIR</div>
     </div>
 
     <header>
         <div class="nav-container">
-            <a href="#" class="brand">
+            <div class="brand" onclick="loadView('home')" style="cursor: pointer;">
                 <div class="brand-logo-box">
-                    <img src="./assets/images/logo.jpeg" class="brand-logo" onerror="this.src='https://via.placeholder.com/50'">
+                    <img src="./assets/images/logo.jpeg" class="brand-logo" onerror="this.src='https://via.placeholder.com/60'">
                 </div>
                 <div class="brand-text">
                     <h1>Bal Vinay Mandir</h1>
                     <p>School of Excellence</p>
                 </div>
-            </a>
+            </div>
             
-            <div style="display:flex; align-items:center; gap:20px;">
+            <div style="display:flex; align-items:center; gap:25px;">
                 <ul class="desk-menu" id="nav-desk">
                     </ul>
                 <button class="btn-lang" onclick="toggleLang()">EN / HI</button>
@@ -495,8 +552,8 @@
     <div class="drawer-overlay" id="drawer-ol" onclick="toggleDrawer()"></div>
     <div class="drawer" id="drawer">
         <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:20px; border-bottom:1px solid rgba(255,255,255,0.1); margin-bottom:20px;">
-            <span style="color:var(--gold); font-family:'Cinzel', serif; font-weight:700; font-size:1.2rem;">MENU</span>
-            <span class="material-icons" style="color:white; cursor:pointer; font-size:28px;" onclick="toggleDrawer()">close</span>
+            <span style="color:var(--gold); font-family:'Cinzel', serif; font-weight:700; font-size:1.5rem;">MENU</span>
+            <span class="material-icons" style="color:white; cursor:pointer; font-size:32px;" onclick="toggleDrawer()">close</span>
         </div>
         <div id="nav-mob">
             </div>
@@ -506,39 +563,69 @@
         <span class="material-icons">notifications_active</span> NOTICE BOARD
     </div>
 
-    <section class="hero">
+    <section class="hero" id="hero-section">
         <div class="hero-bg"></div>
         <div class="hero-content">
             <h1 class="hero-title" id="hero-head">Empowering Minds,<br>Creating Leaders</h1>
             <div class="hero-badge" id="hero-sub">
-                <span class="material-icons" style="font-size:16px;">verified</span>
+                <span class="material-icons" style="font-size:18px;">verified</span>
                 Excellence in Education Since 1980
             </div>
         </div>
     </section>
 
     <div class="main-container">
+        
         <main>
-            <div id="dynamic-content">
+            
+            <div id="view-home">
+                <div id="home-content"></div>
+                <div id="custom-pages"></div>
+                
+                <section id="video-tour-section">
+                    <div class="vt-container">
+                        <h2 class="vt-title">Virtual Campus Tour</h2>
+                        <p class="vt-sub" id="vt-sub-text">Experience the world-class infrastructure of Bal Vinay Mandir.</p>
+                        <div class="video-wrapper">
+                            <iframe id="tour-iframe" src="" title="Campus Tour" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div id="view-gallery">
+                <div class="sec-head"><h2 class="sec-title">Photo Gallery</h2><div class="sec-line"></div></div>
+                <div class="grid-premium" id="gal-grid">
+                    <p style="text-align:center; width:100%; grid-column:1/-1;">Loading Gallery...</p>
                 </div>
-            <div id="custom-pages">
+            </div>
+
+            <div id="view-achievements">
+                <div class="sec-head"><h2 class="sec-title">Our Achievements</h2><div class="sec-line"></div></div>
+                <div class="grid-premium" id="ach-grid">
+                    <p style="text-align:center; width:100%; grid-column:1/-1;">Loading Achievements...</p>
                 </div>
+            </div>
+
         </main>
 
         <aside class="sidebar">
+            
             <div class="notice-board">
                 <div class="nb-header">
                     <span class="material-icons">campaign</span> Latest Updates
                 </div>
                 <div class="nb-content" id="notice-list-desk">
-                    <div style="padding:20px; text-align:center; color:#94a3b8;">Loading Notices...</div>
+                    <div style="padding:30px; text-align:center; color:#94a3b8;">
+                        <span class="material-icons" style="animation:spin 1s infinite;">refresh</span><br>Loading Notices...
+                    </div>
                 </div>
-                <div style="padding:10px; text-align:center; background:#f8fafc; border-top:1px solid #e2e8f0;">
-                    <button onclick="openAllNotices()" style="background:none; border:none; color:var(--navy); font-weight:700; cursor:pointer; font-size:0.8rem;">VIEW ALL</button>
+                <div style="padding:15px; text-align:center; background:#f8fafc; border-top:1px solid #e2e8f0;">
+                    <button onclick="openAllNotices()" style="background:none; border:none; color:var(--navy); font-weight:700; cursor:pointer;">VIEW ALL NOTICES</button>
                 </div>
             </div>
 
-            <div class="contact-box" id="contact">
+            <div class="contact-box" id="contact-widget">
                 <div class="c-head">
                     <span class="material-icons" style="color:var(--gold);">mail_outline</span> Contact Us
                 </div>
@@ -567,7 +654,7 @@
                     </div>
 
                     <div class="c-group">
-                        <textarea name="message" class="c-field" rows="3" placeholder="Your Message..." required style="resize:vertical;"></textarea>
+                        <textarea name="message" class="c-field" rows="3" placeholder="Write your message..." required style="resize:vertical;"></textarea>
                         <span class="material-icons c-icon">chat</span>
                     </div>
                     
@@ -579,19 +666,27 @@
                 </form>
                 
                 <div id="c-success" class="success-overlay">
-                    <span class="material-icons" style="font-size:60px; color:var(--gold); margin-bottom:15px;">check_circle</span>
-                    <h3 style="color:var(--navy); font-size:1.5rem;">Message Sent!</h3>
-                    <p style="color:#64748b; margin-top:10px; font-size:0.95rem;">Thank you for contacting Bal Vinay Mandir.<br>We will get back to you shortly.</p>
-                    <button onclick="document.getElementById('c-success').style.display='none'; document.getElementById('contact-form').style.display='block'; document.getElementById('contact-form').reset();" style="margin-top:20px; background:none; border:none; color:var(--navy); text-decoration:underline; cursor:pointer;">Send Another</button>
+                    <span class="material-icons" style="font-size:70px; color:var(--gold); margin-bottom:20px;">check_circle</span>
+                    <h3 style="color:var(--navy); font-size:1.6rem;">Message Sent!</h3>
+                    <p style="color:#64748b; margin-top:10px; font-size:1rem;">Thank you for contacting Bal Vinay Mandir.<br>Our administration team will get back to you shortly.</p>
+                    <button onclick="resetContactForm()" style="margin-top:25px; background:none; border:none; color:var(--navy); text-decoration:underline; cursor:pointer; font-weight:700;">Send Another Message</button>
                 </div>
             </div>
+
+            <div style="margin-top:40px;">
+                <h4 style="color:var(--navy); font-family:'Cinzel', serif; margin-bottom:15px; border-bottom:2px solid var(--gold); display:inline-block;">Our Location</h4>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29443.91293152809!2d75.81303527910154!3d22.710054700000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3962fd003f5e61c5%3A0x356d37e0b09e8049!2sSchool%20of%20exellence%20Bal%20viny%20mandir%20Indore!5e0!3m2!1sen!2sin!4v1768403242807!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+
         </aside>
     </div>
 
     <footer>
         <div class="ft-grid">
             <div class="ft-col">
-                <img src="./assets/images/logo.jpeg" style="width:70px; border-radius:50%; border:2px solid var(--gold); margin-bottom:20px; box-shadow:0 0 15px rgba(212,175,55,0.3);">
+                <img src="./assets/images/logo.jpeg" style="width:80px; border-radius:50%; border:2px solid var(--gold); margin-bottom:25px; box-shadow:0 0 20px rgba(212,175,55,0.4);">
                 <p><span class="material-icons ft-icon">location_on</span> Chatri Bagh, Indore (M.P.)</p>
                 <p><span class="material-icons ft-icon">call</span> 0731-123456</p>
                 <p><span class="material-icons ft-icon">email</span> info@bvmindore.com</p>
@@ -608,52 +703,60 @@
             <div class="ft-col">
                 <h4>Quick Access</h4>
                 <a href="#" onclick="openAllNotices(); return false;">Notice Board</a>
-                <a href="#" onclick="document.getElementById('gallery').scrollIntoView(); return false;">Photo Gallery</a>
-                <a href="#" onclick="document.getElementById('contact').scrollIntoView(); return false;">Admission Enquiry</a>
+                <a href="#" onclick="loadView('gallery'); return false;">Photo Gallery</a>
+                <a href="#" onclick="document.getElementById('contact-widget').scrollIntoView(); return false;">Admission Enquiry</a>
             </div>
 
             <div class="ft-col">
-                <h4>Location</h4>
-                <div style="width:100%; height:150px; background:#112240; border-radius:4px; display:flex; align-items:center; justify-content:center; border:1px solid rgba(255,255,255,0.1);">
-                    <span style="font-size:0.8rem; opacity:0.7;">[Map Placeholder]</span>
+                <h4>Visit Us</h4>
+                <div class="map-container" style="height:200px; border-color:rgba(255,255,255,0.2); margin-top:0;">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29443.91293152809!2d75.81303527910154!3d22.710054700000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3962fd003f5e61c5%3A0x356d37e0b09e8049!2sSchool%20of%20exellence%20Bal%20viny%20mandir%20Indore!5e0!3m2!1sen!2sin!4v1768403242807!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
         </div>
         
         <div class="ft-bottom">
-            &copy; 2026 Bal Vinay Mandir H.S. School. All Rights Reserved. | Premium Education Since 1980.
+            © 2026 Bal Vinay Mandir H.S. School. All Rights Reserved. | <span style="color:var(--gold);">Excellence Since 1980</span>
         </div>
     </footer>
 
     <div id="notice-modal" class="modal-bg">
         <div class="modal-content">
             <span class="material-icons close-modal" onclick="document.getElementById('notice-modal').style.display='none'">close</span>
-            <div id="m-date" style="color:var(--gold); font-weight:800; font-size:0.85rem; letter-spacing:1px; margin-bottom:8px;"></div>
-            <h3 id="m-title" style="margin-bottom:15px; font-size:1.4rem; line-height:1.3; color:var(--navy);"></h3>
-            <div style="width:60px; height:3px; background:var(--gold); margin-bottom:20px;"></div>
-            <div id="m-desc" style="color:#475569; line-height:1.7; white-space:pre-line; margin-bottom:25px; font-size:1rem;"></div>
+            <div id="m-date" style="color:var(--gold); font-weight:800; font-size:0.9rem; letter-spacing:1px; margin-bottom:10px;"></div>
+            <h3 id="m-title" style="margin-bottom:20px; font-size:1.5rem; line-height:1.3; color:var(--navy);"></h3>
+            <div style="width:80px; height:4px; background:var(--gold); margin-bottom:25px;"></div>
+            <div id="m-desc" style="color:#475569; line-height:1.8; white-space:pre-line; margin-bottom:30px; font-size:1.05rem;"></div>
             <div id="m-link"></div>
         </div>
     </div>
 
     <div id="all-notices-modal" class="modal-bg">
-        <div class="modal-content" style="height:80vh; display:flex; flex-direction:column; padding:0; overflow:hidden;">
-            <div style="padding:20px; background:var(--navy); color:white; display:flex; justify-content:space-between; align-items:center;">
-                <h3 style="margin:0; font-family:'Cinzel', serif; color:var(--gold);">Notice Board</h3>
-                <span class="material-icons" style="cursor:pointer;" onclick="document.getElementById('all-notices-modal').style.display='none'">close</span>
+        <div class="modal-content" style="height:85vh; display:flex; flex-direction:column; padding:0; overflow:hidden;">
+            <div style="padding:25px; background:var(--navy); color:white; display:flex; justify-content:space-between; align-items:center;">
+                <h3 style="margin:0; font-family:'Cinzel', serif; color:var(--gold); display:flex; align-items:center; gap:10px;">
+                    <span class="material-icons">notifications</span> Notice Board
+                </h3>
+                <span class="material-icons" style="cursor:pointer; font-size:28px;" onclick="document.getElementById('all-notices-modal').style.display='none'">close</span>
             </div>
-            <div id="notice-list-mob" style="overflow-y:auto; flex:1; padding:10px;">
-                </div>
+            <div id="notice-list-mob" style="overflow-y:auto; flex:1; padding:15px; background:#f1f5f9;"></div>
         </div>
     </div>
 
-    <div id="lightbox" onclick="this.style.display='none'">
-        <span class="material-icons close-lb">close</span>
-        <img id="lb-img" onclick="event.stopPropagation()">
+    <div id="lightbox">
+        <span class="material-icons close-lb" onclick="closeLightbox()">close</span>
+        <div id="lb-container">
+            <img id="lb-img">
+        </div>
+        
+        <div class="lb-controls">
+            <div class="lb-btn" onclick="zoomImg(-0.2)"><span class="material-icons">remove</span></div>
+            <div class="lb-btn" onclick="zoomImg(0.2)"><span class="material-icons">add</span></div>
+        </div>
     </div>
 
     <script>
-        // --- 1. FIREBASE CONFIGURATION ---
+        // --- 1. FIREBASE INIT ---
         const firebaseConfig = { 
             apiKey: "AIzaSyBEqzUbus1kXmcIXwI0QlOIGa3IV1zqXVw", 
             authDomain: "ebvmindore.firebaseapp.com", 
@@ -663,59 +766,78 @@
             appId: "1:545685474288:web:0bc816ef47dfaf63acab35", 
             measurementId: "G-5HL4PRSHV9" 
         };
-        
-        // Initialize Firebase
-        try {
-            firebase.initializeApp(firebaseConfig);
-        } catch(e) { console.error("Firebase Error:", e); }
-        
+        try { firebase.initializeApp(firebaseConfig); } catch(e) { console.error("FB Error:", e); }
         const db = firebase.firestore();
 
-        // --- 2. GLOBAL STATE ---
+        // --- 2. APP STATE ---
         let lang = 'en'; 
         let notices = [];
-        
-        const SECTIONS = [
+        let currentZoom = 1;
+        let currentView = 'home';
+
+        const HOME_SECTIONS = [
             { id:'about', en:'About Us', hi:'परिचय' }, 
             { id:'principal', en:'Principal Desk', hi:'प्राचार्य संदेश' },
-            { id:'facilities', en:'Facilities', hi:'सुविधाएं' }, 
-            { id:'achievements', en:'Achievements', hi:'उपलब्धियां' },
-            { id:'gallery', en:'Gallery', hi:'गैलरी' }, 
-            { id:'contact', en:'Contact', hi:'संपर्क' }
+            { id:'facilities', en:'Facilities', hi:'सुविधाएं' }
+            // Gallery & Achievements are separate Views now
         ];
 
-        // --- 3. UI UTILITIES ---
+        // --- 3. HELPER FUNCTIONS ---
         function toggleDrawer(){ 
-            const d=document.getElementById('drawer'); 
-            const o=document.getElementById('drawer-ol'); 
-            if(d.classList.contains('active')){
-                d.classList.remove('active'); o.style.display='none';
-            }else{
-                d.classList.add('active'); o.style.display='block';
-            } 
+            const d = document.getElementById('drawer'); const o = document.getElementById('drawer-ol'); 
+            if(d.classList.contains('active')){ d.classList.remove('active'); o.style.display='none'; }
+            else{ d.classList.add('active'); o.style.display='block'; } 
         }
 
         function toggleLang(){ 
             lang = (lang === 'en') ? 'hi' : 'en'; 
-            document.getElementById('hero-head').innerHTML = (lang === 'en') 
-                ? "Empowering Minds,<br>Creating Leaders" 
-                : "सशक्त मन,<br>नेतृत्व का निर्माण";
-            initLoad(); // Reload content with new language
+            document.getElementById('hero-head').innerHTML = (lang === 'en') ? "Empowering Minds,<br>Creating Leaders" : "सशक्त मन,<br>नेतृत्व का निर्माण";
+            document.getElementById('vt-sub-text').innerText = (lang === 'en') ? "Experience the world-class infrastructure of Bal Vinay Mandir." : "बाल विनय मंदिर की विश्व स्तरीय बुनियादी ढांचे का अनुभव करें।";
+            initLoad(); 
         }
 
         function openAllNotices(){ 
-            // Copy content from sidebar to modal
             const content = document.getElementById('notice-list-desk').innerHTML;
             document.getElementById('notice-list-mob').innerHTML = content; 
             document.getElementById('all-notices-modal').style.display = 'flex'; 
         }
 
+        function resetContactForm(){
+            document.getElementById('c-success').style.display='none'; 
+            document.getElementById('contact-form').style.display='block'; 
+            document.getElementById('contact-form').reset();
+        }
+
         const resolveImg = (src) => (!src) ? '' : (src.startsWith('http') || src.startsWith('data:') ? src : `./assets/images/${src}`);
-        
-        // --- 4. MAIN DATA FETCHING & RENDERING ---
+        const getYTId = (url) => { if(!url) return null; const m = url.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/); return (m && m[2].length===11) ? m[2] : null; };
+
+        // --- 4. NAVIGATION & VIEW CONTROLLER ---
+        function loadView(viewName) {
+            currentView = viewName;
+            
+            // Toggle Views
+            document.getElementById('view-home').style.display = (viewName === 'home') ? 'block' : 'none';
+            document.getElementById('view-gallery').style.display = (viewName === 'gallery') ? 'block' : 'none';
+            document.getElementById('view-achievements').style.display = (viewName === 'achievements') ? 'block' : 'none';
+            
+            // Toggle Hero (Only for Home)
+            document.getElementById('hero-section').style.display = (viewName === 'home') ? 'flex' : 'none';
+
+            // Scroll to Top
+            window.scrollTo(0,0);
+            
+            // Close Drawer if open
+            const d = document.getElementById('drawer');
+            if(d.classList.contains('active')) toggleDrawer();
+
+            // Load specific data if needed
+            if(viewName === 'gallery') loadGallery();
+            if(viewName === 'achievements') loadAchievements();
+        }
+
+        // --- 5. DATA LOADING ---
         async function initLoad() {
             try {
-                // Fetch all collections in parallel for speed
                 const [cSnap, tSnap, pSnap, nSnap] = await Promise.all([
                     db.collection('siteConfig').get(), 
                     db.collection('siteContent').get(), 
@@ -726,143 +848,165 @@
                 let config={}; cSnap.forEach(d=>config[d.id]=d.data());
                 let content={}; tSnap.forEach(d=>content[d.id]=d.data());
                 
-                const main = document.getElementById('dynamic-content'); 
-                main.innerHTML='';
-                
-                // Navigation Builders
+                // --- SETUP VIRTUAL TOUR ---
+                const tourSec = document.getElementById('video-tour-section');
+                const tourConf = config['tour'];
+                const tourContent = content['tour'];
+                if(tourConf && tourConf.isVisible !== false && tourContent && tourContent.video){
+                    const vidId = getYTId(tourContent.video);
+                    if(vidId){ document.getElementById('tour-iframe').src = `https://www.youtube.com/embed/${vidId}?autoplay=0&rel=0`; tourSec.style.display = 'block'; }
+                } else { tourSec.style.display = 'none'; }
+
+                // --- RENDER NAV MENUS ---
                 const dNav = document.getElementById('nav-desk'); 
                 const mNav = document.getElementById('nav-mob');
-                let dh = `<li><a href="#" class="nav-link">${lang==='en'?'Home':'होम'}</a></li>`; 
-                let mh = `<a href="#" class="d-link" onclick="toggleDrawer()">${lang==='en'?'Home':'होम'} <span class="material-icons">home</span></a>`;
+                
+                // Base Links
+                let dh = `<li><div onclick="loadView('home')" class="nav-link">${lang==='en'?'Home':'होम'}</div></li>`; 
+                let mh = `<div onclick="loadView('home')" class="d-link">${lang==='en'?'Home':'होम'} <span class="material-icons">home</span></div>`;
 
-                // --- BUILD SECTIONS ---
-                SECTIONS.forEach(sec => {
+                // Sections (Scroll to ID in Home View)
+                HOME_SECTIONS.forEach(sec => {
                     if(config[sec.id]?.isVisible !== false){
                         const d = content[sec.id] || {}; 
                         const t = lang==='en' ? (d.title_en||sec.en) : (d.title_hi||sec.hi);
+                        // If current view is NOT home, switch to home then scroll
+                        const action = `loadView('home'); setTimeout(() => document.getElementById('${sec.id}').scrollIntoView(), 100);`;
                         
-                        dh += `<li><a href="#${sec.id}" class="nav-link">${t}</a></li>`; 
-                        mh += `<a href="#${sec.id}" class="d-link" onclick="toggleDrawer()">${t} <span class="material-icons">chevron_right</span></a>`;
-                        
+                        dh += `<li><div onclick="${action}" class="nav-link">${t}</div></li>`; 
+                        mh += `<div onclick="${action}" class="d-link">${t} <span class="material-icons">chevron_right</span></div>`;
+                    }
+                });
+
+                // Custom Pages
+                const cust = document.getElementById('custom-pages'); cust.innerHTML='';
+                pSnap.forEach(doc => {
+                    const d = doc.data(); const cid = `p-${doc.id}`; 
+                    const t = lang==='en' ? d.title_en : (d.title_hi||d.title_en);
+                    // Add to Nav
+                    const action = `loadView('home'); setTimeout(() => document.getElementById('${cid}').scrollIntoView(), 100);`;
+                    dh += `<li><div onclick="${action}" class="nav-link">${t}</div></li>`; 
+                    mh += `<div onclick="${action}" class="d-link">${t} <span class="material-icons">article</span></div>`;
+                    
+                    // Render in Home
+                    cust.innerHTML += `<section id="${cid}" class="section-wrap">
+                        <div class="sec-head"><h2 class="sec-title">${t}</h2><div class="sec-line"></div></div>
+                        <div class="royal-card">${d.image ? `<img src="${resolveImg(d.image)}" class="royal-img">` : ''}<div class="royal-txt">${lang==='en' ? d.content_en : d.content_hi}</div></div>
+                    </section>`;
+                });
+
+                // --- RENDER HOME CONTENT ---
+                const homeCont = document.getElementById('home-content'); homeCont.innerHTML='';
+                HOME_SECTIONS.forEach(sec => {
+                    if(config[sec.id]?.isVisible !== false){
+                        const d = content[sec.id] || {}; 
+                        const t = lang==='en' ? (d.title_en||sec.en) : (d.title_hi||sec.hi);
                         let body = ''; 
                         const img = resolveImg(d.image); 
                         const txt = lang==='en' ? (d.text_en||'') : (d.text_hi||'');
                         
-                        // Specific Layouts
                         if(sec.id === 'facilities'){
                             body = `<div class="stats-grid">
                                 <div><div class="sr-num">${d.stat1||'45+'}</div><div class="sr-lbl">Years</div></div>
-                                <div><div class="sr-num">${d.stat2||'2.5K'}</div><div class="sr-lbl">Students</div></div>
+                                <div><div class="sr-num">${d.stat2||'2K+'}</div><div class="sr-lbl">Students</div></div>
                                 <div><div class="sr-num">${d.stat3||'100%'}</div><div class="sr-lbl">Results</div></div>
-                                <div><div class="sr-num">${d.stat4||'70+'}</div><div class="sr-lbl">Faculty</div></div>
+                                <div><div class="sr-num">${d.stat4||'80+'}</div><div class="sr-lbl">Faculty</div></div>
                             </div>`;
-                            if(txt||img) body += `<div class="royal-card" style="margin-top:35px;">${img?`<img src="${img}" class="royal-img">`:''}<div class="royal-txt">${txt}</div></div>`;
-                        }
-                        else if(sec.id === 'gallery'){ 
-                            body = `<div class="grid-premium" id="gal-grid"><p style="grid-column:1/-1; text-align:center;">Loading Photos...</p></div>`; 
-                            setTimeout(loadGallery, 500); 
-                        }
-                        else if(sec.id === 'achievements'){ 
-                            body = `<div class="grid-premium" id="ach-grid"><p style="grid-column:1/-1; text-align:center;">Loading...</p></div>`; 
-                            setTimeout(loadAchievements, 500); 
-                        }
-                        else if(sec.id === 'contact'){
-                            // Contact is in sidebar, this is just info
-                            body = `<div class="royal-card">
-                                <div style="flex:1; background:#f8fafc; padding:25px; border-radius:4px; border:1px solid #e2e8f0;">
-                                    <h4 style="color:var(--navy); margin-bottom:15px; border-bottom:1px solid #ddd; padding-bottom:10px;">Visit Us</h4>
-                                    <p style="display:flex; gap:12px; margin-bottom:15px;"><span class="material-icons" style="color:var(--gold);">location_on</span><span>${d.address||'Chatri Bagh, Indore (M.P.)'}</span></p>
-                                    <p style="display:flex; gap:12px; margin-bottom:15px;"><span class="material-icons" style="color:var(--gold);">call</span><span>${d.phone||'0731-123456'}</span></p>
-                                    <p style="display:flex; gap:12px;"><span class="material-icons" style="color:var(--gold);">email</span><span>info@bvmindore.com</span></p>
-                                </div>
-                                ${d.map ? `<div style="flex:1; height:280px; border-radius:4px; overflow:hidden; border:1px solid #e2e8f0;"><iframe src="${d.map}" width="100%" height="100%" style="border:0;" loading="lazy"></iframe></div>` : ''}
-                            </div>`;
+                            if(txt||img) body += `<div class="royal-card" style="margin-top:50px;">${img?`<img src="${img}" class="royal-img">`:''}<div class="royal-txt">${txt}</div></div>`;
                         } else {
-                            // Standard Text/Image Section
                             body = `<div class="royal-card">${img?`<img src="${img}" class="royal-img">`:''}<div class="royal-txt">${txt}</div></div>`;
                         }
                         
-                        main.innerHTML += `<section id="${sec.id}" class="section-wrap">
+                        homeCont.innerHTML += `<section id="${sec.id}" class="section-wrap">
                             <div class="sec-head"><h2 class="sec-title">${t}</h2><div class="sec-line"></div></div>
                             ${body}
                         </section>`;
                     }
                 });
 
-                // --- CUSTOM PAGES ---
-                const cust = document.getElementById('custom-pages'); 
-                cust.innerHTML='';
-                pSnap.forEach(doc => {
-                    const d = doc.data(); 
-                    const cid = `p-${doc.id}`; 
-                    const t = lang==='en' ? d.title_en : (d.title_hi||d.title_en);
-                    
-                    dh += `<li><a href="#${cid}" class="nav-link">${t}</a></li>`; 
-                    mh += `<a href="#${cid}" class="d-link" onclick="toggleDrawer()">${t} <span class="material-icons">article</span></a>`;
-                    
-                    cust.innerHTML += `<section id="${cid}" class="section-wrap">
-                        <div class="sec-head"><h2 class="sec-title">${t}</h2><div class="sec-line"></div></div>
-                        <div class="royal-card">
-                            ${d.image ? `<img src="${resolveImg(d.image)}" class="royal-img">` : ''}
-                            <div class="royal-txt">${lang==='en' ? d.content_en : d.content_hi}</div>
-                        </div>
-                    </section>`;
-                });
+                // --- ADD GALLERY & ACHIEVEMENTS TO NAV ---
+                dh += `<li><div onclick="loadView('gallery')" class="nav-link">${lang==='en'?'Gallery':'गैलरी'}</div></li>`;
+                mh += `<div onclick="loadView('gallery')" class="d-link">${lang==='en'?'Gallery':'गैलरी'} <span class="material-icons">photo_library</span></div>`;
                 
-                dNav.innerHTML = dh; 
-                mNav.innerHTML = mh;
+                dh += `<li><div onclick="loadView('achievements')" class="nav-link">${lang==='en'?'Achievements':'उपलब्धियां'}</div></li>`;
+                mh += `<div onclick="loadView('achievements')" class="d-link">${lang==='en'?'Achievements':'उपलब्धियां'} <span class="material-icons">emoji_events</span></div>`;
+                
+                // CONTACT NAV
+                dh += `<li><div onclick="document.getElementById('contact-widget').scrollIntoView()" class="nav-link">${lang==='en'?'Contact':'संपर्क'}</div></li>`;
+                mh += `<div onclick="document.getElementById('contact-widget').scrollIntoView(); toggleDrawer();" class="d-link">${lang==='en'?'Contact':'संपर्क'} <span class="material-icons">call</span></div>`;
+
+                dNav.innerHTML = dh; mNav.innerHTML = mh;
 
                 // --- NOTICES ---
-                let nh = ''; 
-                notices = [];
+                let nh = ''; notices = [];
                 if(nSnap.empty) nh = '<div style="padding:20px; text-align:center; color:#94a3b8;">No Active Notices</div>';
                 
                 nSnap.forEach(doc => {
                     const d = doc.data(); 
                     const title = lang==='en' ? (d.title_en||d.title) : (d.title_hi||d.title);
-                    notices.push({...d, title}); // Store for modal
-                    
+                    notices.push({...d, title}); 
                     nh += `<div class="n-item" onclick="openNotice(${notices.length-1})">
-                        <span class="n-date"><span class="material-icons" style="font-size:12px;">event</span> ${d.date}</span>
+                        <span class="n-date"><span class="material-icons" style="font-size:14px;">event</span> ${d.date}</span>
                         <div class="n-title">${title}</div>
-                        ${d.priority === 'high' ? '<span class="n-badge">IMPORTANT</span>' : ''}
+                        ${d.priority === 'high' ? '<span class="n-badge">URGENT</span>' : ''}
                     </div>`;
                 });
                 document.getElementById('notice-list-desk').innerHTML = nh;
 
-                // --- AUTO POPUP LOGIC ---
-                // Wait 2 seconds after load, then show notices popup automatically
-                if(notices.length > 0) {
-                   setTimeout(() => {
-                       openAllNotices();
-                   }, 2000); 
-                }
+                // Auto Popup Notice
+                if(notices.length > 0) { setTimeout(() => { openAllNotices(); }, 2500); }
 
-            } catch(e) { console.error("Loading Error:", e); }
+            } catch(e) { console.error("Init Error:", e); }
 
-            // HIDE PRELOADER
+            // Hide Preloader
             setTimeout(() => {
                 const pre = document.getElementById('preloader');
                 pre.style.opacity = '0';
-                setTimeout(() => pre.style.display='none', 600);
+                setTimeout(() => pre.style.display='none', 800);
             }, 1000);
         }
 
-        // --- 5. CONTACT FORM LOGIC (WEB3FORMS) ---
+        // --- 6. DYNAMIC LOADERS ---
+        function loadGallery() { 
+            db.collection('gallery').orderBy('timestamp','desc').limit(20).get().then(s => { 
+                let h=''; s.forEach(d => { 
+                    const u = resolveImg(d.data().image); 
+                    const t = (lang==='en' ? d.data().title : d.data().title_hi) || ''; 
+                    h += `<div class="premium-item" onclick="viewImage('${u}')">
+                        <div class="premium-img-box"><img src="${u}"></div>
+                        ${t ? `<div class="premium-caption"><div class="pc-title">${t}</div></div>` : ''}
+                    </div>`; 
+                }); 
+                document.getElementById('gal-grid').innerHTML = h || '<p style="text-align:center; width:100%;">Gallery Empty.</p>'; 
+            }); 
+        }
+        
+        function loadAchievements() { 
+            db.collection('achievements').orderBy('timestamp','desc').limit(10).get().then(s => { 
+                let h=''; s.forEach(d => { 
+                    const u = resolveImg(d.data().image); 
+                    const t = (lang==='en' ? d.data().title : d.data().title_hi) || 'Achievement'; 
+                    h += `<div class="premium-item" onclick="viewImage('${u}')">
+                        <div class="premium-img-box"><img src="${u}"></div>
+                        <div class="premium-caption"><div class="pc-title">${t}</div><div style="font-size:0.7rem; color:var(--gold); text-transform:uppercase; margin-top:5px; font-weight:700;">Proud Moment</div></div>
+                    </div>`; 
+                }); 
+                document.getElementById('ach-grid').innerHTML = h || '<p style="text-align:center; width:100%;">No records found.</p>'; 
+            }); 
+        }
+
+        // --- 7. FORM HANDLER ---
         function submitContact(e) {
             e.preventDefault();
             const form = document.getElementById('contact-form');
             const btn = document.getElementById('c-btn-txt');
             const originalHTML = btn.innerHTML;
             
-            // Loading State
             btn.innerHTML = `<span>SENDING...</span> <span class="material-icons" style="animation:spin 1s linear infinite;">refresh</span>`;
             btn.disabled = true;
-            btn.style.opacity = '0.7';
 
             const formData = new FormData(form);
-            const object = Object.fromEntries(formData);
-            const json = JSON.stringify(object);
+            const json = JSON.stringify(Object.fromEntries(formData));
 
             fetch('https://api.web3forms.com/submit', {
                 method: 'POST',
@@ -871,92 +1015,58 @@
             })
             .then(async (response) => {
                 if (response.status == 200) {
-                    // Success UI
                     form.style.display = 'none';
                     document.getElementById('c-success').style.display = 'block';
-                } else {
-                    alert("Submission failed. Please check your internet connection.");
-                }
+                } else { alert("Submission failed."); }
             })
             .catch(error => { console.log(error); alert("Error sending message."); })
-            .finally(() => { 
-                btn.innerHTML = originalHTML; 
-                btn.disabled = false; 
-                btn.style.opacity = '1';
-            });
+            .finally(() => { btn.innerHTML = originalHTML; btn.disabled = false; });
         }
 
-        // --- 6. DYNAMIC CONTENT LOADERS ---
-        function loadGallery() { 
-            db.collection('gallery').orderBy('timestamp','desc').limit(16).get().then(s => { 
-                let h=''; 
-                s.forEach(d => { 
-                    const u = resolveImg(d.data().image); 
-                    const t = (lang==='en' ? d.data().title : d.data().title_hi) || ''; 
-                    h += `<div class="premium-item" onclick="viewImage('${u}')">
-                        <div class="premium-img-box"><img src="${u}"></div>
-                        ${t ? `<div class="premium-caption"><div class="pc-title">${t}</div></div>` : ''}
-                    </div>`; 
-                }); 
-                document.getElementById('gal-grid').innerHTML = h || '<p style="text-align:center; width:100%;">Gallery Updating...</p>'; 
-            }); 
-        }
-        
-        function loadAchievements() { 
-            db.collection('achievements').orderBy('timestamp','desc').limit(8).get().then(s => { 
-                let h=''; 
-                s.forEach(d => { 
-                    const u = resolveImg(d.data().image); 
-                    const t = (lang==='en' ? d.data().title : d.data().title_hi) || 'Achievement'; 
-                    h += `<div class="premium-item" onclick="viewImage('${u}')">
-                        <div class="premium-img-box"><img src="${u}"></div>
-                        <div class="premium-caption">
-                            <div class="pc-title">${t}</div>
-                            <div style="font-size:0.7rem; color:var(--gold); text-transform:uppercase; margin-top:5px; font-weight:700;">Proud Moment</div>
-                        </div>
-                    </div>`; 
-                }); 
-                document.getElementById('ach-grid').innerHTML = h || '<p style="text-align:center; width:100%;">No records found.</p>'; 
-            }); 
+        // --- 8. LIGHTBOX & ZOOM LOGIC ---
+        function viewImage(src){ 
+            currentZoom = 1;
+            const img = document.getElementById('lb-img');
+            img.src = src; 
+            img.style.transform = `scale(${currentZoom})`;
+            document.getElementById('lightbox').style.display = 'flex'; 
         }
 
-        // --- 7. MODAL ACTIONS ---
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+        }
+
+        function zoomImg(factor) {
+            currentZoom += factor;
+            if(currentZoom < 1) currentZoom = 1; // Min Zoom
+            if(currentZoom > 3) currentZoom = 3; // Max Zoom
+            document.getElementById('lb-img').style.transform = `scale(${currentZoom})`;
+        }
+
         function openNotice(i){ 
             const d = notices[i]; 
             document.getElementById('m-date').innerText = d.date; 
             document.getElementById('m-title').innerText = d.title; 
             document.getElementById('m-desc').innerText = (lang==='en' ? d.desc : d.desc_hi) || d.desc || ''; 
             
-            const linkHtml = d.link ? `<a href="${d.link}" target="_blank" style="display:inline-flex; align-items:center; gap:8px; padding:10px 25px; background:var(--navy); color:white; border-radius:50px; text-decoration:none; font-weight:600; font-size:0.9rem; transition:0.3s;">
-                <span class="material-icons">description</span> Download Attachment
+            const linkHtml = d.link ? `<a href="${d.link}" target="_blank" style="display:inline-flex; align-items:center; gap:8px; padding:12px 30px; background:var(--navy); color:white; border-radius:50px; text-decoration:none; font-weight:600; font-size:0.9rem; transition:0.3s; box-shadow:0 4px 15px rgba(0,0,0,0.2);">
+                <span class="material-icons">description</span> Download Document
             </a>` : '';
             
             document.getElementById('m-link').innerHTML = linkHtml; 
-            
             document.getElementById('all-notices-modal').style.display = 'none'; 
             document.getElementById('notice-modal').style.display = 'flex'; 
         }
 
-        function viewImage(src){ 
-            document.getElementById('lb-img').src = src; 
-            document.getElementById('lightbox').style.display = 'flex'; 
-        }
-
-        // Start App
-        window.onload = initLoad;
-
-        // --- 8. HIGH SECURITY MODULE (ANTI-INSPECT) ---
-        // Warning: This will freeze the browser if DevTools is opened
+        // --- 9. SECURITY (DEBUGGER TRAP) ---
         setInterval(function() {
             var before = new Date().getTime();
-            debugger; // THE TRAP
+            debugger; 
             var after = new Date().getTime();
-            if (after - before > 100) {
-                // If execution paused significantly, user is likely inspecting.
-                // We can reload to annoy them or just let the loop run.
-                window.location.href = "about:blank"; // Redirects inspector to blank page
-            }
+            if (after - before > 100) { window.location.reload(); }
         }, 500);
+
+        window.onload = initLoad;
 
     </script>
 </body>
